@@ -7,13 +7,13 @@ const hooks = new UsuarioFunc()
 
 class UsuarioController {
     // public async login(req: Request, res: Response): Promise<void> {
-    //   const { mail, password } = req.body;
+    //   const { mail, senha } = req.body;
   
-    //   if (!mail || !password) {
+    //   if (!mail || !senha) {
     //     res.status(401).json({ erro: "Forneça o e-mail e senha" });
     //   } else {
     //     try {
-    //       const Usuario = await Usuario.findOne({ mail, password });
+    //       const Usuario = await Usuario.findOne({ mail, senha });
     //       if (Usuario) {
     //         res.json({ ...Usuario.toObject(), token: tokenize(Usuario.toObject()) });
     //       } else {
@@ -26,14 +26,14 @@ class UsuarioController {
     // }
     
     public async create(req: Request, res: Response): Promise<void> {
-        const { email, password, data_de_nascimento, peso, altura, sedentarismo, sexo } = req.body;
-        if (!email && !password) {
+        const { email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo } = req.body;
+        if (!email && !senha) {
             res.status(401).json({ erro: "Forneça o e-mail e senha" });
         }else{
         try {
             
-            const IMC = hooks.calculadoraIMC(altura, peso)
-            const response = await Usuario.create({email, password, data_de_nascimento, peso, altura, sedentarismo, sexo, IMC });
+            const IMC = await hooks.calculadoraIMC(altura, peso)
+            const response = await Usuario.create({email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, IMC });
             res.send(response);
         } catch (e: any) {
                 res.send({ message: e });
@@ -94,11 +94,11 @@ class UsuarioController {
     }
 
     public async updasenha(req: Request, res: Response): Promise<void> {
-        const { id, password } = req.body;
+        const { id, senha } = req.body;
         try {
             const response = await Usuario.findByIdAndUpdate(
                 id,
-                { password },
+                { senha },
                 {
                     new: true,
                     runValidators: true
@@ -112,8 +112,8 @@ class UsuarioController {
             }
         } catch (e: any) {
            
-            if (e.errors?.mail) {
-                res.send({ message: e.errors.password.message });
+            if (e.errors?.senha) {
+                res.send({ message: e.errors.senha.message });
             }
             else {
                 res.send({ message: e });

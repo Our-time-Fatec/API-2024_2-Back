@@ -16,7 +16,7 @@ const UsuarioSchema = new Schema({
             message: (props:any) => `${props.value} não é um formato de e-mail válido`,
     }
 },
-    password: {
+    senha: {
         type: String, 
         minlength: 6, 
         maxlength: 100, 
@@ -24,7 +24,7 @@ const UsuarioSchema = new Schema({
         trim: true,
         required: [true, "A senha é obrigatória"]
     },
-    data_de_nascimento:{
+    dataDeNascimento:{
         type: Date,
         required: [true, "Preencha sua idade"]
     },
@@ -36,7 +36,7 @@ const UsuarioSchema = new Schema({
         type: Number,
         required: [true, "Preencha sua altura"]
     },
-    sedentarismo:{
+    nivelDeSedentarismo:{
         type: String,
         enum: ["Sedentário", "Levemente ativo", "Moderadamente ativo", "Altamente ativo", "Extremamente ativo"],
         default: "Moderadamente ativo"
@@ -49,19 +49,24 @@ const UsuarioSchema = new Schema({
     IMC:{
         type: Number
     },
-    taxa_metabolismo_basal:{
+    taxaMetabolismoBasal:{
         type: Number
     },
-    ultima_vez_usado:{
+    ultimaVezUtilizado:{
         type: Date,
         default: Date.now
     },
-    criado_em:{
+    criadoEm:{
         type: Date,
         default: Date.now
     },
-    removido_em:{
-        type: Date
+    atualizadoEm:{
+        type: Date,
+        default: null
+    },
+    removidoEm:{
+        type: Date,
+        default: null
     }
 }, {
     toJSON: {
@@ -74,7 +79,7 @@ const UsuarioSchema = new Schema({
 });
 
 UsuarioSchema.pre('save', function(next) {
-    this.ultima_vez_usado = new Date();
+    this.ultimaVezUtilizado = new Date();
     next();
 })
 
