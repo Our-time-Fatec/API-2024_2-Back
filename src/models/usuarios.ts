@@ -1,0 +1,83 @@
+import mongoose, { Schema } from "mongoose";
+
+const UsuarioSchema = new Schema({
+    email: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        unique: true,
+        required: [true, "O e-mail é obrigatório"],
+        validate: {
+            validator: function (value: string) {
+            // expressão regular para validar o formato do e-mail
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(value);
+            },
+            message: (props:any) => `${props.value} não é um formato de e-mail válido`,
+    }
+},
+    password: {
+        type: String, 
+        minlength: 6, 
+        maxlength: 100, 
+        select: false,
+        trim: true,
+        required: [true, "A senha é obrigatória"]
+    },
+    data_de_nascimento:{
+        type: Date,
+        required: [true, "Preencha sua idade"]
+    },
+    peso:{
+        type: Number,
+        required: [true, "Preencha seu peso"]
+    },
+    altura:{
+        type: Number,
+        required: [true, "Preencha sua altura"]
+    },
+    sedentarismo:{
+        type: String,
+        enum: ["Sedentário", "Levemente ativo", "Moderadamente ativo", "Altamente ativo", "Extremamente ativo"],
+        default: "Moderadamente ativo"
+    },
+    sexo:{
+        type: String,
+        enum: ["Masculino", "Feminino"],
+        default: "Masculino"
+    },
+    IMC:{
+        type: Number
+    },
+    taxa_metabolismo_basal:{
+        type: Number
+    },
+    ultima_vez_usado:{
+        type: Date,
+        default: Date.now
+    },
+    criado_em:{
+        type: Date,
+        default: Date.now
+    },
+    removido_em:{
+        type: Date
+    }
+}, {
+    toJSON: {
+        transform: function(doc, ret, options) {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.__v;
+        }
+    }
+});
+
+UsuarioSchema.pre('save', function(next) {
+    this.ultima_vez_usado = new Date();
+    next();
+})
+
+const UsuarioModel = mongoose.model("Usuario", UsuarioSchema, "users")
+
+export default UsuarioModel
