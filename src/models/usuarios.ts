@@ -46,10 +46,17 @@ const UsuarioSchema = new Schema({
         enum: ["Masculino", "Feminino"],
         default: "Masculino"
     },
+    objetivo:{
+        type: String,
+        enum: ["Dieta de emagrecimento", "Dieta de Ganho de Massa Muscular", "Dieta Low Carb"]
+    },
     IMC:{
         type: Number
     },
     taxaMetabolismoBasal:{
+        type: Number
+    },
+    caloriasGastas:{
         type: Number
     },
     ultimaVezUtilizado:{

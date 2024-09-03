@@ -26,30 +26,51 @@ class UsuarioController {
     // }
     
     public async create(req: Request, res: Response): Promise<void> {
-        const { email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo } = req.body;
-        if (!email && !senha) {
+        const { email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo } = req.body;
+    
+        if (!email || !senha) { 
             res.status(401).json({ erro: "Forneça o e-mail e senha" });
-        }else{
+            return; 
+        }
+
+        if (!dataDeNascimento || !peso || !altura || !nivelDeSedentarismo || !sexo) {
+            res.status(400).json({ erro: "Dados incompletos fornecidos" });
+            return;
+        }
+    
         try {
+            const IMC = hooks.calculadoraIMC(altura, peso);
+            const idade = hooks.calculadoraIdade(dataDeNascimento);
+            const taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(peso, altura, idade, sexo);
+            const caloriasGastas = await hooks.calculadoraCaloriasGastas(nivelDeSedentarismo, taxaMetabolismoBasal);
             
-            const IMC = await hooks.calculadoraIMC(altura, peso)
-            const response = await Usuario.create({email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, IMC });
-            res.send(response);
+            const response = await Usuario.create({
+                email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo,
+                IMC, taxaMetabolismoBasal, caloriasGastas 
+            });
+            
+            res.status(201).json(response); 
         } catch (e: any) {
-                res.send({ message: e });
-            }
+            res.status(500).json({ message: "Erro ao criar usuário", erro: e.message }); 
         }
     }
 
 
     public async list(_: Request, res: Response): Promise<void> {
-        res.send(await Usuario.find(
-            {},
-            {},
-            {
-                sort: { mail: 1 }
-            }
-        ));
+        try {
+            const usuarios = await Usuario.find({}, null, {
+                sort: { email: 1 }
+            });
+    
+            const usuariosReorganizados = usuarios.map(usuario => {
+                const { _id, ...rest } = usuario.toObject();
+                return { _id, ...rest };
+            });
+    
+            res.status(200).json(usuariosReorganizados);
+        } catch (error) {
+            res.status(500).json({ erro: 'Erro ao listar usuários'});
+        }
     }
 
     public async delete(req: Request, res: Response): Promise<void> {
