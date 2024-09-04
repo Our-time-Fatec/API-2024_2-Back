@@ -38,13 +38,11 @@ const UsuarioSchema = new Schema({
     },
     nivelDeSedentarismo:{
         type: String,
-        enum: ["Sedentário", "Levemente ativo", "Moderadamente ativo", "Altamente ativo", "Extremamente ativo"],
-        default: "Moderadamente ativo"
+        enum: ["Sedentário", "Levemente ativo", "Moderadamente ativo", "Altamente ativo", "Extremamente ativo"]
     },
     sexo:{
         type: String,
-        enum: ["Masculino", "Feminino"],
-        default: "Masculino"
+        enum: ["Masculino", "Feminino"]
     },
     objetivo:{
         type: String,
