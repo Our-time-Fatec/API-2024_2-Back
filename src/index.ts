@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import routes from "./routes";
 import { connect } from "./database/connection";
+import seedDatabase from "./database/seed";
 dotenv.config();
 
 // será usado 3000 se a variável de ambiente não tiver sido definida
@@ -18,6 +19,10 @@ app.use(cors());
 
 // conecta ao MongoDB no início da aplicação
 connect();
+
+seedDatabase().then(() => {
+    console.log("Aplicação iniciada com o banco de dados seedado");
+});
 
 // inicializa o servidor na porta especificada
 app.listen(PORT, () => {
