@@ -28,16 +28,11 @@ class UsuarioController {
     public async create(req: Request, res: Response): Promise<void> {
         const { email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo } = req.body;
     
-        if (!email || !senha) { 
+        if (!email && !senha) { 
             res.status(401).json({ erro: "Forneça o e-mail e senha" });
             return; 
         }
 
-        if (!dataDeNascimento || !peso || !altura || !nivelDeSedentarismo || !sexo) {
-            res.status(400).json({ erro: "Dados incompletos fornecidos" });
-            return;
-        }
-    
         try {
             const IMC = hooks.calculadoraIMC(altura, peso);
             const idade = hooks.calculadoraIdade(dataDeNascimento);
