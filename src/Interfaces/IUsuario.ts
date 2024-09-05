@@ -12,7 +12,7 @@ export interface IUsuario {
     objetivo?: "Dieta de emagrecimento" | "Dieta de Ganho de Massa Muscular" | "Dieta Low Carb";
     IMC?: number;
     taxaMetabolismoBasal?: number;
-    caloriasGastas?: number;
+    gastoDeCaloria?: number;
     ultimaVezUtilizado?: Date;
     criadoEm?: Date;
     atualizadoEm?: Date | null;

@@ -61,7 +61,7 @@ const UsuarioSchema = new Schema<IUsuario>({
     taxaMetabolismoBasal: {
         type: Number
     },
-    caloriasGastas: {
+    gastoDeCaloria: {
         type: Number
     },
     ultimaVezUtilizado: {
