@@ -7,24 +7,6 @@ import criptografia from "../utils/criptografia";
 const hooks = new UsuarioFunc()
 
 class UsuarioController {
-    // public async login(req: Request, res: Response): Promise<void> {
-    //   const { mail, senha } = req.body;
-
-    //   if (!mail || !senha) {
-    //     res.status(401).json({ erro: "Forneça o e-mail e senha" });
-    //   } else {
-    //     try {
-    //       const Usuario = await Usuario.findOne({ mail, senha });
-    //       if (Usuario) {
-    //         res.json({ ...Usuario.toObject(), token: tokenize(Usuario.toObject()) });
-    //       } else {
-    //         res.json({ erro: "Dados de login não conferem" });
-    //       }
-    //     } catch (e: any) {
-    //       res.status(500).json({ erro: e.message });
-    //     }
-    //   }
-    // }
 
     public async create(req: Request, res: Response): Promise<Response> {
         const { nome, sobrenome, email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo } = req.body;
@@ -43,6 +25,19 @@ class UsuarioController {
         }
 
         try {
+
+            const existingUser = await Usuario.findOne({ email, removidoEm: null });
+            if (existingUser) {
+                return res.status(400).json({ message: "Este e-mail já está em uso por outro usuário ativo" });
+            }
+
+            const removedUser = await Usuario.findOne({ email });
+            if (removedUser && removedUser.removidoEm !== null) {
+                removedUser.removidoEm = null;
+                await removedUser.save();
+                return res.status(201).json({ message: "Usuario reativado" });
+            }
+
             const senhaCriptografada = await criptografia.criptografarSenha(senha);
             const IMC = hooks.calculadoraIMC(altura, peso);
             const idade = hooks.calculadoraIdade(dataDeNascimento);
@@ -51,7 +46,7 @@ class UsuarioController {
 
             const response = await Usuario.create({
                 nome, sobrenome,
-                email, senha: senhaCriptografada, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo,
+                email, senha: senhaCriptografada, dataDeNascimento, idade, peso, altura, nivelDeSedentarismo, sexo, objetivo,
                 IMC, taxaMetabolismoBasal, caloriasGastas
             });
 
@@ -73,7 +68,7 @@ class UsuarioController {
 
     public async list(_: Request, res: Response): Promise<void> {
         try {
-            const usuarios = await Usuario.find({}, null, {
+            const usuarios = await Usuario.find({ removidoEm: null }, null, {
                 sort: { email: 1 }
             });
 
@@ -88,72 +83,57 @@ class UsuarioController {
         }
     }
 
-    public async delete(req: Request, res: Response): Promise<void> {
-        const { id } = req.body;
-        const response = await Usuario.findByIdAndDelete(id);
-        if (response) {
-            res.json(response);
-        }
-        else {
-            res.json({ message: "Registro inexistente" });
+    public async update(req: Request, res: Response): Promise<Response> {
+        const { nome, sobrenome, email, senha, dataDeNascimento, peso, altura, objetivo, userId } = req.body;
+        try {
+            const usuario = await Usuario.findOne({ _id: userId, removidoEm: null });
+
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuário não encontrado' });
+            }
+
+            usuario.nome = nome || usuario.nome;
+            usuario.sobrenome = sobrenome || usuario.sobrenome;
+            usuario.email = email || usuario.email;
+            if (senha) {
+                usuario.senha = await criptografia.criptografarSenha(senha);
+            }
+            usuario.peso = peso || usuario.peso;
+            usuario.altura = altura || usuario.altura;
+            usuario.objetivo = objetivo || usuario.objetivo;
+            usuario.dataDeNascimento = dataDeNascimento || usuario.dataDeNascimento
+            usuario.idade = hooks.calculadoraIdade(usuario.dataDeNascimento);
+            usuario.IMC = hooks.calculadoraIMC(usuario.altura, usuario.peso);
+            usuario.taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(usuario.peso, usuario.altura, usuario.idade, usuario.sexo || 'Masculino');
+            usuario.gastoDeCaloria = await hooks.calculadoraCaloriasGastas(usuario.nivelDeSedentarismo || 'Sedentário', usuario.taxaMetabolismoBasal);
+            usuario.atualizadoEm = new Date();
+
+            await usuario.save();
+            return res.status(200).json({ message: 'Usuário atualizado com sucesso', usuario });
+        } catch (error: any) {
+            if (error.code === 11000 || error.code === 11001) {
+                return res.status(500).json({ message: "Este e-mail já está em uso" });
+            }
+            return res.status(500).json({ message: 'Erro ao atualizar usuário', error });
         }
     }
 
-    public async updatemail(req: Request, res: Response): Promise<void> {
-        const { id, email } = req.body;
+    public async delete(req: Request, res: Response): Promise<Response> {
         try {
-            const response = await Usuario.findByIdAndUpdate(
-                id,
-                { email },
-                {
-                    new: true,
-                    runValidators: true
-                }
-            );
-            if (response) {
-                res.json(response);
-            }
-            else {
-                res.json({ message: "Registro inexistente" });
-            }
-        } catch (e: any) {
-            if (e.code === 11000) {
-                res.send({ message: `O e-mail ${email} já está em uso` });
-            }
-            else if (e.errors?.mail) {
-                res.send({ message: e.errors.mail.message });
-            }
-            else {
-                res.send({ message: e });
-            }
-        }
-    }
+            const { userId } = req.body;
 
-    public async updasenha(req: Request, res: Response): Promise<void> {
-        const { id, senha } = req.body;
-        try {
-            const response = await Usuario.findByIdAndUpdate(
-                id,
-                { senha },
-                {
-                    new: true,
-                    runValidators: true
-                }
-            );
-            if (response) {
-                res.json(response);
-            }
-            else {
-                res.json({ message: "Registro inexistente" });
-            }
-        } catch (e: any) {
+            const usuario = await Usuario.findById(userId);
 
-            if (e.errors?.senha) {
-                res.send({ message: e.errors.senha.message });
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuário não encontrado' });
             }
-            else {
-                res.send({ message: e });
-            }
+
+            usuario.removidoEm = new Date();
+            await usuario.save();
+
+            return res.status(200).json({ message: 'Usuário removido com sucesso' });
+        } catch (error) {
+            return res.status(500).json({ message: 'Erro ao remover usuário', error });
         }
     }
 }

@@ -5,6 +5,7 @@ export interface IUsuario {
     email: string;
     senha?: string;
     dataDeNascimento: Date;
+    idade: number;
     peso: number;
     altura: number;
     nivelDeSedentarismo?: "Sedentário" | "Levemente ativo" | "Moderadamente ativo" | "Altamente ativo" | "Extremamente ativo";
