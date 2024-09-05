@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import Usuario from "../models/usuarios";
 import jwt from "jsonwebtoken";
 import UsuarioFunc from "../func/UsuarioFunc";
+import criptografia from "../utils/criptografia";
 
 const hooks = new UsuarioFunc()
 
 class UsuarioController {
     // public async login(req: Request, res: Response): Promise<void> {
     //   const { mail, senha } = req.body;
-  
+
     //   if (!mail || !senha) {
     //     res.status(401).json({ erro: "Forneça o e-mail e senha" });
     //   } else {
@@ -24,29 +25,30 @@ class UsuarioController {
     //     }
     //   }
     // }
-    
+
     public async create(req: Request, res: Response): Promise<void> {
         const { email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo } = req.body;
-    
-        if (!email && !senha) { 
+
+        if (!email && !senha) {
             res.status(401).json({ erro: "Forneça o e-mail e senha" });
-            return; 
+            return;
         }
 
         try {
             const IMC = hooks.calculadoraIMC(altura, peso);
+            const senhaCriptografada = await criptografia.criptografarSenha(senha);
             const idade = hooks.calculadoraIdade(dataDeNascimento);
             const taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(peso, altura, idade, sexo);
             const caloriasGastas = await hooks.calculadoraCaloriasGastas(nivelDeSedentarismo, taxaMetabolismoBasal);
-            
+
             const response = await Usuario.create({
-                email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo,
-                IMC, taxaMetabolismoBasal, caloriasGastas 
+                email, senha: senhaCriptografada, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo,
+                IMC, taxaMetabolismoBasal, caloriasGastas
             });
-            
-            res.status(201).json(response); 
+
+            res.status(201).json(response);
         } catch (e: any) {
-            res.status(500).json({ message: "Erro ao criar usuário", erro: e.message }); 
+            res.status(500).json({ message: "Erro ao criar usuário", erro: e.message });
         }
     }
 
@@ -56,15 +58,15 @@ class UsuarioController {
             const usuarios = await Usuario.find({}, null, {
                 sort: { email: 1 }
             });
-    
+
             const usuariosReorganizados = usuarios.map(usuario => {
                 const { _id, ...rest } = usuario.toObject();
                 return { _id, ...rest };
             });
-    
+
             res.status(200).json(usuariosReorganizados);
         } catch (error) {
-            res.status(500).json({ erro: 'Erro ao listar usuários'});
+            res.status(500).json({ erro: 'Erro ao listar usuários' });
         }
     }
 
@@ -127,7 +129,7 @@ class UsuarioController {
                 res.json({ message: "Registro inexistente" });
             }
         } catch (e: any) {
-           
+
             if (e.errors?.senha) {
                 res.send({ message: e.errors.senha.message });
             }
