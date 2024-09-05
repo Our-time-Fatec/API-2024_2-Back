@@ -30,9 +30,9 @@ class AuthController {
 
         try {
             // Busca o usuário pelo email
-            const usuario = await Usuario.findOne({ email }).select("+senha");
+            const usuario = await Usuario.findOne({ email, removidoEm: null }).select("+senha");
             if (!usuario) {
-                res.status(401).json({ message: "Credenciais inválidas" });
+                res.status(401).json({ message: "Usuário não encontrado" });
                 return;
             }
 
