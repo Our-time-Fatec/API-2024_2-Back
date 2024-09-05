@@ -1,13 +1,7 @@
 import mongoose, { Schema, model, Document } from 'mongoose';
+import { ICategoria } from '../Interfaces/ICategoria';
 
-export interface ICategoria extends Document {
-    codigo: number;
-    nome: string;
-    urlPlaceholder: string;
-    criadoEm: Date;
-    atualizadoEm?: Date | null;
-    removidoEm?: Date | null;
-}
+
 
 const GrupoSchema = new Schema<ICategoria>({
     codigo: { type: Number, required: true },

@@ -1,6 +1,15 @@
 import mongoose, { Schema } from "mongoose";
+import { IUsuario } from "../Interfaces/IUsuario";
 
-const UsuarioSchema = new Schema({
+const UsuarioSchema = new Schema<IUsuario>({
+    nome: {
+        type: String,
+        required: [true, "Nome é obrigatório"],
+    },
+    sobrenome: {
+        type: String,
+        required: [true, "Sobrenome é obrigatório"],
+    },
     email: {
         type: String,
         trim: true,
@@ -9,73 +18,71 @@ const UsuarioSchema = new Schema({
         required: [true, "O e-mail é obrigatório"],
         validate: {
             validator: function (value: string) {
-            // expressão regular para validar o formato do e-mail
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(value);
+                // expressão regular para validar o formato do e-mail
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(value);
             },
-            message: (props:any) => `${props.value} não é um formato de e-mail válido`,
-    }
-},
+            message: (props: any) => `${props.value} não é um formato de e-mail válido`,
+        }
+    },
     senha: {
-        type: String, 
-        minlength: 6, 
-        maxlength: 100, 
+        type: String,
         select: false,
         trim: true,
         required: [true, "A senha é obrigatória"]
     },
-    dataDeNascimento:{
+    dataDeNascimento: {
         type: Date,
         required: [true, "Preencha sua idade"]
     },
-    peso:{
+    peso: {
         type: Number,
         required: [true, "Preencha seu peso"]
     },
-    altura:{
+    altura: {
         type: Number,
         required: [true, "Preencha sua altura"]
     },
-    nivelDeSedentarismo:{
+    nivelDeSedentarismo: {
         type: String,
         enum: ["Sedentário", "Levemente ativo", "Moderadamente ativo", "Altamente ativo", "Extremamente ativo"]
     },
-    sexo:{
+    sexo: {
         type: String,
         enum: ["Masculino", "Feminino"]
     },
-    objetivo:{
+    objetivo: {
         type: String,
         enum: ["Dieta de emagrecimento", "Dieta de Ganho de Massa Muscular", "Dieta Low Carb"]
     },
-    IMC:{
+    IMC: {
         type: Number
     },
-    taxaMetabolismoBasal:{
+    taxaMetabolismoBasal: {
         type: Number
     },
-    caloriasGastas:{
+    caloriasGastas: {
         type: Number
     },
-    ultimaVezUtilizado:{
+    ultimaVezUtilizado: {
         type: Date,
         default: Date.now
     },
-    criadoEm:{
+    criadoEm: {
         type: Date,
         default: Date.now
     },
-    atualizadoEm:{
+    atualizadoEm: {
         type: Date,
         default: null
     },
-    removidoEm:{
+    removidoEm: {
         type: Date,
         default: null
     }
 }, {
     toJSON: {
-        transform: function(doc, ret, options) {
+        transform: function (doc, ret, options) {
             ret.id = ret._id;
             delete ret._id;
             delete ret.__v;
@@ -83,11 +90,11 @@ const UsuarioSchema = new Schema({
     }
 });
 
-UsuarioSchema.pre('save', function(next) {
+UsuarioSchema.pre('save', function (next) {
     this.ultimaVezUtilizado = new Date();
     next();
 })
 
-const UsuarioModel = mongoose.model("Usuario", UsuarioSchema, "users")
+const UsuarioModel = mongoose.model<IUsuario>("Usuario", UsuarioSchema, "Usuarios")
 
 export default UsuarioModel

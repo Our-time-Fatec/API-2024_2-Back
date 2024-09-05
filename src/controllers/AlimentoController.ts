@@ -1,4 +1,4 @@
-import { IAlimento } from "../models/alimento";
+import { IAlimento } from "../Interfaces/IAlimento";
 import Alimento from "../models/alimento";
 
 class AlimentoController {

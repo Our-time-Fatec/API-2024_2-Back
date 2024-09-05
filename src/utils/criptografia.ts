@@ -4,7 +4,7 @@ class CriptografiaService {
     private saltRounds: number;
 
     constructor() {
-        this.saltRounds = 10; 
+        this.saltRounds = 7; 
     }
 
     // Método para criptografar a senha
