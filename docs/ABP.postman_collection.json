@@ -1,0 +1,463 @@
+{
+	"info": {
+		"_postman_id": "066a2e90-526a-4aac-a09f-d964be0861ba",
+		"name": "ABP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24836916"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhMzM3ODI1ZWZmMGQ3YTRlN2Y3Y2IiLCJlbWFpbCI6ImRhdmluY2ljb2RlLmZhdGVjQGdtYWlsLmNvbSIsImlhdCI6MTcyNTU3NjIyOCwiZXhwIjoxNzI4MTY4MjI4fQ.ZnYROkjLuWEfKe1qjb7b6cmBV4_etTK9biHUDahd1UI\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/auth/refresh-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"lfcosta0804@gmail.com\",\r\n    \"senha\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "List Usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQ5ZGQ5Nzk5YjgzZjZkMTM5ZGY5ZjIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU1NTI1MSwiZXhwIjoxNzI1NjQxNjUxfQ.tAU7_Wk75b_PpVptQcUHmt51ydu4CRPBiJ5xG1ZpOew",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/usuario/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"lucas\",\r\n    \"sobrenome\": \"ferreira da costa\",\r\n    \"email\": \"lfcosta0804@gmail.com\",\r\n    \"senha\": \"12345678\",\r\n    \"dataDeNascimento\": \"2003-04-08T12:30:00Z\",\r\n    \"peso\": 65,\r\n    \"altura\": 1.67,\r\n    \"nivelDeSedentarismo\": \"Sedentário\",\r\n    \"sexo\": \"Masculino\",\r\n    \"objetivo\": \"Dieta de Ganho de Massa Muscular\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/usuario/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhMzU4YjI1ZWZmMGQ3YTRlODA3NTEiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU3NjYzMSwiZXhwIjoxNzI1NjYzMDMxfQ.ywmYxqVShCuCd6gZ-W12vS43ZY3ZqnBF4QuFVJhPl7c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"lucas\",\r\n    \"sobrenome\": \"teste da silvaaa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/usuario/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhNTFkZDkwZDEwZmNmZWZjZmE2ZmYiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU4Mzg2MSwiZXhwIjoxNzI1NjcwMjYxfQ.Q0eoOjli5qpuIvGCOmvfpU4DSeDMp4kGyIuVGmQE8L8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/usuario/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alimento",
+			"item": [
+				{
+					"name": "Create Alimento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhNTFkZDkwZDEwZmNmZWZjZmE2ZmYiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU4Mzg2MSwiZXhwIjoxNzI1NjcwMjYxfQ.Q0eoOjli5qpuIvGCOmvfpU4DSeDMp4kGyIuVGmQE8L8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"nome\": \"Energético Monster\", \r\n    \"preparo\": \"Não se aplica\", \r\n    \"porcao\": 100,\r\n    \"categoriaCodigo\": 1, \r\n    \"criadoEm\": \"2024-09-05\", \r\n    \"detalhes\": { \r\n        \"valorEnergetico\": 3, \r\n        \"proteinas\": 0, \r\n        \"lipidios\": 0, \r\n        \"carboidratos\": 1.4, \r\n        \"fibras\": 0 \r\n    } \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/alimento/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimento",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Alimentos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQ5ZGQ5Nzk5YjgzZjZkMTM5ZGY5ZjIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU1NTI1MSwiZXhwIjoxNzI1NjQxNjUxfQ.tAU7_Wk75b_PpVptQcUHmt51ydu4CRPBiJ5xG1ZpOew",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/alimento/?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimento",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "categoriaCodigo",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Alimentos By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhNDgyZDAxOTM2NGYwMDkyYzhjN2YiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU4MTQwNCwiZXhwIjoxNzI1NjY3ODA0fQ.mzxmAiQTjCtsQS5ZwMEwZsYHqcH94J2HCvKLGDuaODk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/alimento/66da520e90d10fcfefcfa703",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimento",
+								"66da520e90d10fcfefcfa703"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "categoriaCodigo",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Alimentos By User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhNDgyZDAxOTM2NGYwMDkyYzhjN2YiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU4MTQwNCwiZXhwIjoxNzI1NjY3ODA0fQ.mzxmAiQTjCtsQS5ZwMEwZsYHqcH94J2HCvKLGDuaODk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/alimento/criadosPorMim?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimento",
+								"criadosPorMim"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "categoriaCodigo",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Alimento",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhNTFkZDkwZDEwZmNmZWZjZmE2ZmYiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU4Mzg2MSwiZXhwIjoxNzI1NjcwMjYxfQ.Q0eoOjli5qpuIvGCOmvfpU4DSeDMp4kGyIuVGmQE8L8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"nome\": \"Energético Monster\", \r\n    \"preparo\": \"Não se aplica\", \r\n    \"categoriaCodigo\": 16, \r\n    \"criadoEm\": \"2024-09-05\", \r\n    \"detalhes\": { \r\n        \"valorEnergetico\": 3, \r\n        \"proteinas\": 0, \r\n        \"lipidios\": 0, \r\n        \"carboidratos\": 1.4, \r\n        \"fibras\": 0 \r\n    } \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/alimento/66da520e90d10fcfefcfa703",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimento",
+								"66da520e90d10fcfefcfa703"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Alimento",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhNDViYjU0ZjI0NWQ3ZmY4YTkwOTYiLCJlbWFpbCI6ImRhdmluY2ljb2RlLmZhdGVjQGdtYWlsLmNvbSIsImlhdCI6MTcyNTU4MTk4NiwiZXhwIjoxNzI1NjY4Mzg2fQ.d9-fhvJgmLNRJ3AxQvJ8C6lodQYbvebHE19Sc2S0_zY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/alimento/66da49d5019364f0092c8c83",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimento",
+								"66da49d5019364f0092c8c83"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "List categorias",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQ5ZGQ5Nzk5YjgzZjZkMTM5ZGY5ZjIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU1NTI1MSwiZXhwIjoxNzI1NjQxNjUxfQ.tAU7_Wk75b_PpVptQcUHmt51ydu4CRPBiJ5xG1ZpOew",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/categoria/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"categoria",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
