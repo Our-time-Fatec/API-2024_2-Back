@@ -44,8 +44,6 @@ class AuthController {
                 return;
             }
 
-            // const token = jwt.sign({ id: usuario._id, email: usuario.email }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
-            // const refreshToken = jwt.sign({ id: usuario._id, email: usuario.email }, REFRESH_SECRET, { expiresIn: REFRESH_EXPIRES_IN });
             const token = generateToken(usuario._id, usuario.email)
             const refreshToken = generateRefreshToken(usuario._id, usuario.email);
 
