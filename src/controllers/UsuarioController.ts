@@ -122,7 +122,7 @@ class UsuarioController {
         try {
             const { userId } = req.body;
 
-            const usuario = await Usuario.findById(userId);
+            const usuario = await Usuario.findOne({ _id: userId, removidoEm: null });
 
             if (!usuario) {
                 return res.status(404).json({ message: 'Usuário não encontrado' });

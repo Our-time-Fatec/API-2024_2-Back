@@ -12,6 +12,7 @@ const AlimentoDetalhesSchema = new Schema<AlimentoDetalhes>({
 const AlimentoSchema = new Schema<IAlimento>({
     nome: { type: String, required: true },
     preparo: { type: String, required: true },
+    porcao: { type: Number, required: true },
     categoriaCodigo: { type: Number, required: true },
     criadoPor: { type: String, required: true },
     criadoEm: { type: Date, default: Date.now, required: true },

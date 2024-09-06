@@ -2,17 +2,25 @@ import { Request, Response } from "express";
 import { IAlimento } from "../Interfaces/IAlimento";
 import Alimento from "../models/alimento";
 import Categoria from "../models/categoria";
+import Usuario from "../models/usuarios";
 
 class AlimentoController {
 
     async create(req: Request, res: Response): Promise<Response> {
-        const { nome, preparo, categoriaCodigo, detalhes } = req.body;
+        const { nome, preparo, porcao, categoriaCodigo, detalhes } = req.body;
         const userId = req.body.userId;
 
         try {
+            const usuario = await Usuario.findById(userId);
+
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuário não encontrado' });
+            }
+
             const alimentoSalvo = await Alimento.create({
                 nome,
                 preparo,
+                porcao,
                 categoriaCodigo,
                 criadoPor: userId,
                 criadoEm: new Date(),
@@ -92,7 +100,7 @@ class AlimentoController {
     async update(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
         const userId = req.body.userId;
-        const { nome, preparo, categoriaCodigo, detalhes } = req.body;
+        const { nome, preparo, porcao, categoriaCodigo, detalhes } = req.body;
 
         try {
             const alimento = await Alimento.findById(id);
@@ -107,6 +115,7 @@ class AlimentoController {
 
             alimento.nome = nome || alimento.nome;
             alimento.preparo = preparo || alimento.preparo;
+            alimento.porcao = porcao || alimento.porcao;
             alimento.categoriaCodigo = categoriaCodigo || alimento.categoriaCodigo;
             alimento.detalhes = detalhes || alimento.detalhes;
             alimento.atualizadoEm = new Date();
