@@ -1,9 +1,7 @@
 import mongoose, { Schema, model, Document } from 'mongoose';
 import { ICategoria } from '../Interfaces/ICategoria';
 
-
-
-const GrupoSchema = new Schema<ICategoria>({
+const CategoriaSchema = new Schema<ICategoria>({
     codigo: { type: Number, required: true },
     nome: { type: String, required: true },
     urlPlaceholder: { type: String, required: true },
@@ -12,6 +10,6 @@ const GrupoSchema = new Schema<ICategoria>({
     removidoEm: { type: Date, default: null },
 });
 
-const Categoria = mongoose.model<ICategoria>('Categoria', GrupoSchema, 'Categorias');
+const Categoria = mongoose.model<ICategoria>('Categoria', CategoriaSchema, 'Categorias');
 
 export default Categoria;
