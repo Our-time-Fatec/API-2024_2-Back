@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import Usuario from "../models/usuarios";
-import jwt from "jsonwebtoken";
 import UsuarioFunc from "../func/UsuarioFunc";
 import criptografia from "../utils/criptografia";
+import { generateRefreshToken, generateToken } from "./AuthController";
 
 const hooks = new UsuarioFunc()
 
@@ -42,15 +42,24 @@ class UsuarioController {
             const IMC = hooks.calculadoraIMC(altura, peso);
             const idade = hooks.calculadoraIdade(dataDeNascimento);
             const taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(peso, altura, idade, sexo);
-            const caloriasGastas = await hooks.calculadoraCaloriasGastas(nivelDeSedentarismo, taxaMetabolismoBasal);
-
+            const gastoDeCaloria = await hooks.calculadoraCaloriasGastas(nivelDeSedentarismo, taxaMetabolismoBasal);
             const response = await Usuario.create({
                 nome, sobrenome,
                 email, senha: senhaCriptografada, dataDeNascimento, idade, peso, altura, nivelDeSedentarismo, sexo, objetivo,
-                IMC, taxaMetabolismoBasal, caloriasGastas
+                IMC, taxaMetabolismoBasal, gastoDeCaloria
             });
 
-            return res.status(201).json(response);
+            const token = generateToken(response._id, response.email);
+            const refreshToken = generateRefreshToken(response._id, response.email);
+
+            const { senha: _, ...userWithoutPassword } = response.toObject();
+
+            return res.status(201).json({
+                message: "Usuário criado com sucesso",
+                usuario: userWithoutPassword,
+                token,
+                refreshToken
+            });
         } catch (error: any) {
 
             if (error.code === 11000 || error.code === 11001) {
