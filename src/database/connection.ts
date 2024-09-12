@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // A URI indica o IP, a porta e BD a ser conectado
-const uri:string = process.env.DB_URI || "";
+const uri: string = process.env.DB_URI || "mongodb://localhost:27017/abp-teste";
 
 // Salva o objeto mongoose em uma variável
 const db = mongoose;

@@ -59,7 +59,8 @@ class AlimentoController {
                     const categoria = await Categoria.findOne({ codigo: alimento.categoriaCodigo });
                     return {
                         ...alimento.toObject(),
-                        categoriaNome: categoria ? categoria.nome : 'Categoria não encontrada'
+                        categoriaNome: categoria ? categoria.nome : 'Categoria não encontrada',
+                        categoriaUrl: categoria ? categoria.urlPlaceholder : 'URL não encontrada'
                     };
                 })
             );

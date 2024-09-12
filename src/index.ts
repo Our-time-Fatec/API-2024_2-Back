@@ -4,30 +4,44 @@ import dotenv from "dotenv";
 import routes from "./routes";
 import { connect } from "./database/connection";
 import seedDatabase from "./database/seed";
+
+// Carregar as variáveis de ambiente
 dotenv.config();
 
-// será usado 3000 se a variável de ambiente não tiver sido definida
+// Será usada a porta 3000 se a variável de ambiente PORT não for definida
 const PORT = process.env.PORT || 3000;
 
-const app = express(); // cria o servidor e coloca na variável app
+const app = express();
 
-// suportar parâmetros JSON no body da requisição
+// Configuração para suportar JSON no body das requisições
 app.use(express.json());
 
-// configura o servidor para receber requisições de qualquer domínio
+// Configurar o CORS para permitir requisições de qualquer origem
 app.use(cors());
 
-// conecta ao MongoDB no início da aplicação
-connect();
+// Função para iniciar o servidor após conexão com o banco e seeding
+async function startServer() {
+    try {
+        // Conectando ao MongoDB
+        await connect();
+        console.log("Conectado ao MongoDB com sucesso!");
 
-seedDatabase().then(() => {
-    console.log("Aplicação iniciada com o banco de dados seedado");
-});
+        // Realizando o seed do banco de dados
+        await seedDatabase();
+        console.log("Banco de dados seedado com sucesso!");
 
-// inicializa o servidor na porta especificada
-app.listen(PORT, () => {
-    console.log(`Rodando na porta ${PORT}...`);
-});
+        // Inicializa o servidor na porta especificada
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}...`);
+        });
 
-// define a rota para o pacote /routes
-app.use(routes);
+        // Define as rotas após o seeding e a conexão
+        app.use(routes);
+
+    } catch (error) {
+        console.error("Erro ao iniciar a aplicação:", error);
+    }
+}
+
+// Iniciar o servidor
+startServer();
