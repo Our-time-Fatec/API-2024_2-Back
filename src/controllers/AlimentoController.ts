@@ -40,11 +40,15 @@ class AlimentoController {
         const limit = parseInt(req.query.limit as string) || 10;
         const categoriaCodigo = req.query.categoriaCodigo ? parseInt(req.query.categoriaCodigo as string) : null;
         const searchTerm = req.query.searchTerm ? (req.query.searchTerm as string).trim() : '';
+        const onlyUser = req.query.onlyUser === 'true';
 
         const skip = (page - 1) * limit;
 
         try {
             const filtro: any = { removidoEm: null };
+            if (onlyUser) {
+                filtro.criadoPor = req.body.userId;
+            }
             if (categoriaCodigo !== null) {
                 filtro.categoriaCodigo = categoriaCodigo;
             }
@@ -67,16 +71,13 @@ class AlimentoController {
                 })
             );
 
-            const totalAlimentos = await Alimento.countDocuments(filtro);
-
-            return res.status(200).json({
+            return res.json({
                 alimentosComCategoria,
-                currentPage: page,
-                totalPages: Math.ceil(totalAlimentos / limit),
-                totalAlimentos
+                totalPages: Math.ceil(await Alimento.countDocuments(filtro) / limit)
             });
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao listar alimentos", error });
+            console.error('Erro ao listar alimentos:', error);
+            return res.status(500).json({ message: 'Erro interno do servidor' });
         }
     }
 
