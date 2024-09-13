@@ -8,8 +8,8 @@ export interface IUsuario {
     idade: number;
     peso: number;
     altura: number;
-    nivelDeSedentarismo?: "Sedentário" | "Levemente ativo" | "Moderadamente ativo" | "Altamente ativo" | "Extremamente ativo";
-    sexo?: "Masculino" | "Feminino";
+    nivelDeSedentarismo: "Sedentário" | "Levemente ativo" | "Moderadamente ativo" | "Altamente ativo" | "Extremamente ativo";
+    sexo: "Masculino" | "Feminino";
     objetivo?: "Dieta de emagrecimento" | "Dieta de Ganho de Massa Muscular" | "Dieta Low Carb";
     IMC?: number;
     taxaMetabolismoBasal?: number;

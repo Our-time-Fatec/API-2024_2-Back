@@ -109,7 +109,7 @@ class UsuarioController {
     }
 
     public async update(req: Request, res: Response): Promise<Response> {
-        const { nome, sobrenome, email, senha, dataDeNascimento, peso, altura, objetivo, userId } = req.body;
+        const { nome, sobrenome, email, senha, dataDeNascimento, peso, altura, objetivo, nivelDeSedentarismo, sexo, userId } = req.body;
         try {
             const usuario = await Usuario.findOne({ _id: userId, removidoEm: null });
 
@@ -126,16 +126,19 @@ class UsuarioController {
             usuario.peso = peso || usuario.peso;
             usuario.altura = altura || usuario.altura;
             usuario.objetivo = objetivo || usuario.objetivo;
-            usuario.dataDeNascimento = dataDeNascimento || usuario.dataDeNascimento
+            usuario.dataDeNascimento = dataDeNascimento || usuario.dataDeNascimento;
+            usuario.sexo = sexo || usuario.sexo;
+            usuario.nivelDeSedentarismo = nivelDeSedentarismo || usuario.nivelDeSedentarismo;
             usuario.idade = hooks.calculadoraIdade(usuario.dataDeNascimento);
             usuario.IMC = hooks.calculadoraIMC(usuario.altura, usuario.peso);
-            usuario.taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(usuario.peso, usuario.altura, usuario.idade, usuario.sexo || 'Masculino');
-            usuario.gastoDeCaloria = await hooks.calculadoraCaloriasGastas(usuario.nivelDeSedentarismo || 'Sedentário', usuario.taxaMetabolismoBasal);
+            usuario.taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(usuario.peso, usuario.altura, usuario.idade, usuario.sexo);
+            usuario.gastoDeCaloria = await hooks.calculadoraCaloriasGastas(usuario.nivelDeSedentarismo, usuario.taxaMetabolismoBasal);
             usuario.atualizadoEm = new Date();
 
             await usuario.save();
             return res.status(200).json({ message: 'Usuário atualizado com sucesso', usuario });
         } catch (error: any) {
+            console.log(error)
             if (error.code === 11000 || error.code === 11001) {
                 return res.status(500).json({ message: "Este e-mail já está em uso" });
             }
