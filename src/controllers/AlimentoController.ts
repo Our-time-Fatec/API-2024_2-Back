@@ -39,16 +39,18 @@ class AlimentoController {
         const page = parseInt(req.query.page as string) || 1;
         const limit = parseInt(req.query.limit as string) || 10;
         const categoriaCodigo = req.query.categoriaCodigo ? parseInt(req.query.categoriaCodigo as string) : null;
+        const searchTerm = req.query.searchTerm ? (req.query.searchTerm as string).trim() : '';
 
         const skip = (page - 1) * limit;
 
         try {
-
             const filtro: any = { removidoEm: null };
             if (categoriaCodigo !== null) {
                 filtro.categoriaCodigo = categoriaCodigo;
             }
-
+            if (searchTerm) {
+                filtro.nome = { $regex: `^${searchTerm}`, $options: 'i' };
+            }
 
             const alimentos = await Alimento.find(filtro)
                 .skip(skip)
