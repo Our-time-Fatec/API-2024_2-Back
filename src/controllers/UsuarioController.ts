@@ -92,6 +92,22 @@ class UsuarioController {
         }
     }
 
+    public async getUsuario(req: Request, res: Response): Promise<void> {
+        try {
+            const { userId } = req.body;
+            const usuario = await Usuario.findById(userId);
+
+            if (!usuario) {
+                res.status(404).json({ erro: 'Usuário não encontrado' });
+                return;
+            }
+            const { _id, ...rest } = usuario.toObject();
+            res.status(200).json({ _id, ...rest });
+        } catch (error) {
+            res.status(500).json({ erro: 'Erro ao buscar informações do usuário' });
+        }
+    }
+
     public async update(req: Request, res: Response): Promise<Response> {
         const { nome, sobrenome, email, senha, dataDeNascimento, peso, altura, objetivo, userId } = req.body;
         try {
