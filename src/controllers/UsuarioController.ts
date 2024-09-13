@@ -12,15 +12,15 @@ class UsuarioController {
         const { nome, sobrenome, email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo } = req.body;
 
         if (!email && !senha) {
-            return res.status(401).json({ erro: "Forneça o e-mail e senha" });
+            return res.status(401).json({ message: "Forneça o e-mail e senha" });
         }
 
         if (senha) {
             if (senha.length < 6) {
-                return res.status(400).json({ erro: "A senha precisa ter no mínimo 6 caracteres" });
+                return res.status(400).json({ message: "A senha precisa ter no mínimo 6 caracteres" });
             }
             else if (senha.length > 20) {
-                return res.status(400).json({ erro: "A senha precisa ter no máximo 20 caracteres" });
+                return res.status(400).json({ message: "A senha precisa ter no máximo 20 caracteres" });
             }
         }
 
@@ -66,9 +66,9 @@ class UsuarioController {
                 // código 11000 e 11001 indica violação de restrição única (índice duplicado)
                 return res.status(500).json({ message: "Este e-mail já está em uso" });
             } else if (error && error.errors["email"]) {
-                return res.json({ message: error.errors["email"].message });
+                return res.status(400).json({ message: error.errors["email"].message });
             } else if (error && error.errors["senha"]) {
-                return res.json({ message: error.errors["senha"].message });
+                return res.status(400).json({ message: error.errors["senha"].message });
             }
             return res.status(500).json({ message: error.message });
         }
