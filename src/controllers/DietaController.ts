@@ -28,8 +28,10 @@ class DietaController {
             return res.status(201).json(novaDieta);
 
         } catch (error: any) {
-            console.error(error);
-            return res.status(500).json({ message: 'Erro ao criar dieta.', error: error.message });
+            if (error && error.errors["grupos"]) {
+                return res.status(400).json({ message: error.errors["grupos"].message });
+            }
+            return res.status(500).json({ message: error.message });
         }
     }
 
@@ -63,8 +65,10 @@ class DietaController {
             return res.status(200).json(dieta);
 
         } catch (error: any) {
-            console.error(error);
-            return res.status(500).json({ message: 'Erro ao atualizar dieta.', error: error.message });
+            if (error && error.errors["grupos"]) {
+                return res.status(400).json({ message: error.errors["grupos"].message });
+            }
+            return res.status(500).json({ message: error.message });
         }
     }
 
@@ -118,7 +122,6 @@ class DietaController {
             return res.status(200).json({ message: 'Dieta removida com sucesso.' });
 
         } catch (error: any) {
-            console.error(error);
             return res.status(500).json({ message: 'Erro ao remover dieta.', error: error.message });
         }
     }
@@ -148,7 +151,6 @@ class DietaController {
             return res.status(200).json(dieta);
 
         } catch (error: any) {
-            console.error(error);
             return res.status(500).json({ message: 'Erro ao buscar dieta.', error: error.message });
         }
     }
