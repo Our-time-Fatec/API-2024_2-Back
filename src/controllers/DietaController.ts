@@ -22,6 +22,8 @@ class DietaController {
                                 throw new Error(`Alimento com ID ${alimentoId} não encontrado.`);
                             }
 
+                            const proporcaoPorcao = porcao / Number(alimento.porcao);
+
                             const alimentoDieta: IAlimentoDieta = {
                                 nome: alimento.nome,
                                 preparo: alimento.preparo,
@@ -29,11 +31,11 @@ class DietaController {
                                 porcao,
                                 categoriaCodigo: alimento.categoriaCodigo,
                                 detalhes: {
-                                    valorEnergetico: alimento.detalhes.valorEnergetico * quantidade,
-                                    proteinas: alimento.detalhes.proteinas * quantidade,
-                                    carboidratos: alimento.detalhes.carboidratos * quantidade,
-                                    fibras: alimento.detalhes.fibras * quantidade,
-                                    lipidios: alimento.detalhes.lipidios * quantidade,
+                                    valorEnergetico: alimento.detalhes.valorEnergetico * proporcaoPorcao * quantidade,
+                                    proteinas: alimento.detalhes.proteinas * proporcaoPorcao * quantidade,
+                                    carboidratos: alimento.detalhes.carboidratos * proporcaoPorcao * quantidade,
+                                    fibras: alimento.detalhes.fibras * proporcaoPorcao * quantidade,
+                                    lipidios: alimento.detalhes.lipidios * proporcaoPorcao * quantidade,
                                 }
                             };
 

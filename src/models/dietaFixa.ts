@@ -13,6 +13,7 @@ const DietaDetalhesSchema = new Schema<IDietaDetalhes>({
 const AlimentoSchema = new Schema<IAlimentoDieta>({
     nome: { type: String, required: true },
     quantidade: { type: Number, required: true },
+    preparo: { type: String, required: true },
     porcao: { type: Number, required: true },
     categoriaCodigo: { type: String, required: true },
     detalhes: { type: DietaDetalhesSchema, required: true },
