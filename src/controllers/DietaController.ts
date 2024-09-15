@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { IAlimentoDieta, IDietaFixa, IGrupo, IDietaDetalhes } from '../Interfaces/IDieta';
 import { IAlimento } from '../Interfaces/IAlimento';
 import DietaFixaModel from '../models/dietaFixa';
-import calcularDetalhesDieta from '../utils/CalcularDetalhesDieta';
+import calcularDetalhesDieta from '../utils/calcularDetalhesDieta';
 
 class DietaController {
     static async criarDieta(req: Request, res: Response): Promise<Response> {
@@ -13,35 +13,45 @@ class DietaController {
                 return res.status(400).json({ message: 'Parâmetros inválidos ou ausentes.' });
             }
 
-            const dietaExistente = await DietaFixaModel.findOne({
-                usuarioId: userId,
-                diaSemana,
-                removidoEm: null
-            });
+            const diasSemanaArray = Array.isArray(diaSemana) ? diaSemana : [diaSemana];
+            const dietasCriadas = [];
 
-            if (dietaExistente) {
-                return res.status(400).json({ message: 'Já existe uma dieta para este dia da semana.' });
+            for (const dia of diasSemanaArray) {
+                const dietaExistente = await DietaFixaModel.findOne({
+                    usuarioId: userId,
+                    diaSemana: dia,
+                    removidoEm: null
+                });
+
+                if (dietaExistente) {
+                    return res.status(400).json({ message: `Já existe uma dieta para este dia da semana: ${dia}` });
+                }
+
+                const { gruposCompletos, dietaDetalhes } = await calcularDetalhesDieta(grupos);
+
+                const novaDieta = new DietaFixaModel({
+                    usuarioId: userId,
+                    diaSemana: dia,
+                    criadoEm: new Date(),
+                    detalhes: dietaDetalhes,
+                    grupos: gruposCompletos
+                });
+
+                await novaDieta.save();
+
+                dietasCriadas.push(novaDieta);
             }
 
-            const { gruposCompletos, dietaDetalhes } = await calcularDetalhesDieta(grupos);
+            if (dietasCriadas.length === 0) {
+                return res.status(400).json({ message: 'Já existe uma dieta para todos os dias da semana fornecidos.' });
+            }
 
-            const novaDieta = new DietaFixaModel({
-                usuarioId: userId,
-                diaSemana,
-                criadoEm: new Date(),
-                detalhes: dietaDetalhes,
-                grupos: gruposCompletos
-            });
-
-            await novaDieta.save();
-
-            return res.status(201).json(novaDieta);
+            return res.status(201).json({ message: 'Dietas criadas com sucesso!', dietas: dietasCriadas });
 
         } catch (error: any) {
             if (error && error.errors["grupos"]) {
                 return res.status(400).json({ message: error.errors["grupos"].message });
-            }
-            else if (error && error.errors["diaSemana"]) {
+            } else if (error && error.errors["diaSemana"]) {
                 return res.status(400).json({ message: error.errors["diaSemana"].message });
             }
             return res.status(500).json({ message: error.message });
