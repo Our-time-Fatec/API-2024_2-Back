@@ -13,6 +13,16 @@ class DietaController {
                 return res.status(400).json({ message: 'Parâmetros inválidos ou ausentes.' });
             }
 
+            const dietaExistente = await DietaFixaModel.findOne({
+                usuarioId: userId,
+                diaSemana,
+                removidoEm: null
+            });
+
+            if (dietaExistente) {
+                return res.status(400).json({ message: 'Já existe uma dieta para este dia da semana.' });
+            }
+
             const { gruposCompletos, dietaDetalhes } = await calcularDetalhesDieta(grupos);
 
             const novaDieta = new DietaFixaModel({
@@ -30,6 +40,9 @@ class DietaController {
         } catch (error: any) {
             if (error && error.errors["grupos"]) {
                 return res.status(400).json({ message: error.errors["grupos"].message });
+            }
+            else if (error && error.errors["diaSemana"]) {
+                return res.status(400).json({ message: error.errors["diaSemana"].message });
             }
             return res.status(500).json({ message: error.message });
         }
@@ -53,6 +66,17 @@ class DietaController {
                 return res.status(403).json({ message: 'Você não tem permissão para atualizar esta dieta.' });
             }
 
+            const dietaExistente = await DietaFixaModel.findOne({
+                usuarioId: userId,
+                diaSemana,
+                _id: { $ne: dietaId },
+                removidoEm: null
+            });
+
+            if (dietaExistente) {
+                return res.status(400).json({ message: 'Já existe uma dieta para este dia da semana.' });
+            }
+
             const { gruposCompletos, dietaDetalhes } = await calcularDetalhesDieta(grupos);
 
             dieta.diaSemana = diaSemana;
@@ -67,6 +91,9 @@ class DietaController {
         } catch (error: any) {
             if (error && error.errors["grupos"]) {
                 return res.status(400).json({ message: error.errors["grupos"].message });
+            }
+            else if (error && error.errors["diaSemana"]) {
+                return res.status(400).json({ message: error.errors["diaSemana"].message });
             }
             return res.status(500).json({ message: error.message });
         }
