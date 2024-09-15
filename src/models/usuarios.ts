@@ -67,6 +67,9 @@ const UsuarioSchema = new Schema<IUsuario>({
     gastoDeCaloria: {
         type: Number
     },
+    consumoDeCaloriaPorDia: {
+        type: Number
+    },
     ultimaVezUtilizado: {
         type: Date,
         default: Date.now

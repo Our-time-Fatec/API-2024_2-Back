@@ -43,10 +43,11 @@ class UsuarioController {
             const idade = hooks.calculadoraIdade(dataDeNascimento);
             const taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(peso, altura, idade, sexo);
             const gastoDeCaloria = await hooks.calculadoraCaloriasGastas(nivelDeSedentarismo, taxaMetabolismoBasal);
+            const consumoDeCaloriaPorDia = await hooks.calcularConsumoDeCaloriaPorDia(objetivo, gastoDeCaloria);
             const response = await Usuario.create({
                 nome, sobrenome,
                 email, senha: senhaCriptografada, dataDeNascimento, idade, peso, altura, nivelDeSedentarismo, sexo, objetivo,
-                IMC, taxaMetabolismoBasal, gastoDeCaloria
+                IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia
             });
 
             const token = generateToken(response._id, response.email);
@@ -133,6 +134,7 @@ class UsuarioController {
             usuario.IMC = hooks.calculadoraIMC(usuario.altura, usuario.peso);
             usuario.taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(usuario.peso, usuario.altura, usuario.idade, usuario.sexo);
             usuario.gastoDeCaloria = await hooks.calculadoraCaloriasGastas(usuario.nivelDeSedentarismo, usuario.taxaMetabolismoBasal);
+            usuario.consumoDeCaloriaPorDia = await hooks.calcularConsumoDeCaloriaPorDia(usuario.objetivo, usuario.gastoDeCaloria);
             usuario.atualizadoEm = new Date();
 
             await usuario.save();
