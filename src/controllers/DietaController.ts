@@ -3,6 +3,7 @@ import { IAlimentoDieta, IDietaFixa, IGrupo, IDietaDetalhes } from '../Interface
 import { IAlimento } from '../Interfaces/IAlimento';
 import DietaFixaModel from '../models/dietaFixa';
 import calcularDetalhesDieta from '../utils/calcularDetalhesDieta';
+import { DiasSemana } from '../enums/DiasSemana';
 
 class DietaController {
     static async criarDieta(req: Request, res: Response): Promise<Response> {
@@ -112,6 +113,17 @@ class DietaController {
     static async listarDietas(req: Request, res: Response): Promise<Response> {
         try {
             const { userId } = req.body;
+            const { diaSemana } = req.query;
+
+            const diaSemanaMap: Record<string, DiasSemana> = {
+                Domingo: DiasSemana.Domingo,
+                Segunda: DiasSemana.Segunda,
+                Terca: DiasSemana.Terca,
+                Quarta: DiasSemana.Quarta,
+                Quinta: DiasSemana.Quinta,
+                Sexta: DiasSemana.Sexta,
+                Sabado: DiasSemana.Sabado,
+            };
 
             if (!userId) {
                 return res.status(400).json({ message: 'Parâmetro userId ausente.' });
@@ -121,10 +133,21 @@ class DietaController {
                 return res.status(400).json({ message: 'Parâmetro userId inválido.' });
             }
 
-            const dietas = await DietaFixaModel.find({
+            const filtro: any = {
                 usuarioId: userId,
                 removidoEm: null
-            });
+            };
+
+            if (diaSemana && typeof diaSemana === 'string') {
+                const diaSemanaCompleto = diaSemanaMap[diaSemana];
+                if (diaSemanaCompleto) {
+                    filtro.diaSemana = diaSemanaCompleto;
+                } else {
+                    return res.status(400).json({ message: 'Parâmetro diaSemana inválido.' });
+                }
+            }
+
+            const dietas = await DietaFixaModel.find(filtro);
 
             return res.status(200).json(dietas);
 
