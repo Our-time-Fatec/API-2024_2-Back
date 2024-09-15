@@ -122,6 +122,36 @@ class DietaController {
             return res.status(500).json({ message: 'Erro ao remover dieta.', error: error.message });
         }
     }
+
+    static async buscarDietaPorId(req: Request, res: Response): Promise<Response> {
+        try {
+            const dietaId = req.params.id;
+            const userId = req.body.userId;
+
+            if (!dietaId) {
+                return res.status(400).json({ message: 'ID da dieta é necessário.' });
+            }
+
+            const dieta = await DietaFixaModel.findOne({
+                _id: dietaId,
+                removidoEm: null
+            });
+
+            if (!dieta) {
+                return res.status(404).json({ message: 'Dieta não encontrada ou já removida.' });
+            }
+
+            if (dieta.usuarioId !== userId) {
+                return res.status(403).json({ message: 'Você não tem permissão para visualizar esta dieta.' });
+            }
+
+            return res.status(200).json(dieta);
+
+        } catch (error: any) {
+            console.error(error);
+            return res.status(500).json({ message: 'Erro ao buscar dieta.', error: error.message });
+        }
+    }
 }
 
 export default DietaController;
