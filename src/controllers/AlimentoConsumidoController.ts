@@ -1,10 +1,42 @@
 import { Request, Response } from "express";
 import AlimentoConsumido from "../models/alimentoConsumido";
+import Alimento from "../models/alimento";
 import Usuario from "../models/usuarios";
 
 class AlimentoConsumidoConctroller {
-  async create(req: Request, res: Response): Promise<Response> {
-    const { nome, preparo, porcao, detalhes, quantidade } = req.body;
+//   async create(req: Request, res: Response): Promise<Response> {
+//     const { nome, preparo, porcao, detalhes, quantidade } = req.body;
+//     const userId = req.body.userId;
+
+//     try {
+//       const usuario = await Usuario.findById(userId);
+
+//       if (!usuario) {
+//         return res.status(404).json({ message: "Usuário não encontrado" });
+//       }
+
+//       const alimentoConsumidoSalvo = await AlimentoConsumido.create({
+//         nome,
+//         preparo,
+//         porcao,
+//         criadoPor: userId,
+//         criadoEm: new Date(),
+//         atualizadoEm: null,
+//         removidoEm: null,
+//         detalhes,
+//         quantidade,
+//       });
+
+//       return res.status(201).json(alimentoConsumidoSalvo);
+//     } catch (error) {
+//       return res
+//         .status(500)
+//         .json({ message: "Erro ao criar o consumo", error });
+//     }
+//   }
+
+async create(req: Request, res: Response): Promise<Response> {
+    const { id, porcao, quantidade } = req.body;
     const userId = req.body.userId;
 
     try {
@@ -14,15 +46,20 @@ class AlimentoConsumidoConctroller {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
+      const alimento = await Alimento.findById(id)
+      if (!alimento) {
+        return res.status(404).json({ message: "Alimento não encontrado" });
+      }
+
       const alimentoConsumidoSalvo = await AlimentoConsumido.create({
-        nome,
-        preparo,
+        nome: alimento.nome,
+        preparo: alimento.preparo,
         porcao,
         criadoPor: userId,
         criadoEm: new Date(),
         atualizadoEm: null,
         removidoEm: null,
-        detalhes,
+        detalhes: alimento.detalhes,
         quantidade,
       });
 
@@ -33,6 +70,7 @@ class AlimentoConsumidoConctroller {
         .json({ message: "Erro ao criar o consumo", error });
     }
   }
+
 
   async listAlimentosConsumidos(
     req: Request,
