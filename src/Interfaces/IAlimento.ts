@@ -13,8 +13,20 @@ export interface IAlimento extends Document {
 
 export interface AlimentoDetalhes {
     valorEnergetico: number;
-    proteinas: number;
     carboidratos: number;
+    proteinas: number;
     fibras: number;
     lipidios: number;
+}
+
+export interface IAlimentoConsumido{
+    usuarioId: string;
+    nome: string;
+    preparo: string;
+    porcao: Number;
+    detalhes: string;
+    quantidade: Number;
+    criadoEm: Date;
+    criadoPor: string;
+    removidoEm: Date | null;
 }
