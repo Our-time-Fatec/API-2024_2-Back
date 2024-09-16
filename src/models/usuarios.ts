@@ -35,6 +35,9 @@ const UsuarioSchema = new Schema<IUsuario>({
         type: Date,
         required: [true, "Preencha sua idade"]
     },
+    idade: {
+        type: Number
+    },
     peso: {
         type: Number,
         required: [true, "Preencha seu peso"]
@@ -62,6 +65,9 @@ const UsuarioSchema = new Schema<IUsuario>({
         type: Number
     },
     gastoDeCaloria: {
+        type: Number
+    },
+    consumoDeCaloriaPorDia: {
         type: Number
     },
     ultimaVezUtilizado: {

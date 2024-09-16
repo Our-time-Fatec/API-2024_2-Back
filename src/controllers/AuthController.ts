@@ -9,11 +9,11 @@ const REFRESH_SECRET = process.env.JWT_SECRET_REFRESH || "secretKeyRefresh";
 const JWT_EXPIRES_IN = '1d';
 const REFRESH_EXPIRES_IN = '30d';
 
-function generateToken(userId: Types.ObjectId, email: string) {
+export function generateToken(userId: Types.ObjectId, email: string) {
     return jwt.sign({ userId: userId.toString(), email: email }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 }
 
-function generateRefreshToken(userId: Types.ObjectId, email: string) {
+export function generateRefreshToken(userId: Types.ObjectId, email: string) {
     return jwt.sign({ userId: userId.toString(), email: email }, REFRESH_SECRET, { expiresIn: REFRESH_EXPIRES_IN });
 }
 
