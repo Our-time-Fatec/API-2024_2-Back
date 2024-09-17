@@ -1,134 +1,76 @@
 ---
 title: AlimentoController
-description: 'Controlador responsável pela manipulação de dados relacionados a alimentos, incluindo criação, listagem, atualização e exclusão.'
+description: 'Controlador responsável pela manipulação de alimentos, incluindo criação, listagem, atualização e exclusão.'
 ---
 
 # AlimentoController
 
-O `AlimentoController` é uma classe que gerencia as operações relacionadas aos alimentos em uma aplicação Express. Ele fornece métodos para criar, listar, buscar, atualizar e deletar alimentos, além de filtrar alimentos por usuário.
+O `AlimentoController` é responsável por gerenciar as operações relacionadas aos alimentos na aplicação. Ele fornece métodos para criar, listar, buscar, atualizar e deletar alimentos, além de filtrar alimentos por usuário.
 
 ## Métodos
 
 ### create
 
-```typescript
-async create(req: Request, res: Response): Promise<Response>
-```
+Cria um novo alimento.
 
-Cria um novo alimento. O método espera que os dados do alimento sejam enviados no corpo da requisição.
+**Parâmetros:**
+- `req`: Objeto de requisição que contém os dados do alimento a ser criado.
+- `res`: Objeto de resposta para enviar a resposta ao cliente.
 
-#### Parâmetros
-
-- `req`: Objeto da requisição que contém os dados do alimento.
-- `res`: Objeto da resposta que será enviado ao cliente.
-
-#### Respostas
-
-- **201**: Alimento criado com sucesso.
-- **404**: Usuário não encontrado.
-- **500**: Erro ao criar alimento.
-
----
+**Retorno:**
+- Retorna um objeto JSON com os dados do alimento criado ou uma mensagem de erro.
 
 ### listAlimentos
 
-```typescript
-async listAlimentos(req: Request, res: Response): Promise<Response>
-```
+Lista os alimentos com suporte a paginação e filtragem.
 
-Lista os alimentos, com suporte à paginação e filtragem por categoria.
+**Parâmetros:**
+- `req`: Objeto de requisição que pode conter parâmetros de consulta para paginação e filtragem.
+- `res`: Objeto de resposta para enviar a resposta ao cliente.
 
-#### Parâmetros
-
-- `req`: Objeto da requisição que pode conter parâmetros de paginação e filtro.
-- `res`: Objeto da resposta que será enviado ao cliente.
-
-#### Respostas
-
-- **200**: Lista de alimentos com informações de categoria.
-- **500**: Erro ao listar alimentos.
-
----
+**Retorno:**
+- Retorna um objeto JSON com a lista de alimentos e informações de paginação.
 
 ### findAlimentoById
 
-```typescript
-async findAlimentoById(req: Request, res: Response): Promise<Response>
-```
+Busca um alimento pelo seu ID.
 
-Busca um alimento específico pelo seu ID.
+**Parâmetros:**
+- `req`: Objeto de requisição que contém o ID do alimento a ser buscado.
+- `res`: Objeto de resposta para enviar a resposta ao cliente.
 
-#### Parâmetros
-
-- `req`: Objeto da requisição que contém o ID do alimento.
-- `res`: Objeto da resposta que será enviado ao cliente.
-
-#### Respostas
-
-- **200**: Alimento encontrado com informações de categoria.
-- **404**: Alimento não encontrado.
-- **500**: Erro ao buscar alimento.
-
----
+**Retorno:**
+- Retorna um objeto JSON com os dados do alimento encontrado ou uma mensagem de erro.
 
 ### update
 
-```typescript
-async update(req: Request, res: Response): Promise<Response>
-```
-
 Atualiza os dados de um alimento existente.
 
-#### Parâmetros
+**Parâmetros:**
+- `req`: Objeto de requisição que contém o ID do alimento e os novos dados.
+- `res`: Objeto de resposta para enviar a resposta ao cliente.
 
-- `req`: Objeto da requisição que contém o ID do alimento e os novos dados.
-- `res`: Objeto da resposta que será enviado ao cliente.
-
-#### Respostas
-
-- **200**: Alimento atualizado com sucesso.
-- **404**: Alimento não encontrado.
-- **403**: Permissão negada para editar o alimento.
-- **500**: Erro ao editar alimento.
-
----
+**Retorno:**
+- Retorna um objeto JSON com os dados do alimento atualizado ou uma mensagem de erro.
 
 ### delete
 
-```typescript
-async delete(req: Request, res: Response): Promise<Response>
-```
+Deleta um alimento pelo seu ID.
 
-Deleta um alimento existente.
+**Parâmetros:**
+- `req`: Objeto de requisição que contém o ID do alimento a ser deletado.
+- `res`: Objeto de resposta para enviar a resposta ao cliente.
 
-#### Parâmetros
-
-- `req`: Objeto da requisição que contém o ID do alimento.
-- `res`: Objeto da resposta que será enviado ao cliente.
-
-#### Respostas
-
-- **200**: Alimento deletado com sucesso.
-- **404**: Alimento não encontrado.
-- **403**: Permissão negada para deletar o alimento.
-- **500**: Erro ao deletar alimento.
-
----
+**Retorno:**
+- Retorna uma mensagem de sucesso ou erro.
 
 ### findAlimentosByUser
 
-```typescript
-async findAlimentosByUser(req: Request, res: Response): Promise<Response>
-```
+Busca alimentos criados por um usuário específico.
 
-Lista os alimentos criados por um usuário específico, com suporte à paginação e filtragem por categoria.
+**Parâmetros:**
+- `req`: Objeto de requisição que pode conter parâmetros de consulta para paginação e filtragem.
+- `res`: Objeto de resposta para enviar a resposta ao cliente.
 
-#### Parâmetros
-
-- `req`: Objeto da requisição que pode conter parâmetros de paginação e filtro.
-- `res`: Objeto da resposta que será enviado ao cliente.
-
-#### Respostas
-
-- **200**: Lista de alimentos do usuário com informações de categoria.
-- **500**: Erro ao listar alimentos.
+**Retorno:**
+- Retorna um objeto JSON com a lista de alimentos do usuário e informações de paginação.

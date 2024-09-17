@@ -1,13 +1,15 @@
 ---
 title: categoriaRoutes
-description: 'Definição das rotas para gerenciamento de categorias no sistema.'
+description: 'Define as rotas para operações relacionadas a categorias no sistema.'
 ---
 
 # categoriaRoutes
 
-O arquivo `categoriaRoutes.ts` define as rotas relacionadas ao gerenciamento de categorias no sistema. Utiliza o framework Express para facilitar a criação e manipulação das rotas.
+Este arquivo contém a definição das rotas para as operações relacionadas a categorias no sistema. Utiliza o framework Express para gerenciar as requisições HTTP.
 
 ## Estrutura do Código
+
+O código importa o módulo `Router` do Express e o controlador `CategoriaController`, que contém a lógica de negócios para as operações de categoria.
 
 ```typescript
 import { Router } from "express";
@@ -20,23 +22,10 @@ routes.get("/", controller.list);
 export default routes;
 ```
 
-## Descrição das Rotas
+## Rotas Definidas
 
-- `GET /`: Esta rota é responsável por listar todas as categorias. Ela utiliza o método `list` do `CategoriaController` para retornar os dados.
+- `GET /`: Chama o método `list` do `CategoriaController` para listar todas as categorias.
 
-## Dependências
+## Exportação
 
-- **express**: O framework utilizado para a criação das rotas.
-- **CategoriaController**: Controlador que contém a lógica de negócios para manipulação das categorias.
-
-## Como Usar
-
-Para utilizar estas rotas, você deve importá-las em seu arquivo principal de rotas ou no servidor Express, como mostrado abaixo:
-
-```typescript
-import categoriaRoutes from './routes/categoriaRoutes';
-
-app.use('/categorias', categoriaRoutes);
-```
-
-Isso fará com que todas as requisições para `/categorias` sejam direcionadas para as rotas definidas em `categoriaRoutes.ts`.
+As rotas são exportadas como um módulo padrão, permitindo que sejam utilizadas em outras partes da aplicação.

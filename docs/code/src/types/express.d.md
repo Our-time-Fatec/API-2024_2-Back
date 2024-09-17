@@ -5,9 +5,9 @@ description: 'Declarações de tipos para estender a interface Request do Expres
 
 # express.d.ts
 
-Este arquivo contém declarações de tipos para estender a interface `Request` do framework Express. Ele permite que você adicione informações adicionais ao objeto de requisição, como o payload do usuário autenticado.
+Este arquivo contém declarações de tipos para estender a interface `Request` do framework Express. O objetivo é adicionar um campo opcional `user`, que pode ser utilizado para armazenar informações sobre o usuário autenticado.
 
-## Conteúdo
+## Estrutura do Código
 
 ```typescript
 import { UserPayload } from './path/to/your/userPayload'; // Importe o tipo que representa o payload do seu usuário, se você o tiver
@@ -21,14 +21,14 @@ declare global {
 }
 ```
 
-## Descrição
+### Detalhes
 
-- **Importação**: O arquivo começa importando o tipo `UserPayload`, que deve ser definido em outro local do seu projeto. Este tipo representa a estrutura dos dados do usuário que você deseja incluir na requisição.
+- **Importação**: O arquivo começa importando o tipo `UserPayload`, que deve ser definido em outro local do seu projeto. Este tipo representa a estrutura de dados do payload do usuário.
+  
+- **Declaração Global**: A declaração `declare global` é utilizada para estender o namespace `Express`, permitindo que você adicione novas propriedades às interfaces existentes.
 
-- **Declaração Global**: A declaração `declare global` é utilizada para estender o namespace `Express`. Isso permite que você adicione propriedades personalizadas à interface `Request`.
+- **Interface Request**: A interface `Request` do Express é estendida para incluir uma propriedade opcional `user`, que é do tipo `UserPayload`. Isso permite que você acesse as informações do usuário diretamente a partir do objeto `Request` em seus manipuladores de rotas.
 
-- **Interface Request**: A interface `Request` é estendida para incluir uma propriedade opcional `user`, que é do tipo `UserPayload`. Isso significa que, ao manipular requisições no seu aplicativo, você pode acessar `req.user` para obter informações sobre o usuário autenticado, se disponível.
+### Uso
 
-## Uso
-
-Para utilizar essa extensão, certifique-se de que o tipo `UserPayload` esteja corretamente definido e importado. Após isso, você poderá acessar `req.user` em seus middlewares e controladores, facilitando a manipulação de dados do usuário durante o processamento das requisições.
+Ao utilizar este tipo estendido, você pode acessar o usuário autenticado em qualquer middleware ou rota do Express, facilitando a implementação de lógica de autorização e personalização de respostas com base nas informações do usuário.

@@ -5,16 +5,15 @@ description: 'Pasta contendo funções utilitárias para o projeto.'
 
 # utils
 
-A pasta `utils` contém funções utilitárias que são utilizadas em diferentes partes do projeto. Essas funções são projetadas para serem reutilizáveis e facilitar a implementação de funcionalidades comuns, promovendo a modularidade e a organização do código. 
+A pasta `utils` contém funções utilitárias que são utilizadas em diversas partes do projeto. Essas funções são projetadas para serem reutilizáveis e facilitar a implementação de funcionalidades comuns, promovendo a modularidade e a manutenção do código.
 
 ## Estrutura
 
-A estrutura da pasta `utils` pode incluir, mas não se limita a:
+A pasta `utils` pode conter arquivos como:
 
-- Funções de manipulação de dados
-- Funções de validação
-- Funções de formatação
+- `calcularDetalhesDieta.ts`: Funções relacionadas ao cálculo de detalhes de dietas.
+- `criptografia.ts`: Funções para manipulação e segurança de dados através de criptografia.
 
 ## Uso
 
-As funções contidas nesta pasta devem ser importadas nos arquivos onde são necessárias, garantindo que o código permaneça limpo e eficiente.
+As funções dentro da pasta `utils` devem ser importadas nos arquivos onde são necessárias, permitindo que o código permaneça limpo e organizado.

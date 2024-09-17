@@ -1,48 +1,39 @@
 ---
 title: connection
-description: 'Módulo responsável pela conexão e desconexão do MongoDB utilizando Mongoose.'
+description: 'Módulo responsável pela conexão com o banco de dados MongoDB utilizando Mongoose.'
 ---
 
 # connection.ts
 
-Este módulo gerencia a conexão com o banco de dados MongoDB utilizando a biblioteca Mongoose. Ele fornece funções para conectar e desconectar do banco de dados, além de lidar com o encerramento da aplicação.
+O arquivo `connection.ts` é responsável por estabelecer e gerenciar a conexão com o banco de dados MongoDB utilizando a biblioteca Mongoose. Ele também lida com o encerramento da conexão de forma adequada quando a aplicação é finalizada.
 
-## Dependências
+## Importações
 
 - `mongoose`: Biblioteca para modelagem de dados MongoDB.
-- `dotenv`: Carrega variáveis de ambiente a partir de um arquivo `.env`.
+- `dotenv`: Biblioteca para carregar variáveis de ambiente a partir de um arquivo `.env`.
 
 ## Variáveis
 
-- `uri`: String que contém a URI de conexão com o MongoDB, obtida a partir da variável de ambiente `DB_URI`.
+- `uri`: String que contém a URI de conexão com o MongoDB. O valor é obtido a partir da variável de ambiente `DB_URI`, ou utiliza um valor padrão que conecta ao MongoDB local.
 
 ## Funções
 
-### connect()
+### `connect()`
 
-Estabelece a conexão com o MongoDB utilizando a URI definida. Em caso de sucesso, uma mensagem de confirmação é exibida no console. Se ocorrer um erro, a mensagem de erro é exibida.
+Estabelece a conexão com o MongoDB utilizando a URI definida. 
 
-#### Comportamento ao encerrar a aplicação
+#### Comportamento:
 
-- O sinal `SIGINT` (geralmente enviado ao pressionar Ctrl+C) é tratado para fechar a conexão com o MongoDB de forma adequada, garantindo que todos os recursos sejam liberados.
+- Utiliza o método `connect` do Mongoose.
+- Exibe uma mensagem de sucesso no console ao conectar.
+- Em caso de erro, exibe uma mensagem de erro no console.
+- Escuta o sinal `SIGINT` (geralmente enviado ao pressionar Ctrl+C) para fechar a conexão de forma limpa.
 
-### disconnect()
+### `disconnect()`
 
-Desconecta a aplicação do MongoDB e exibe uma mensagem de confirmação no console.
+Encerra a conexão com o MongoDB.
 
-## Exemplo de Uso
+#### Comportamento:
 
-```typescript
-import { connect, disconnect } from './database/connection';
-
-// Conectar ao MongoDB
-connect();
-
-// Desconectar do MongoDB
-disconnect();
-```
-
-## Observações
-
-- Certifique-se de que a variável de ambiente `DB_URI` esteja configurada corretamente para evitar falhas na conexão.
-- O tratamento de erros é essencial para garantir que a aplicação não falhe silenciosamente em caso de problemas de conexão.
+- Exibe uma mensagem no console informando que a conexão está sendo encerrada.
+- Utiliza o método `disconnect` do Mongoose para fechar a conexão.

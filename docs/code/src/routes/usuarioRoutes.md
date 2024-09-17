@@ -5,34 +5,38 @@ description: 'Definição das rotas para gerenciamento de usuários na aplicaç�
 
 # usuarioRoutes
 
-O arquivo `usuarioRoutes.ts` define as rotas relacionadas ao gerenciamento de usuários na aplicação. Utiliza o framework Express para a criação de rotas e inclui middleware de autenticação para proteger algumas das operações.
+Este arquivo contém a definição das rotas relacionadas ao gerenciamento de usuários na aplicação. Utiliza o framework Express para criar as rotas e integra-se com o controlador de usuários e um middleware de autenticação.
 
 ## Estrutura das Rotas
 
-As seguintes rotas estão disponíveis:
+As rotas definidas neste arquivo são as seguintes:
 
 - `POST /`: Cria um novo usuário.
 - `GET /`: Lista todos os usuários (requer autenticação).
-- `PUT /`: Atualiza as informações de um usuário existente (requer autenticação).
-- `DELETE /`: Remove um usuário (requer autenticação).
+- `GET /me`: Retorna os detalhes do usuário autenticado (requer autenticação).
+- `PUT /`: Atualiza as informações do usuário autenticado (requer autenticação).
+- `GET /mydetails`: Retorna detalhes adicionais do usuário autenticado (requer autenticação).
+- `DELETE /`: Remove o usuário autenticado (requer autenticação).
 
-## Dependências
+## Importações
 
 O arquivo importa os seguintes módulos:
 
-- `Router` do Express: Utilizado para criar um conjunto de rotas.
-- `controller` de `UsuarioController`: Contém a lógica de controle para as operações de usuário.
-- `authMiddleware`: Middleware que verifica a autenticação do usuário antes de permitir o acesso a certas rotas.
+- `Router` do Express para definir as rotas.
+- `controller` do `UsuarioController` para manipulação das requisições.
+- `authMiddleware` para proteger as rotas que requerem autenticação.
 
 ## Exemplo de Uso
 
-```typescript
+Para utilizar estas rotas, você deve integrá-las ao seu aplicativo Express principal, como mostrado abaixo:
+
+```javascript
 import usuarioRoutes from './src/routes/usuarioRoutes';
 
-// Adicionando as rotas ao aplicativo Express
+const app = express();
 app.use('/api/usuarios', usuarioRoutes);
 ```
 
 ## Considerações
 
-As rotas que requerem autenticação utilizam o `authMiddleware` para garantir que apenas usuários autenticados possam acessar as funcionalidades de listagem, atualização e exclusão.
+As rotas que requerem autenticação utilizam o `authMiddleware`, que deve ser implementado para verificar a validade do token de autenticação antes de permitir o acesso às rotas protegidas.
