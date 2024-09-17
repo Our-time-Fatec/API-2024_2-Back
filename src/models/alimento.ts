@@ -1,7 +1,7 @@
 import mongoose, { Schema, model, Document } from "mongoose";
 import { AlimentoDetalhes, IAlimento } from "../Interfaces/IAlimento";
 
-const AlimentoDetalhesSchema = new Schema<AlimentoDetalhes>({
+export const AlimentoDetalhesSchema = new Schema<AlimentoDetalhes>({
   valorEnergetico: { type: Number, required: false },
   proteinas: { type: Number, required: false },
   carboidratos: { type: Number, required: false },

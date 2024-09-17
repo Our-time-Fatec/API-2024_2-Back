@@ -19,14 +19,14 @@ export interface AlimentoDetalhes {
     lipidios: number;
 }
 
-export interface IAlimentoConsumido{
-    usuarioId: string;
+export interface IAlimentoConsumido {
     nome: string;
     preparo: string;
     porcao: Number;
-    detalhes: string;
     quantidade: Number;
+    categoriaCodigo: Number;
     criadoEm: Date;
     criadoPor: string;
     removidoEm: Date | null;
+    detalhes: AlimentoDetalhes;
 }
