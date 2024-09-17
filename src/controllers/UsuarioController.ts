@@ -3,6 +3,9 @@ import Usuario from "../models/usuarios";
 import UsuarioFunc from "../func/UsuarioFunc";
 import criptografia from "../utils/criptografia";
 import { generateRefreshToken, generateToken } from "./AuthController";
+import AlimentoConsumidoModel from "../models/alimentoConsumido";
+import { AlimentoDetalhes } from "../Interfaces/IAlimento";
+import moment from 'moment';
 
 const hooks = new UsuarioFunc()
 
@@ -166,6 +169,58 @@ class UsuarioController {
             return res.status(500).json({ message: 'Erro ao remover usuário', error });
         }
     }
+
+    public async getUsuarioDetalhes(req: Request, res: Response): Promise<void> {
+        try {
+            const { userId } = req.body;
+            const usuario = await Usuario.findById(userId);
+
+            if (!usuario) {
+                res.status(404).json({ erro: 'Usuário não encontrado' });
+                return;
+            }
+
+            const dataAtualInicio = moment().startOf('day').toDate();
+            const dataAtualFim = moment().endOf('day').toDate();
+
+            const filtro = {
+                removidoEm: null,
+                criadoPor: userId,
+                criadoEm: { $gte: dataAtualInicio, $lte: dataAtualFim }
+            };
+
+            const alimentos = await AlimentoConsumidoModel.find(filtro);
+
+            const totais: AlimentoDetalhes = {
+                valorEnergetico: 0,
+                carboidratos: 0,
+                proteinas: 0,
+                fibras: 0,
+                lipidios: 0,
+            };
+
+            alimentos.forEach((alimento) => {
+                totais.valorEnergetico += alimento.detalhes.valorEnergetico || 0;
+                totais.carboidratos += alimento.detalhes.carboidratos || 0;
+                totais.proteinas += alimento.detalhes.proteinas || 0;
+                totais.fibras += alimento.detalhes.fibras || 0;
+                totais.lipidios += alimento.detalhes.lipidios || 0;
+            });
+
+            const { _id, ...rest } = usuario.toObject();
+
+            res.status(200).json({
+                _id,
+                ...rest,
+                totaisAlimentosConsumidos: totais
+            });
+
+        } catch (error) {
+            console.error('Erro ao buscar informações do usuário:', error);
+            res.status(500).json({ erro: 'Erro ao buscar informações do usuário' });
+        }
+    }
+
 }
 
 export default new UsuarioController();
