@@ -98,7 +98,7 @@ class AlimentoConsumidoConctroller {
         criadoPor: userId,
       };
 
-      const alimentos = await AlimentoConsumido.find(filtro).skip(skip)
+      const alimentos = await AlimentoConsumido.find(filtro).sort({ criadoEm: -1 }).skip(skip)
         .limit(limit);
 
       const alimentosComCategoria = await Promise.all(
