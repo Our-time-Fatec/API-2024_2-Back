@@ -1,11 +1,11 @@
 ---
 title: UsuarioFunc
-description: 'Classe responsável por cálculos relacionados à saúde, como IMC, idade, taxa de metabolismo basal e calorias gastas.'
+description: 'Classe responsável por cálculos relacionados à saúde e nutrição, incluindo IMC, idade, taxa de metabolismo basal e consumo de calorias.'
 ---
 
 # UsuarioFunc
 
-A classe `UsuarioFunc` contém métodos para realizar cálculos relacionados à saúde, incluindo o Índice de Massa Corporal (IMC), idade, taxa de metabolismo basal e calorias gastas com base no nível de atividade física.
+A classe `UsuarioFunc` contém métodos para realizar cálculos relacionados à saúde e nutrição. Os métodos disponíveis incluem:
 
 ## Métodos
 
@@ -18,7 +18,7 @@ Calcula o Índice de Massa Corporal (IMC) com base na altura e peso fornecidos.
   - `peso`: Peso em quilogramas.
   
 - **Retorno:** 
-  - Retorna o valor do IMC como um número.
+  - O IMC calculado como um número.
 
 ### `calculadoraIdade(dataDeNascimento: Date): number`
 
@@ -28,7 +28,7 @@ Calcula a idade com base na data de nascimento fornecida.
   - `dataDeNascimento`: Data de nascimento do usuário.
   
 - **Retorno:** 
-  - Retorna a idade em anos como um número.
+  - A idade em anos como um número.
 
 ### `calculadoraTaxaMetabolismoBasal(peso: number, altura: number, idade: number, sexo: string): Promise<number>`
 
@@ -38,28 +38,39 @@ Calcula a Taxa de Metabolismo Basal (TMB) com base no peso, altura, idade e sexo
   - `peso`: Peso em quilogramas.
   - `altura`: Altura em centímetros.
   - `idade`: Idade em anos.
-  - `sexo`: Sexo do usuário, que pode ser "Masculino" ou "Feminino".
+  - `sexo`: Sexo do usuário ("Masculino" ou "Feminino").
   
 - **Retorno:** 
-  - Retorna a TMB como uma Promise que resolve para um número.
+  - A TMB calculada como uma promessa que resolve para um número.
 
 ### `calculadoraCaloriasGastas(nivelDeSedentarismo: string, taxaMetabolismoBasal: number): Promise<number>`
 
-Calcula as calorias gastas com base no nível de sedentarismo e na taxa de metabolismo basal.
+Calcula as calorias gastas com base no nível de sedentarismo e na TMB.
 
 - **Parâmetros:**
-  - `nivelDeSedentarismo`: Nível de atividade física do usuário, que pode ser "Sedentário", "Levemente ativo", "Moderadamente ativo", "Altamente ativo" ou "Extremamente ativo".
-  - `taxaMetabolismoBasal`: Valor da TMB calculada anteriormente.
+  - `nivelDeSedentarismo`: Nível de atividade do usuário ("Sedentário", "Levemente ativo", "Moderadamente ativo", "Altamente ativo", "Extremamente ativo").
+  - `taxaMetabolismoBasal`: TMB do usuário.
   
 - **Retorno:** 
-  - Retorna as calorias gastas como uma Promise que resolve para um número.
+  - As calorias gastas calculadas como uma promessa que resolve para um número.
 
-## Níveis de Sedentarismo
+### `calcularConsumoDeCaloriaPorDia(objetivo: string, gastoDeCaloria: number): Promise<number>`
 
-Os níveis de sedentarismo utilizados para o cálculo das calorias gastas são:
+Calcula o consumo de calorias por dia com base no objetivo do usuário e no gasto de calorias.
 
-- **Sedentário:** TMB × 1,2
-- **Levemente ativo:** TMB × 1,375
-- **Moderadamente ativo:** TMB × 1,55
-- **Altamente ativo:** TMB × 1,725
-- **Extremamente ativo:** TMB × 1,9
+- **Parâmetros:**
+  - `objetivo`: Objetivo do usuário ("Dieta de emagrecimento", "Dieta de Ganho de Massa Muscular", "Dieta Low Carb").
+  - `gastoDeCaloria`: Gasto calórico diário.
+  
+- **Retorno:** 
+  - O consumo de calorias por dia calculado como uma promessa que resolve para um número.
+
+## Notas
+
+Os fatores de multiplicação para o cálculo de calorias gastas com base no nível de sedentarismo são os seguintes:
+
+- Sedentário: TMB × 1,2
+- Levemente ativo: TMB × 1,375
+- Moderadamente ativo: TMB × 1,55
+- Altamente ativo: TMB × 1,725
+- Extremamente ativo: TMB × 1,9

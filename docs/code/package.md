@@ -16,30 +16,35 @@ O arquivo `package.json` é um componente essencial de qualquer projeto Node.js,
 - **main**: O ponto de entrada do aplicativo, que neste caso é `dist/index.js`.
 - **scripts**: Scripts que podem ser executados usando o comando `npm run`. Os scripts definidos são:
   - `create`: Executa o script de criação do banco de dados.
-  - `load`: Executa o script para carregar dados no banco de dados.
-  - `start`: Inicia o servidor executando `src/index.ts`.
-  - `dev`: Inicia o servidor em modo de desenvolvimento com recarregamento automático.
+  - `load`: Carrega dados no banco de dados.
+  - `start`: Inicia o servidor.
+  - `dev`: Inicia o servidor em modo de desenvolvimento.
 
 ### Dependências
 
-- **dependencies**: Lista de pacotes necessários para o funcionamento do projeto em produção:
-  - `bcrypt`: Biblioteca para hashing de senhas.
-  - `cors`: Middleware para habilitar CORS.
-  - `dotenv`: Carrega variáveis de ambiente de um arquivo `.env`.
-  - `express`: Framework web para Node.js.
-  - `jsonwebtoken`: Biblioteca para manipulação de JSON Web Tokens.
-  - `mongoose`: ODM para MongoDB.
+As dependências do projeto são listadas sob o campo `dependencies` e incluem:
 
-- **devDependencies**: Lista de pacotes necessários apenas durante o desenvolvimento:
-  - `@types/bcrypt`: Tipos TypeScript para o pacote bcrypt.
-  - `@types/cors`: Tipos TypeScript para o pacote cors.
-  - `@types/express`: Tipos TypeScript para o pacote express.
-  - `@types/jsonwebtoken`: Tipos TypeScript para o pacote jsonwebtoken.
-  - `@types/pg`: Tipos TypeScript para o pacote pg.
-  - `ts-node`: Executa arquivos TypeScript diretamente.
-  - `ts-node-dev`: Executa arquivos TypeScript com recarregamento automático.
-  - `typescript`: Compilador TypeScript.
+- **bcrypt**: Biblioteca para hashing de senhas.
+- **cors**: Middleware para habilitar CORS (Cross-Origin Resource Sharing).
+- **dotenv**: Carrega variáveis de ambiente de um arquivo `.env`.
+- **express**: Framework web para Node.js.
+- **jsonwebtoken**: Implementação de JSON Web Tokens.
+- **moment**: Biblioteca para manipulação de datas.
+- **mongoose**: ODM (Object Data Modeling) para MongoDB.
 
-## Considerações Finais
+### Dependências de Desenvolvimento
 
-O `package.json` é fundamental para gerenciar as dependências e scripts do projeto, facilitando o desenvolvimento e a manutenção do código. É importante mantê-lo atualizado conforme novas dependências são adicionadas ou removidas do projeto.
+As dependências de desenvolvimento são listadas sob o campo `devDependencies` e incluem:
+
+- **@types/bcrypt**: Tipos TypeScript para a biblioteca bcrypt.
+- **@types/cors**: Tipos TypeScript para a biblioteca cors.
+- **@types/express**: Tipos TypeScript para o framework express.
+- **@types/jsonwebtoken**: Tipos TypeScript para a biblioteca jsonwebtoken.
+- **@types/pg**: Tipos TypeScript para PostgreSQL.
+- **ts-node**: Executa arquivos TypeScript diretamente.
+- **ts-node-dev**: Ferramenta para desenvolvimento que reinicia automaticamente o servidor ao detectar alterações.
+- **typescript**: Compilador TypeScript.
+
+## Conclusão
+
+O arquivo `package.json` é fundamental para a configuração e gerenciamento de um projeto Node.js, permitindo a instalação de dependências e a execução de scripts de forma organizada.

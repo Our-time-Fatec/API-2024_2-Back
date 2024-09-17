@@ -1,20 +1,18 @@
 ---
 title: middlewares
-description: 'Pasta que contém os middlewares utilizados na aplicação para manipulação de requisições e autenticação.'
+description: 'Pasta que contém os middlewares utilizados na aplicação para controle de acesso e manipulação de requisições.'
 ---
 
 # middlewares
 
-A pasta `middlewares` é responsável por armazenar os middlewares utilizados na aplicação. Middlewares são funções que têm acesso ao objeto de requisição (req), ao objeto de resposta (res) e à próxima função middleware na cadeia. Eles podem ser utilizados para executar código, modificar a requisição e a resposta, encerrar a requisição ou chamar o próximo middleware na pilha.
+A pasta `middlewares` é responsável por armazenar os middlewares utilizados na aplicação. Middlewares são funções que têm acesso ao objeto de requisição (req), ao objeto de resposta (res) e à próxima função middleware na cadeia. Eles podem ser utilizados para diversas finalidades, como autenticação, manipulação de dados de requisição, tratamento de erros, entre outros.
 
 ## Estrutura
 
-Dentro da pasta `middlewares`, você encontrará arquivos que implementam funcionalidades específicas, como autenticação e validação de dados. Esses middlewares são essenciais para garantir a segurança e a integridade das operações realizadas pela aplicação.
+A pasta `middlewares` contém os seguintes arquivos:
 
-### Exemplos de Middlewares
-
-- **authMiddleware.ts**: Middleware responsável pela autenticação de usuários, garantindo que apenas usuários autenticados possam acessar determinadas rotas.
+- **authMiddleware.ts**: Middleware responsável pela autenticação de usuários. Ele verifica se o usuário está autenticado antes de permitir o acesso a rotas protegidas.
 
 ## Uso
 
-Os middlewares podem ser aplicados em rotas específicas ou globalmente na aplicação, dependendo da necessidade. Para utilizá-los, basta importá-los nos arquivos de rotas e aplicá-los conforme necessário.
+Os middlewares podem ser aplicados em rotas específicas ou globalmente na aplicação, dependendo da necessidade. Para utilizá-los, basta importá-los nos arquivos de rotas e aplicá-los como funções intermediárias nas definições das rotas.

@@ -5,29 +5,18 @@ description: 'Definição das rotas de autenticação para o serviço.'
 
 # authRoutes
 
-O arquivo `authRoutes.ts` define as rotas relacionadas à autenticação no serviço. Utiliza o framework Express para gerenciar as requisições HTTP.
+Este arquivo contém a definição das rotas relacionadas à autenticação no serviço. Utiliza o framework Express para gerenciar as requisições HTTP.
 
-## Estrutura do Código
+## Rotas Definidas
 
-```typescript
-import { Router } from 'express';
-import AuthController from '../controllers/AuthController';
+### POST /login
+- **Descrição**: Rota para realizar o login de um usuário.
+- **Controlador**: `AuthController.login`
 
-const routes = Router();
+### POST /refresh-token
+- **Descrição**: Rota para atualizar o token de autenticação do usuário.
+- **Controlador**: `AuthController.refresh`
 
-routes.post('/login', AuthController.login);
-routes.post('/refresh-token', AuthController.refresh);
-
-export default routes;
-```
-
-## Descrição das Rotas
-
-- **POST /login**: Esta rota é responsável por autenticar um usuário. O controlador `AuthController` gerencia a lógica de login.
-  
-- **POST /refresh-token**: Esta rota permite que um usuário obtenha um novo token de autenticação, utilizando o controlador `AuthController` para processar a solicitação.
-
-## Dependências
-
-- **express**: O framework utilizado para criar as rotas e gerenciar as requisições.
-- **AuthController**: Controlador que contém a lógica de autenticação, incluindo métodos para login e refresh de token.
+## Importações
+- `Router` do pacote `express`: Utilizado para criar um conjunto de rotas.
+- `AuthController`: Controlador que contém a lógica de autenticação.
