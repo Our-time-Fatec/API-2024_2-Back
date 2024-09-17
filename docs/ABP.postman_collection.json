@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhMzM3ODI1ZWZmMGQ3YTRlN2Y3Y2IiLCJlbWFpbCI6ImRhdmluY2ljb2RlLmZhdGVjQGdtYWlsLmNvbSIsImlhdCI6MTcyNTU3NjIyOCwiZXhwIjoxNzI4MTY4MjI4fQ.ZnYROkjLuWEfKe1qjb7b6cmBV4_etTK9biHUDahd1UI\"\r\n}",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRhNTFkZDkwZDEwZmNmZWZjZmE2ZmYiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTY3OTQ1NiwiZXhwIjoxNzI4MjcxNDU2fQ.vuWiZlKs-cVyMz241fw8wP2V19yJj5qyWkNG3GViAHY\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"lfcosta0804@gmail.com\",\r\n    \"senha\": \"12345678\"\r\n}",
+							"raw": "{\r\n    \"email\": \"lfcosta0804@gmail.com\",\r\n    \"senha\": \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -82,7 +82,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQ5ZGQ5Nzk5YjgzZjZkMTM5ZGY5ZjIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU1NTI1MSwiZXhwIjoxNzI1NjQxNjUxfQ.tAU7_Wk75b_PpVptQcUHmt51ydu4CRPBiJ5xG1ZpOew",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmUzODZkODBmMmZhODExMjRlZGEwZmIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjE5MTYyNiwiZXhwIjoxNzI2Mjc4MDI2fQ.P0NvIVlJjYyiULuPWmIJyxueAx3xJOO6MZD2QfYr5nQ",
 								"type": "text"
 							}
 						],
@@ -111,13 +111,89 @@
 					"response": []
 				},
 				{
+					"name": "Get Usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU2ZWRjMjI1NDFiOTAwMjJhZTc2Y2QiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjQxMDE3OCwiZXhwIjoxNzI2NDk2NTc4fQ.Awm7yY1WBzZbTtiUOssLVNwZ7IbxaHTCym0XHvl0aRc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/usuario/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"usuario",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Usuario Detalhes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/usuario/mydetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"usuario",
+								"mydetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Usuario",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"lucas\",\r\n    \"sobrenome\": \"ferreira da costa\",\r\n    \"email\": \"lfcosta0804@gmail.com\",\r\n    \"senha\": \"12345678\",\r\n    \"dataDeNascimento\": \"2003-04-08T12:30:00Z\",\r\n    \"peso\": 65,\r\n    \"altura\": 1.67,\r\n    \"nivelDeSedentarismo\": \"Sedentário\",\r\n    \"sexo\": \"Masculino\",\r\n    \"objetivo\": \"Dieta de Ganho de Massa Muscular\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"Lucas\",\r\n    \"sobrenome\": \"Ferreira da Costa\",\r\n    \"email\": \"lfcosta0804@gmail.com\",\r\n    \"senha\": \"123456\",\r\n    \"dataDeNascimento\": \"2003-04-08T12:30:00Z\",\r\n    \"peso\": 65,\r\n    \"altura\": 167,\r\n    \"nivelDeSedentarismo\": \"Sedentário\",\r\n    \"sexo\": \"Masculino\",\r\n    \"objetivo\": \"Dieta de Ganho de Massa Muscular\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -247,7 +323,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQ5ZGQ5Nzk5YjgzZjZkMTM5ZGY5ZjIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU1NTI1MSwiZXhwIjoxNzI1NjQxNjUxfQ.tAU7_Wk75b_PpVptQcUHmt51ydu4CRPBiJ5xG1ZpOew",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
 								"type": "text"
 							}
 						],
@@ -438,7 +514,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQ5ZGQ5Nzk5YjgzZjZkMTM5ZGY5ZjIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTU1NTI1MSwiZXhwIjoxNzI1NjQxNjUxfQ.tAU7_Wk75b_PpVptQcUHmt51ydu4CRPBiJ5xG1ZpOew",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRkMWIzMTExYmY1MjIzZmI3MGY4ZDkiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTc2ODQ4NCwiZXhwIjoxNzI1ODU0ODg0fQ.ltai3UH9Z3fVbY5F2KbQFkCjbzOk3XcS_FYqbY0NgZw",
 								"type": "text"
 							}
 						],
@@ -452,6 +528,251 @@
 							"path": [
 								"categoria",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dieta",
+			"item": [
+				{
+					"name": "Create Dieta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"diaSemana\": [\"Domingo\", \"Segunda-feira\", \"Terça-feira\", \"Quarta-feira\", \"Quinta-feira\", \"Sexta-feira\", \"Sábado\"],\r\n  \"grupos\": [\r\n    {\r\n      \"nome\": \"Café da Manhã\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d7abd\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        },\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d7e25\",\r\n          \"porcao\": 100,\r\n          \"quantidade\": 1\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"nome\": \"Almoço\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d79d9\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"nome\": \"Café da Tarde\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d7abd\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        },\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d7e25\",\r\n          \"porcao\": 100,\r\n          \"quantidade\": 1\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"nome\": \"Janta\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d79d9\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/dieta/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"dieta",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Dieta",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU2ZjAxNDg3OGQ4YWNlMTUxNTgwMjkiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjQxMDc3MywiZXhwIjoxNzI2NDk3MTczfQ.auxv2D-VeOJNuzxbaf0p098ZuThzSLNiv2yAa-soYtI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"diaSemana\": \"Segunda-feira\",\r\n  \"grupos\": [\r\n    {\r\n      \"nome\": \"Café da Manhã\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e6ed7a2541b90022ae6766\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/dieta/66e78ab5d884d7ccbdb8157b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"dieta",
+								"66e78ab5d884d7ccbdb8157b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Minhas dietas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/dieta/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"dieta",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar dieta por id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU0MmUxZDg2ZGQ4ZDY2ZTk0MDIwM2MiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjM2OTIxMCwiZXhwIjoxNzI2NDU1NjEwfQ.wUJPFe0bj5LgSyhn9Q_PDSUy5IdTKuzXgtHyU2QP7Sw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/dieta/66e64e21a4b91be443ff51f2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"dieta",
+								"66e64e21a4b91be443ff51f2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete dieta",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/dieta/66e83aa0ea22c8b7903af212",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"dieta",
+								"66e83aa0ea22c8b7903af212"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alimentos consumidos",
+			"item": [
+				{
+					"name": "Adicionar alimento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"66e8391bdbd1449afd1d79d9\",\r\n    \"porcao\": 150,\r\n    \"quantidade\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3010/alimentoConsumido/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimentoConsumido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar alimentos consumidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/alimentoConsumido/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimentoConsumido",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover alimento",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3010/alimentoConsumido/66e98dbd9e20c8c059fad993",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3010",
+							"path": [
+								"alimentoConsumido",
+								"66e98dbd9e20c8c059fad993"
 							]
 						}
 					},
