@@ -6,6 +6,7 @@ import { generateRefreshToken, generateToken } from "./AuthController";
 import AlimentoConsumidoModel from "../models/alimentoConsumido";
 import { AlimentoDetalhes } from "../Interfaces/IAlimento";
 import moment from 'moment';
+import sendVerificationEmail from "../middlewares/emailMiddleware";
 
 const hooks = new UsuarioFunc()
 
@@ -58,6 +59,11 @@ class UsuarioController {
 
             const { senha: _, ...userWithoutPassword } = response.toObject();
 
+            const verificationLink = `http://localhost:3010/verify?token=${token}`
+            const verificado = await sendVerificationEmail(response.email, verificationLink);
+            if(!verificado){
+                return res.status(400)
+            }
             return res.status(201).json({
                 message: "Usuário criado com sucesso",
                 usuario: userWithoutPassword,
