@@ -14,7 +14,6 @@ class UsuarioController {
 
     public async create(req: Request, res: Response): Promise<Response> {
         const { nome, sobrenome, email, senha, dataDeNascimento, peso, altura, nivelDeSedentarismo, sexo, objetivo } = req.body;
-
         if (!email && !senha) {
             return res.status(401).json({ message: "Forneça o e-mail e senha" });
         }
@@ -53,22 +52,22 @@ class UsuarioController {
                 email, senha: senhaCriptografada, dataDeNascimento, idade, peso, altura, nivelDeSedentarismo, sexo, objetivo,
                 IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia
             });
-
+            try {
+                const verificationLink = `http://google.com`;
+                await sendVerificationEmail(email, verificationLink);
+            } catch (error) {
+                console.error('Erro ao enviar e-mail de verificação:', error);
+            }
             const token = generateToken(response._id, response.email);
             const refreshToken = generateRefreshToken(response._id, response.email);
 
             const { senha: _, ...userWithoutPassword } = response.toObject();
 
-            const verificationLink = `http://localhost:3010/verify?token=${token}`
-            const verificado = await sendVerificationEmail(response.email, verificationLink);
-            if(!verificado){
-                return res.status(400)
-            }
             return res.status(201).json({
                 message: "Usuário criado com sucesso",
                 usuario: userWithoutPassword,
                 token,
-                refreshToken
+                refreshToken,
             });
         } catch (error: any) {
 
