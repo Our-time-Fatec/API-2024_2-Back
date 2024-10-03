@@ -6,6 +6,7 @@ export interface IDietaDetalhes extends AlimentoDetalhes {
 
 export interface IAlimentoDieta {
     id?: string;
+    alimentoId: string,
     nome: string;
     preparo: string;
     porcao: Number;
@@ -14,7 +15,7 @@ export interface IAlimentoDieta {
     detalhes: AlimentoDetalhes;
 }
 
-export interface IGrupo {
+export interface IGrupo {   
     nome: string;
     alimentos: IAlimentoDieta[];
 }
