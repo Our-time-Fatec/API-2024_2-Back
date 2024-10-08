@@ -10,6 +10,8 @@ routes.get("/me", authMiddleware, controller.getUsuario);
 routes.put("/", authMiddleware, controller.update);
 routes.get("/mydetails", authMiddleware, controller.getUsuarioDetalhes);
 routes.delete("/", authMiddleware, controller.delete);
+routes.put("/pass", controller.editPassword);
+
 
 
 export default routes

@@ -12,12 +12,12 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const sendVerificationEmail = async (email:string, verificationLink:string) =>{
+const sendVerificationEmail = async (email:string) =>{
     const mailOptions = {
         from: 'davincitestes@gmail.com',
         to: email,
         subject: 'Verifique sua conta',
-        text: `Clique no link para verificar sua conta: ${verificationLink}`
+        text: `Clique no link para verificar sua conta: `
     };
     const transportado = transporter.sendMail(mailOptions);   
     if(await transportado){

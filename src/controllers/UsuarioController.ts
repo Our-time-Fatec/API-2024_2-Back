@@ -53,8 +53,7 @@ class UsuarioController {
                 IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia
             });
             try {
-                const verificationLink = `http://google.com`;
-                await sendVerificationEmail(email, verificationLink);
+                await sendVerificationEmail(email);
             } catch (error) {
                 console.error('Erro ao enviar e-mail de verificação:', error);
             }
@@ -223,6 +222,37 @@ class UsuarioController {
         } catch (error) {
             console.error('Erro ao buscar informações do usuário:', error);
             res.status(500).json({ erro: 'Erro ao buscar informações do usuário' });
+        }
+    }
+
+    public async editPassword(req: Request, res: Response):Promise<Response>{
+        const { userId, senha } = req.body;
+
+        if (!senha) {
+            return res.status(400).json({ message: "Nova senha é obrigatória" });
+        }
+        if (senha.length < 6) {
+            return res.status(400).json({ message: "A nova senha precisa ter no mínimo 6 caracteres" });
+        }
+        if (senha.length > 20) {
+            return res.status(400).json({ message: "A nova senha precisa ter no máximo 20 caracteres" });
+        }
+
+        try{
+            const usuario = await Usuario.findOne({ _id:userId, removidoEm: null}).select('+senha');
+            if(!usuario) {
+                return res.status(404).json({ message: "Usuário não encontrado"});
+            }
+            const senhaCriptografa = await criptografia.criptografarSenha(senha);
+            
+            usuario.senha = senhaCriptografa;
+            usuario.atualizadoEm = new Date();
+            await usuario.save();
+
+            return res.status(200).json({message: "Senha atualizada com sucesso"})
+        } catch (error:any){
+            console.error('Erro ao atualizar a senha', error);
+            return res.status(500).json({message:"Erro ao atualizar a senha", error: error.message})
         }
     }
 
