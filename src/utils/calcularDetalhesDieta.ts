@@ -15,6 +15,7 @@ async function calcularDetalhesDieta(grupos: { nome: string, alimentos: { alimen
                     const proporcaoPorcao = porcao / Number(alimento.porcao);
 
                     const alimentoDieta: IAlimentoDieta = {
+                        alimentoId,
                         nome: alimento.nome,
                         preparo: alimento.preparo,
                         quantidade,

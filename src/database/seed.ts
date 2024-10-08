@@ -5,7 +5,6 @@ import { Types } from "mongoose";
 import criptografia from "../utils/criptografia";
 
 async function seedDatabase() {
-
     try {
 
         const userAdm = {
