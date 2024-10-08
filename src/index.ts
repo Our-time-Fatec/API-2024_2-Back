@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import routes from "./routes";
 import { connect } from "./database/connection";
 import seedDatabase from "./database/seed";
-import sendVerificationEmail from "./middlewares/emailMiddleware";
+import { sendVerificationEmail, sendPasswordResetEmail } from "./middlewares/emailMiddleware";
 
 // Carregar as variáveis de ambiente
 dotenv.config();
@@ -20,6 +20,7 @@ app.use(express.json());
 // Configurar o CORS para permitir requisições de qualquer origem
 app.use(cors());
 
+// Envia o email para verificação do email
 app.post('/send-verification-email', async (req, res) => {
     const { email } = req.body;
 
@@ -31,6 +32,20 @@ app.post('/send-verification-email', async (req, res) => {
         res.status(500).json({ message: 'Failed to send email' });
     }
 });
+
+// Envia o email para o reset da senha
+app.post('/send-reset-pass', async (req, res) => {
+    const { email } = req.body;
+
+    const success = await sendPasswordResetEmail(email);
+    
+    if (success) {
+        res.status(200).json({ message: 'Email sent successfully' });
+    } else {
+        res.status(500).json({ message: 'Failed to send email' });
+    }
+});
+
 // Função para iniciar o servidor após conexão com o banco e seeding
 async function startServer() {
     try {

@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import dotenv from 'dotenv';
 
 dotenv.config();
+
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -12,20 +13,28 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const sendVerificationEmail = async (email:string) =>{
+const sendVerificationEmail = async (email: string) => {
     const mailOptions = {
         from: 'davincitestes@gmail.com',
         to: email,
         subject: 'Verifique sua conta',
         text: `Clique no link para verificar sua conta: `
     };
-    const transportado = transporter.sendMail(mailOptions);   
-    if(await transportado){
-        return true
-    }else{
-        return false
-    }
-    
+
+    const transportado = await transporter.sendMail(mailOptions);
+    return !!transportado;
 }
 
-export default sendVerificationEmail;
+const sendPasswordResetEmail = async (email: string) => {
+    const mailOptions = {
+        from: 'davincitestes@gmail.com',
+        to: email,
+        subject: 'Redefinição de Senha',
+        text: `Clique no link para redefinir sua senha: `
+    };
+
+    const transportado = await transporter.sendMail(mailOptions);
+    return !!transportado;
+}
+
+export { sendVerificationEmail, sendPasswordResetEmail };

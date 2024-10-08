@@ -6,7 +6,7 @@ import { generateRefreshToken, generateToken } from "./AuthController";
 import AlimentoConsumidoModel from "../models/alimentoConsumido";
 import { AlimentoDetalhes } from "../Interfaces/IAlimento";
 import moment from 'moment';
-import sendVerificationEmail from "../middlewares/emailMiddleware";
+import {sendVerificationEmail} from "../middlewares/emailMiddleware";
 
 const hooks = new UsuarioFunc()
 
