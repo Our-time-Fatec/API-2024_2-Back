@@ -47,10 +47,11 @@ class UsuarioController {
             const taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(peso, altura, idade, sexo);
             const gastoDeCaloria = await hooks.calculadoraCaloriasGastas(nivelDeSedentarismo, taxaMetabolismoBasal);
             const consumoDeCaloriaPorDia = await hooks.calcularConsumoDeCaloriaPorDia(objetivo, gastoDeCaloria);
+            const metaAgua = await hooks.calcularMetaAgua(peso)
             const response = await Usuario.create({
                 nome, sobrenome,
                 email, senha: senhaCriptografada, dataDeNascimento, idade, peso, altura, nivelDeSedentarismo, sexo, objetivo,
-                IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia
+                IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia, metaAgua
             });
 
             const token = generateToken(response._id, response.email);
@@ -138,6 +139,7 @@ class UsuarioController {
             usuario.taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(usuario.peso, usuario.altura, usuario.idade, usuario.sexo);
             usuario.gastoDeCaloria = await hooks.calculadoraCaloriasGastas(usuario.nivelDeSedentarismo, usuario.taxaMetabolismoBasal);
             usuario.consumoDeCaloriaPorDia = await hooks.calcularConsumoDeCaloriaPorDia(usuario.objetivo, usuario.gastoDeCaloria);
+            usuario.metaAgua = await hooks.calcularMetaAgua(usuario.peso)
             usuario.atualizadoEm = new Date();
 
             await usuario.save();
@@ -180,6 +182,8 @@ class UsuarioController {
                 return;
             }
 
+            await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
+
             const dataAtualInicio = moment().startOf('day').toDate();
             const dataAtualFim = moment().endOf('day').toDate();
 
@@ -207,18 +211,77 @@ class UsuarioController {
                 totais.lipidios += alimento.detalhes.lipidios || 0;
             });
 
-            const { _id, ...rest } = usuario.toObject();
+            const { _id, agua, ...rest } = usuario.toObject();
+            const aguaIngerida = agua.aguaIngerida
 
             res.status(200).json({
                 _id,
                 ...rest,
-                totaisAlimentosConsumidos: totais
+                totaisAlimentosConsumidos: totais,
+                aguaIngerida
             });
 
         } catch (error) {
             console.error('Erro ao buscar informações do usuário:', error);
             res.status(500).json({ erro: 'Erro ao buscar informações do usuário' });
         }
+    }
+
+    public async atualzarAgua(req:Request, res:Response):Promise<Response>{
+        try{
+            const { agua , userId } = req.body
+            const usuario = await Usuario.findById(userId);
+
+            
+
+            if(!agua){
+                return res.status(500).json({message: "Informe a quantia de agua"})
+            }
+
+            if (!usuario) {
+                res.status(404).json({ erro: 'Usuário não encontrado' });
+                return res.status(500).json({ erro: 'Erro ao encontrar usuário' });
+            }
+
+            await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
+
+            if (!usuario.agua) {
+                usuario.agua = { aguaIngerida: 0, atualizacao: new Date() };
+            }
+
+            usuario.agua.aguaIngerida = usuario.agua.aguaIngerida + parseInt(agua)
+            if(usuario.agua.aguaIngerida >= usuario.metaAgua){
+                usuario.agua.aguaIngerida = usuario.metaAgua
+            }
+
+            usuario.agua.atualizacao = new Date();
+    
+            usuario.save()
+
+        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${agua}ml de agua!`})
+    }
+        catch(error){
+            console.error('Erro ao buscar informações do usuário:', error);
+            return res.status(500).json({ erro: 'Erro ao atualizar a quantia de água consumida' });
+        }
+    }
+
+    public async zerarAgua(req: Request, res:Response):Promise<Response>{
+        const { userId } = req.body
+        const usuario = await Usuario.findById(userId);
+
+
+        if (!usuario) {
+            res.status(404).json({ erro: 'Usuário não encontrado' });
+            return res.status(500).json({ erro: 'Erro ao encontrar usuário' });
+        }
+
+        const DataForcada =  new Date(2023, 5, 15);;
+        console.log(DataForcada)
+
+        hooks.checagemAgua(usuario.agua.atualizacao, usuario, DataForcada)
+
+        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${usuario.agua.aguaIngerida}ml de agua!`})
     }
 
 }
