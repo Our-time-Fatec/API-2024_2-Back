@@ -182,11 +182,6 @@ class UsuarioController {
                 return;
             }
 
-            if (!usuario.agua || !usuario.agua.atualizacao) {
-                res.status(400).json({ erro: 'Informações de água não disponíveis' });
-                return;
-            }
-
             await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
 
             const dataAtualInicio = moment().startOf('day').toDate();
@@ -223,7 +218,9 @@ class UsuarioController {
                 _id,
                 ...rest,
                 totaisAlimentosConsumidos: totais,
-                aguaIngerida
+                agua:{
+                    aguaIngerida
+                }
             });
 
         } catch (error) {
@@ -234,12 +231,12 @@ class UsuarioController {
 
     public async atualzarAgua(req:Request, res:Response):Promise<Response>{
         try{
-            const { agua , userId } = req.body
+            const { aguaIngerida , userId } = req.body
             const usuario = await Usuario.findById(userId);
 
             
 
-            if(!agua){
+            if(!aguaIngerida){
                 return res.status(500).json({message: "Informe a quantia de agua"})
             }
 
@@ -254,7 +251,7 @@ class UsuarioController {
                 usuario.agua = { aguaIngerida: 0, atualizacao: new Date() };
             }
 
-            usuario.agua.aguaIngerida = usuario.agua.aguaIngerida + parseInt(agua)
+            usuario.agua.aguaIngerida = usuario.agua.aguaIngerida + parseInt(aguaIngerida)
             if(usuario.agua.aguaIngerida >= usuario.metaAgua){
                 usuario.agua.aguaIngerida = usuario.metaAgua
             }
@@ -263,7 +260,7 @@ class UsuarioController {
     
             usuario.save()
 
-        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${agua}ml de agua!`})
+        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${aguaIngerida}ml de agua!`})
     }
         catch(error){
             console.error('Erro ao buscar informações do usuário:', error);
@@ -282,7 +279,6 @@ class UsuarioController {
         }
 
         const DataForcada =  new Date(2023, 5, 15);;
-        console.log(DataForcada)
 
         hooks.checagemAgua(usuario.agua.atualizacao, usuario, DataForcada)
 
