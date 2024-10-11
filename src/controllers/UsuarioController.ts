@@ -51,7 +51,7 @@ class UsuarioController {
             const response = await Usuario.create({
                 nome, sobrenome,
                 email, senha: senhaCriptografada, dataDeNascimento, idade, peso, altura, nivelDeSedentarismo, sexo, objetivo,
-                IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia, metaAgua
+                IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia, metaAgua, agua:{aguaIngerida: 0}
             });
 
             const token = generateToken(response._id, response.email);
@@ -179,6 +179,11 @@ class UsuarioController {
 
             if (!usuario) {
                 res.status(404).json({ erro: 'Usuário não encontrado' });
+                return;
+            }
+
+            if (!usuario.agua || !usuario.agua.atualizacao) {
+                res.status(400).json({ erro: 'Informações de água não disponíveis' });
                 return;
             }
 

@@ -4,7 +4,6 @@
   const AguaSchema = new Schema<IAgua>({
     aguaIngerida: {
       type: Number,
-      required: true,
       default: 0,
     },
     atualizacao: { 
@@ -131,6 +130,7 @@
 
   UsuarioSchema.pre("save", function (next) {
     this.ultimaVezUtilizado = new Date();
+    this.agua.atualizacao = new Date();
     next();
   });
 
