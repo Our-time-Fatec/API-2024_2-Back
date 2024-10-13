@@ -125,14 +125,12 @@ export default class UsuarioFunc {
           usuario.agua.aguaIngerida = 0;
           usuario.agua.atualizacao = new Date();
           await usuario.save();
-          console.log(`Água ingerida para o usuário  foi zerada.`);
         }
       }
       if (this.isNewDay(atualizacao)) {
         usuario.agua.aguaIngerida = 0;
         usuario.agua.atualizacao = new Date();
         await usuario.save();
-        console.log(`Água ingerida para o usuário  foi zerada.`);
       }
     } else {
       console.log(`Usuário não encontrado.`);

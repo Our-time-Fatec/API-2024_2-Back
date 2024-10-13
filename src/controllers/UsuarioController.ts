@@ -247,10 +247,6 @@ class UsuarioController {
 
             await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
 
-            if (!usuario.agua) {
-                usuario.agua = { aguaIngerida: 0, atualizacao: new Date() };
-            }
-
             usuario.agua.aguaIngerida = usuario.agua.aguaIngerida + parseInt(aguaIngerida)
             if(usuario.agua.aguaIngerida >= usuario.metaAgua){
                 usuario.agua.aguaIngerida = usuario.metaAgua
