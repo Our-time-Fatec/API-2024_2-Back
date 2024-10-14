@@ -20,6 +20,7 @@ export interface AlimentoDetalhes {
 }
 
 export interface IAlimentoConsumido {
+    _id: string;
     nome: string;
     preparo: string;
     porcao: Number;
@@ -29,4 +30,5 @@ export interface IAlimentoConsumido {
     criadoPor: string;
     removidoEm: Date | null;
     detalhes: AlimentoDetalhes;
+    nomeGrupo?: string
 }

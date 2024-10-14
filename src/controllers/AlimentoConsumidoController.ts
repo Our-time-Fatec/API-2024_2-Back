@@ -3,6 +3,7 @@ import AlimentoConsumido from "../models/alimentoConsumido";
 import Alimento from "../models/alimento";
 import Usuario from "../models/usuarios";
 import Categoria from "../models/categoria";
+import DietaDiariaModel from "../models/dietaDiaria";
 
 class AlimentoConsumidoConctroller {
   //   async create(req: Request, res: Response): Promise<Response> {
@@ -37,7 +38,7 @@ class AlimentoConsumidoConctroller {
   //   }
 
   async create(req: Request, res: Response): Promise<Response> {
-    const { _id, porcao, quantidade } = req.body;
+    const { _id, porcao, quantidade, nomeGrupo } = req.body;
     const userId = req.body.userId;
 
     if (!_id && !porcao && !quantidade) {
@@ -72,9 +73,33 @@ class AlimentoConsumidoConctroller {
           carboidratos: alimento.detalhes.carboidratos * proporcaoPorcao * quantidade,
           fibras: alimento.detalhes.fibras * proporcaoPorcao * quantidade,
           lipidios: alimento.detalhes.lipidios * proporcaoPorcao * quantidade,
-        }
+        },
+        nomeGrupo: nomeGrupo
       });
 
+      const hoje = new Date();
+      const dietaDoDia = await DietaDiariaModel.findOne({
+        usuarioId: userId,
+        dia: {
+          $gte: new Date(hoje.setHours(0, 0, 0, 0)),  // Início do dia
+          $lt: new Date(hoje.setHours(23, 59, 59, 999)) // Fim do dia
+        },
+      });
+  
+      if (dietaDoDia && alimentoConsumidoSalvo.nomeGrupo) {
+     
+        let grupoExistente = dietaDoDia.gruposConsumo.find(grupo => grupo.nome === nomeGrupo);
+
+            if (!grupoExistente) {
+                grupoExistente = { nome: nomeGrupo, alimentosConsumidos: [] };
+                dietaDoDia.gruposConsumo.push(grupoExistente);
+            }
+
+            // Adiciona o alimento consumido ao grupo existente
+            grupoExistente.alimentosConsumidos.push(alimentoConsumidoSalvo);
+
+            await dietaDoDia.save();
+    }
       return res.status(201).json(alimentoConsumidoSalvo);
     } catch (error) {
       return res
@@ -192,6 +217,25 @@ class AlimentoConsumidoConctroller {
 
       alimento.removidoEm = new Date();
       await alimento.save();
+
+      const hoje = new Date();
+      const dietaDoDia = await DietaDiariaModel.findOne({
+        usuarioId: userId,
+        dia: {
+          $gte: new Date(hoje.setHours(0, 0, 0, 0)),  // Início do dia
+          $lt: new Date(hoje.setHours(23, 59, 59, 999)) // Fim do dia
+        },
+      });
+  
+      if (dietaDoDia) {
+        dietaDoDia.gruposConsumo.alimentosConsumidos = dietaDoDia.alimentosConsumidos.filter(alimentoConsumido => 
+          alimentoConsumido._id.toString() !== id
+        );
+    
+        await dietaDoDia.save();
+      }
+  
+      
 
       return res.status(200).json({ message: "Alimento deletado com sucesso" });
     } catch (error) {

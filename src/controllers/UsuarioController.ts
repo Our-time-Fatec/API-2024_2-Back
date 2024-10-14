@@ -6,6 +6,8 @@ import { generateRefreshToken, generateToken } from "./AuthController";
 import AlimentoConsumidoModel from "../models/alimentoConsumido";
 import { AlimentoDetalhes } from "../Interfaces/IAlimento";
 import moment from 'moment';
+import definirDietaDiaria from "../utils/definirDietaDiaria";
+
 
 const hooks = new UsuarioFunc()
 
@@ -183,6 +185,7 @@ class UsuarioController {
             }
 
             await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
+            await definirDietaDiaria.criarDietaDiaria(userId)
 
             const dataAtualInicio = moment().startOf('day').toDate();
             const dataAtualFim = moment().endOf('day').toDate();
@@ -210,6 +213,8 @@ class UsuarioController {
                 totais.fibras += alimento.detalhes.fibras || 0;
                 totais.lipidios += alimento.detalhes.lipidios || 0;
             });
+
+            
 
             const { _id, agua, ...rest } = usuario.toObject();
             const aguaIngerida = agua.aguaIngerida

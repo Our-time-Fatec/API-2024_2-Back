@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import { IAlimentoConsumido } from "../Interfaces/IAlimento";
 import { AlimentoDetalhesSchema } from "./alimento";
 
-const AlimentoConsumidoSchema = new Schema<IAlimentoConsumido>({
+export const AlimentoConsumidoSchema = new Schema<IAlimentoConsumido>({
   nome: { type: String, required: true },
   preparo: { type: String, required: true },
   porcao: { type: Number, required: true },
@@ -12,6 +12,7 @@ const AlimentoConsumidoSchema = new Schema<IAlimentoConsumido>({
   criadoPor: { type: String, required: true },
   removidoEm: { type: Date, default: null, required: false },
   detalhes: { type: AlimentoDetalhesSchema, required: true },
+  nomeGrupo: {type: String}
 });
 
 const AlimentoConsumidoModel = mongoose.model<IAlimentoConsumido>(
