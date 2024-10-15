@@ -75,7 +75,6 @@ class DietaDiariaController {
         }
 
         const diaAtual = new Date();
-      
 
         const filtro: any = {
             usuarioId: userId,

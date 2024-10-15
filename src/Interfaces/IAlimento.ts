@@ -30,5 +30,5 @@ export interface IAlimentoConsumido {
     criadoPor: string;
     removidoEm: Date | null;
     detalhes: AlimentoDetalhes;
-    nomeGrupo?: string
+    nomeGrupo: string
 }

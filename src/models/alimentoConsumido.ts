@@ -12,7 +12,7 @@ export const AlimentoConsumidoSchema = new Schema<IAlimentoConsumido>({
   criadoPor: { type: String, required: true },
   removidoEm: { type: Date, default: null, required: false },
   detalhes: { type: AlimentoDetalhesSchema, required: true },
-  nomeGrupo: {type: String}
+  nomeGrupo: {type: String, required: true }
 });
 
 const AlimentoConsumidoModel = mongoose.model<IAlimentoConsumido>(

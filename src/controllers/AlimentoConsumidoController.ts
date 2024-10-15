@@ -4,8 +4,9 @@ import Alimento from "../models/alimento";
 import Usuario from "../models/usuarios";
 import Categoria from "../models/categoria";
 import DietaDiariaModel from "../models/dietaDiaria";
+import definirDietaDiaria from "../utils/definirDietaDiaria";
 
-class AlimentoConsumidoConctroller {
+class AlimentoConsumidoController {
   //   async create(req: Request, res: Response): Promise<Response> {
   //     const { nome, preparo, porcao, detalhes, quantidade } = req.body;
   //     const userId = req.body.userId;
@@ -40,23 +41,24 @@ class AlimentoConsumidoConctroller {
   async create(req: Request, res: Response): Promise<Response> {
     const { _id, porcao, quantidade, nomeGrupo } = req.body;
     const userId = req.body.userId;
-
-    if (!_id && !porcao && !quantidade) {
+  
+    if (!_id && !porcao && !quantidade && !nomeGrupo ) {
       return res.status(401).json({ message: "Preencha todos os campos." });
     }
-
+  
     try {
       const usuario = await Usuario.findById(userId);
-
       if (!usuario) {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
-
-      const alimento = await Alimento.findById(_id)
+  
+      const alimento = await Alimento.findById(_id);
       if (!alimento) {
         return res.status(404).json({ message: "Alimento não encontrado" });
       }
+  
       const proporcaoPorcao = porcao / Number(alimento.porcao);
+  
       const alimentoConsumidoSalvo = await AlimentoConsumido.create({
         nome: alimento.nome,
         preparo: alimento.preparo,
@@ -74,37 +76,52 @@ class AlimentoConsumidoConctroller {
           fibras: alimento.detalhes.fibras * proporcaoPorcao * quantidade,
           lipidios: alimento.detalhes.lipidios * proporcaoPorcao * quantidade,
         },
-        nomeGrupo: nomeGrupo
+        nomeGrupo: nomeGrupo,
       });
-
+  
+      // Atualiza ou cria a dieta diária
+      await definirDietaDiaria.criarDietaDiaria(userId);
+  
       const hoje = new Date();
       const dietaDoDia = await DietaDiariaModel.findOne({
         usuarioId: userId,
         dia: {
-          $gte: new Date(hoje.setHours(0, 0, 0, 0)),  // Início do dia
-          $lt: new Date(hoje.setHours(23, 59, 59, 999)) // Fim do dia
+          $gte: new Date(hoje.setHours(0, 0, 0, 0)), // Início do dia
+          $lt: new Date(hoje.setHours(23, 59, 59, 999)), // Fim do dia
         },
+        removidoEm: null
       });
   
       if (dietaDoDia && alimentoConsumidoSalvo.nomeGrupo) {
-     
-        let grupoExistente = dietaDoDia.gruposConsumo.find(grupo => grupo.nome === nomeGrupo);
+        // Verifica se o grupo de consumo já existe
+        let grupoConsumo = dietaDoDia.gruposConsumo.find(
+            (grupo) => grupo.nome === alimentoConsumidoSalvo.nomeGrupo
+        );
+    
+        if (!grupoConsumo) {
+            // Se não existe, cria um novo grupo de consumo
+            grupoConsumo = {
+                nome: alimentoConsumidoSalvo.nomeGrupo,
+                alimentosConsumidos: [alimentoConsumidoSalvo],
+            };
+            dietaDoDia.gruposConsumo.push(grupoConsumo);
+        } 
+           
+            const alimentoExistente = grupoConsumo.alimentosConsumidos.find(
+                (alimento) => alimento._id === alimentoConsumidoSalvo._id // ou outra propriedade única
+            );
+    
+            if (!alimentoExistente) {
+                grupoConsumo.alimentosConsumidos.push(alimentoConsumidoSalvo);  
+            } 
 
-            if (!grupoExistente) {
-                grupoExistente = { nome: nomeGrupo, alimentosConsumidos: [] };
-                dietaDoDia.gruposConsumo.push(grupoExistente);
-            }
-
-            // Adiciona o alimento consumido ao grupo existente
-            grupoExistente.alimentosConsumidos.push(alimentoConsumidoSalvo);
-
-            await dietaDoDia.save();
+        
+        await dietaDoDia.save();
     }
+    
       return res.status(201).json(alimentoConsumidoSalvo);
     } catch (error) {
-      return res
-        .status(500)
-        .json({ message: "Erro ao criar o consumo", error });
+      return res.status(500).json({ message: "Erro ao criar o consumo", error });
     }
   }
 
@@ -227,22 +244,27 @@ class AlimentoConsumidoConctroller {
         },
       });
   
-      if (dietaDoDia) {
-        dietaDoDia.gruposConsumo.alimentosConsumidos = dietaDoDia.alimentosConsumidos.filter(alimentoConsumido => 
-          alimentoConsumido._id.toString() !== id
-        );
-    
+      if (dietaDoDia && alimento.nomeGrupo) {
+
+        const grupo = dietaDoDia.gruposConsumo.find(grupo => grupo.nome === alimento.nomeGrupo);
+
+        if (grupo) {
+          grupo.alimentosConsumidos = grupo.alimentosConsumidos.filter(alimentoConsumido => 
+            alimentoConsumido._id.toString() !== id
+          );
+
         await dietaDoDia.save();
       }
   
-      
 
-      return res.status(200).json({ message: "Alimento deletado com sucesso" });
-    } catch (error) {
+    } 
+    return res.status(200).json({ message: "Alimento deletado com sucesso" });
+  }
+    catch (error) {
       console.log(error)
       return res.status(500).json({ message: "Erro ao deletar alimento", error });
     }
   }
 }
 
-export default new AlimentoConsumidoConctroller()
+export default new AlimentoConsumidoController()

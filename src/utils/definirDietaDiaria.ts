@@ -1,6 +1,6 @@
 import { DiasSemana } from "../enums/DiasSemana";
 import { IAlimentoConsumido } from "../Interfaces/IAlimento";
-import { IDietaDiaria, IDietaFixa } from "../Interfaces/IDieta";
+import { IDietaDiaria, IDietaFixa, IGrupoConsumo } from "../Interfaces/IDieta";
 import AlimentoConsumidoModel from "../models/alimentoConsumido";
 import DietaDiariaModel from "../models/dietaDiaria";
 import DietaFixaModel from "../models/dietaFixa";
@@ -13,50 +13,84 @@ class DefinirDietaDiaria {
         return daysOfWeek[dayIndex]; 
     };
 
-    public async criarDietaDiaria(userId:string) {
-        const hoje = new Date()
+    public async criarDietaDiaria(userId: string) {
+        const hoje = new Date();
         const diaAtual = this.diaAtualDaSemana();
-
-        const dietaDiaria = await DietaDiariaModel.findOne({
+    
+        // Verifica se já existe uma dieta diária para o usuário no dia atual
+        const dietaDiariaExistente = await DietaDiariaModel.findOne({
             usuarioId: userId,
             dia: {
-                $gte: new Date(hoje.setHours(0, 0, 0, 0)), 
-                $lt: new Date(hoje.setHours(23, 59, 59, 999)) 
-            } 
-        })
-
-        if(dietaDiaria){
-            return
-        }
-        
-        const dietaDoDia = await DietaFixaModel.findOne({
-            usuarioId: userId,
-            diaSemana: diaAtual 
+                $gte: new Date(hoje.setHours(0, 0, 0, 0)),
+                $lt: new Date(hoje.setHours(23, 59, 59, 999))
+            },
+            removidoEm: null
         });
-
-        const alimentosConsumidos:IAlimentoConsumido[] = await AlimentoConsumidoModel.find({
+    
+        // Se já existe uma dieta diária para hoje, não cria uma nova
+        if (dietaDiariaExistente) {
+            return;
+        }
+    
+        // Busca a dieta fixa para o dia da semana atual
+        const dietaDoDiaFixa = await DietaFixaModel.findOne({
+            usuarioId: userId,
+            diaSemana: diaAtual,
+            removidoEm: null
+        });
+    
+        if (!dietaDoDiaFixa) {
+            return null; // Se não houver dieta fixa para o dia, não cria nada
+        }
+    
+        // Busca os alimentos consumidos no dia atual
+        const alimentosConsumidos: IAlimentoConsumido[] = await AlimentoConsumidoModel.find({
             criadoPor: userId,
             criadoEm: {
-                $gte: new Date(hoje.setHours(0, 0, 0, 0)), 
-                $lt: new Date(hoje.setHours(23, 59, 59, 999)) 
+                $gte: new Date(hoje.setHours(0, 0, 0, 0)),
+                $lt: new Date(hoje.setHours(23, 59, 59, 999))
+            },
+            removidoEm: null
+        });
+        
+        // Mapeia os grupos de consumo com base nos alimentos consumidos
+        const gruposConsumoMap = new Map<string, IGrupoConsumo>(); // Um mapa para agrupar por nomeGrupo
+        
+        alimentosConsumidos.forEach(alimento => {
+            const grupoNome = alimento.nomeGrupo;
+        
+            // Verifica se o grupo já existe no mapa
+            if (gruposConsumoMap.has(grupoNome)) {
+                // Se o grupo já existir, adiciona o alimento à lista de alimentosConsumidos do grupo
+                gruposConsumoMap.get(grupoNome)!.alimentosConsumidos.push(alimento);
+            } else {
+                // Se o grupo não existir, cria um novo grupo com o nome e o alimento
+                gruposConsumoMap.set(grupoNome, {
+                    nome: grupoNome,
+                    alimentosConsumidos: [alimento]
+                });
             }
         });
 
-        if(dietaDoDia){
-            const novaDietaDiaria = new DietaDiariaModel({
-                usuarioId: userId,
-                diaSemana: diaAtual,
-                dia: new Date,
-                detalhes: dietaDoDia.detalhes,
-                grupos: dietaDoDia.grupos,
-                alimentosConsumidos: alimentosConsumidos
-            });
-            await novaDietaDiaria.save();
-            return novaDietaDiaria;
-        }
-
-        return null;      
-    }
+        // Converte o mapa em um array de grupos de consumo
+        const gruposConsumo = Array.from(gruposConsumoMap.values());
+        
+        // Cria a nova dieta diária com base na dieta fixa e os alimentos consumidos
+        const novaDietaDiaria = new DietaDiariaModel({
+            usuarioId: userId,
+            diaSemana: diaAtual,
+            dia: new Date(),
+            detalhes: dietaDoDiaFixa.detalhes,
+            grupos: dietaDoDiaFixa.grupos, // Grupos da dieta fixa
+            gruposConsumo: gruposConsumo // Grupos de consumo com alimentos consumidos agrupados
+        });
+        
+        // Salva a nova dieta diária
+        await novaDietaDiaria.save();
+        return novaDietaDiaria;
+    }   
+    
+    
 
     public async atualizarDietaDiaria(userId:string, dieta:IDietaFixa){
         const diaSemanaAtual = this.diaAtualDaSemana();
