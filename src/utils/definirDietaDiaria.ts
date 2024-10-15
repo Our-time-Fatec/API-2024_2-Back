@@ -23,13 +23,13 @@ class DefinirDietaDiaria {
             dia: {
                 $gte: new Date(hoje.setHours(0, 0, 0, 0)),
                 $lt: new Date(hoje.setHours(23, 59, 59, 999))
-            },
-            removidoEm: null
+            }
         });
     
-        // Se já existe uma dieta diária para hoje, não cria uma nova
+        // Se já existe uma dieta diária para hoje, não cria uma nova, apenas a reativa
         if (dietaDiariaExistente) {
-            return;
+             dietaDiariaExistente.removidoEm = null
+             return await dietaDiariaExistente.save();
         }
     
         // Busca a dieta fixa para o dia da semana atual

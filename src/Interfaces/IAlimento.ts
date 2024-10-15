@@ -20,6 +20,7 @@ export interface AlimentoDetalhes {
 }
 
 export interface IAlimentoConsumido {
+    alimentoId: string,
     _id: string;
     nome: string;
     preparo: string;

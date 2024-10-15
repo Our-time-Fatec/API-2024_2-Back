@@ -4,7 +4,7 @@ import auth from "./authRoutes"
 import alimento from "./alimentoRoutes"
 import categoria from "./categoriaRoutes"
 import dieta from "./dietaRoutes"
-import dietaDiaria from "./dietaDiaria"
+import dietaDiaria from "./dietaDiariaRoutes"
 import alimentoConsumido from "./alimentoConsumidoRoutes"
 import authMiddleware from "../middlewares/authMiddleware";
 

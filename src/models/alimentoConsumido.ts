@@ -3,6 +3,7 @@ import { IAlimentoConsumido } from "../Interfaces/IAlimento";
 import { AlimentoDetalhesSchema } from "./alimento";
 
 export const AlimentoConsumidoSchema = new Schema<IAlimentoConsumido>({
+  alimentoId: {type: String},
   nome: { type: String, required: true },
   preparo: { type: String, required: true },
   porcao: { type: Number, required: true },

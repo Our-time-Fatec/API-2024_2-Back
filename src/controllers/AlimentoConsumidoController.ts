@@ -60,6 +60,7 @@ class AlimentoConsumidoController {
       const proporcaoPorcao = porcao / Number(alimento.porcao);
   
       const alimentoConsumidoSalvo = await AlimentoConsumido.create({
+        alimentoId: _id,
         nome: alimento.nome,
         preparo: alimento.preparo,
         categoriaCodigo: alimento.categoriaCodigo,
