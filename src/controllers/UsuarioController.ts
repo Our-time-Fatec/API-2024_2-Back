@@ -185,7 +185,7 @@ class UsuarioController {
             }
 
             await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
-            await definirDietaDiaria.criarDietaDiaria(userId)
+       
 
             const dataAtualInicio = moment().startOf('day').toDate();
             const dataAtualFim = moment().endOf('day').toDate();

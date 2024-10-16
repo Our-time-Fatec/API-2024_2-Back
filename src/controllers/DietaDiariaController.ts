@@ -10,6 +10,7 @@ import DietaFixaModel from "../models/dietaFixa";
 import calcularDetalhesDieta from "../utils/calcularDetalhesDieta";
 import { DiasSemana } from "../enums/DiasSemana";
 import DietaDiariaModel from "../models/dietaDiaria";
+import definirDietaDiaria from "../utils/definirDietaDiaria";
 
 class DietaDiariaController {
   static async listarDietas(req: Request, res: Response): Promise<Response> {
@@ -34,6 +35,8 @@ class DietaDiariaController {
       if (typeof userId !== "string") {
         return res.status(400).json({ message: "Parâmetro userId inválido." });
       }
+
+      await definirDietaDiaria.criarDietaDiaria(userId)
 
       const filtro: any = {
         usuarioId: userId,
@@ -73,6 +76,8 @@ class DietaDiariaController {
         if (typeof userId !== "string") {
             return res.status(400).json({ message: "Parâmetro userId inválido." });
         }
+
+        await definirDietaDiaria.criarDietaDiaria(userId)
 
         const diaAtual = new Date();
 
