@@ -35,9 +35,9 @@ app.post('/send-verification-email', async (req, res) => {
 
 // Envia o email para o reset da senha
 app.post('/send-reset-pass', async (req, res) => {
-    const { email } = req.body;
+    const { email, resetLink } = req.body;
 
-    const success = await sendPasswordResetEmail(email);
+    const success = await sendPasswordResetEmail(email,resetLink);
     
     if (success) {
         res.status(200).json({ message: 'Email sent successfully' });

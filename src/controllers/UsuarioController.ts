@@ -226,7 +226,7 @@ class UsuarioController {
     }
 
     public async editPassword(req: Request, res: Response):Promise<Response>{
-        const { userId, senha } = req.body;
+        const { email, senha } = req.body;
 
         if (!senha) {
             return res.status(400).json({ message: "Nova senha é obrigatória" });
@@ -239,7 +239,7 @@ class UsuarioController {
         }
 
         try{
-            const usuario = await Usuario.findOne({ _id:userId, removidoEm: null}).select('+senha');
+            const usuario = await Usuario.findOne({ email, removidoEm: null}).select('+senha');
             if(!usuario) {
                 return res.status(404).json({ message: "Usuário não encontrado"});
             }
@@ -254,6 +254,23 @@ class UsuarioController {
             console.error('Erro ao atualizar a senha', error);
             return res.status(500).json({message:"Erro ao atualizar a senha", error: error.message})
         }
+    }
+
+    public async verificarEmail(req: Request, res: Response):Promise<Response>{
+        const { email } = req.body;
+
+    try {
+        const user = await Usuario.findOne({ email });
+
+        if (user) {
+            return res.status(200).json({ exists: true });
+        } else {
+            return res.status(200).json({ exists: false });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Ocorreu um erro ao verificar o e-mail." });
+    }
     }
 
 }

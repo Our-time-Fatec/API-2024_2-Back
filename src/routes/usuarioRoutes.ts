@@ -11,6 +11,7 @@ routes.put("/", authMiddleware, controller.update);
 routes.get("/mydetails", authMiddleware, controller.getUsuarioDetalhes);
 routes.delete("/", authMiddleware, controller.delete);
 routes.put("/pass", controller.editPassword);
+routes.get("/verificar-email", controller.verificarEmail);
 
 
 

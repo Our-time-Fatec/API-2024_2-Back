@@ -25,12 +25,12 @@ const sendVerificationEmail = async (email: string) => {
     return !!transportado;
 }
 
-const sendPasswordResetEmail = async (email: string) => {
+const sendPasswordResetEmail = async (email: string, resetLink: string) => {
     const mailOptions = {
         from: 'davincitestes@gmail.com',
         to: email,
         subject: 'Redefinição de Senha',
-        text: `Clique no link para redefinir sua senha: `
+        html: `Clique no link para redefinir sua senha: <a href="${resetLink}">${resetLink}</a>`
     };
 
     const transportado = await transporter.sendMail(mailOptions);
