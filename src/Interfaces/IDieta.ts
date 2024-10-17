@@ -42,5 +42,5 @@ export interface IDietaDiaria extends Document {
 
 export interface IGrupoConsumo {
     nome: string,
-    alimentosConsumidos: IAlimentoConsumido[];
+    alimentos: IAlimentoConsumido[];
 }

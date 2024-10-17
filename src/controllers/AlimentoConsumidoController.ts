@@ -105,17 +105,17 @@ class AlimentoConsumidoController {
           // Se não existe, cria um novo grupo de consumo
           grupoConsumo = {
             nome: alimentoConsumidoSalvo.nomeGrupo,
-            alimentosConsumidos: [alimentoConsumidoSalvo],
+            alimentos: [alimentoConsumidoSalvo],
           };
           dietaDoDia.gruposConsumo.push(grupoConsumo);
         }
 
-        const alimentoExistente = grupoConsumo.alimentosConsumidos.find(
+        const alimentoExistente = grupoConsumo.alimentos.find(
           (alimento) => alimento._id === alimentoConsumidoSalvo._id // ou outra propriedade única
         );
 
         if (!alimentoExistente) {
-          grupoConsumo.alimentosConsumidos.push(alimentoConsumidoSalvo);
+          grupoConsumo.alimentos.push(alimentoConsumidoSalvo);
         }
 
         await dietaDoDia.save();
@@ -266,7 +266,7 @@ class AlimentoConsumidoController {
         );
 
         if (grupo) {
-          grupo.alimentosConsumidos = grupo.alimentosConsumidos.filter(
+          grupo.alimentos = grupo.alimentos.filter(
             (alimentoConsumido) => alimentoConsumido._id.toString() !== id
           );
 
@@ -348,7 +348,7 @@ class AlimentoConsumidoController {
         );
 
         if (grupo) {
-          const alimentoNoGrupo = grupo.alimentosConsumidos.find(
+          const alimentoNoGrupo = grupo.alimentos.find(
             (alimento) => alimento.alimentoId === alimentoConsumido.alimentoId
           );
 
@@ -356,7 +356,7 @@ class AlimentoConsumidoController {
             alimentoNoGrupo.quantidade = alimentoConsumido.quantidade;
 
             if (Number(alimentoNoGrupo.quantidade) <= 0) {
-              grupo.alimentosConsumidos = grupo.alimentosConsumidos.filter(
+              grupo.alimentos = grupo.alimentos.filter(
                 (alimento) =>
                   alimento._id.toString() !==
                     alimentoConsumido._id.toString() ||

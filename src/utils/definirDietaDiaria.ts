@@ -62,12 +62,12 @@ class DefinirDietaDiaria {
             // Verifica se o grupo já existe no mapa
             if (gruposConsumoMap.has(grupoNome)) {
                 // Se o grupo já existir, adiciona o alimento à lista de alimentosConsumidos do grupo
-                gruposConsumoMap.get(grupoNome)!.alimentosConsumidos.push(alimento);
+                gruposConsumoMap.get(grupoNome)!.alimentos.push(alimento);
             } else {
                 // Se o grupo não existir, cria um novo grupo com o nome e o alimento
                 gruposConsumoMap.set(grupoNome, {
                     nome: grupoNome,
-                    alimentosConsumidos: [alimento]
+                    alimentos: [alimento]
                 });
             }
         });

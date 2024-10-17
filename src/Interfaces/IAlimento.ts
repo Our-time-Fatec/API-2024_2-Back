@@ -25,7 +25,7 @@ export interface IAlimentoConsumido {
     nome: string;
     preparo: string;
     porcao: Number;
-    quantidade: Number;
+    quantidade: number;
     categoriaCodigo: Number;
     criadoEm: Date;
     criadoPor: string;

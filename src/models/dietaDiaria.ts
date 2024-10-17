@@ -6,7 +6,7 @@ import { AlimentoConsumidoSchema } from "./alimentoConsumido";
 
 const GruposConsumidosSchema = new Schema<IGrupoConsumo>({
     nome: {type: String, required: true},
-    alimentosConsumidos: {type: [AlimentoConsumidoSchema]}
+    alimentos: {type: [AlimentoConsumidoSchema]}
 })
 
 const DietaDiariaSchema = new Schema<IDietaDiaria>({

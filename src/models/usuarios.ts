@@ -111,7 +111,7 @@
       },
       metaAgua:{
         type: Number,
-        required: true
+        // required: true
       },
       agua:{
         type: AguaSchema,
