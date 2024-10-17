@@ -292,6 +292,7 @@ class AlimentoConsumidoController {
       if (!alimento) {
         return res.status(404).json({ message: "Alimento não encontrado" });
       }
+      
       const hoje = new Date();
       // Agora, procurar o alimento consumido na tabela AlimentosConsumidos
       const alimentoConsumido = await AlimentoConsumido.findOne({

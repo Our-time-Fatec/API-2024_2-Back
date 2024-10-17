@@ -16,6 +16,7 @@ export interface IAlimentoDieta {
 }
 
 export interface IGrupo {   
+    _id?: string,
     nome: string;
     alimentos: IAlimentoDieta[];
 }
@@ -41,6 +42,7 @@ export interface IDietaDiaria extends Document {
 }
 
 export interface IGrupoConsumo {
+    _id?: string,
     nome: string,
     alimentos: IAlimentoConsumido[];
 }
