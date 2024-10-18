@@ -53,7 +53,7 @@ class UsuarioController {
             const response = await Usuario.create({
                 nome, sobrenome,
                 email, senha: senhaCriptografada, dataDeNascimento, idade, peso, altura, nivelDeSedentarismo, sexo, objetivo,
-                IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia, metaAgua, agua:{aguaIngerida: 0}
+                IMC, taxaMetabolismoBasal, gastoDeCaloria, consumoDeCaloriaPorDia, metaAgua, agua:{aguaIngerida: 0, atualizacao: new Date()}
             });
 
             const token = generateToken(response._id, response.email);

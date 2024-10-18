@@ -130,7 +130,7 @@
 
   UsuarioSchema.pre("save", function (next) {
     this.ultimaVezUtilizado = new Date();
-    this.agua.atualizacao = new Date();
+    // this.agua.atualizacao = new Date();
     next();
   });
 
