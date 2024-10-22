@@ -1,6 +1,3 @@
-import { IUsuario } from "../Interfaces/IUsuario";
-import UsuarioModel from "../models/usuarios";
-
 export default class UsuarioFunc {
   public calculadoraIMC(altura: number, peso: number): number {
     let alt = altura / 100;

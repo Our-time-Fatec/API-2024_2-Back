@@ -5,5 +5,6 @@ declare namespace NodeJS {
     DB_URI_1: string;
     DB_URI: string;
     ADMIN_PASSWORD: string;
+    NODE_ENV?:string
   }
 }

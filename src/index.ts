@@ -19,6 +19,10 @@ app.use(express.json());
 // Configurar o CORS para permitir requisições de qualquer origem
 app.use(cors());
 
+// Define as rotas antes de iniciar o servidor
+app.use(routes);
+
+// Função para iniciar o servidor após conexão com o banco e seeding
 // Função para iniciar o servidor após conexão com o banco e seeding
 async function startServer() {
     try {
@@ -30,14 +34,12 @@ async function startServer() {
         await seedDatabase();
         console.log("Banco de dados seedado com sucesso!");
 
-        // Inicializa o servidor na porta especificada
-        app.listen(PORT, () => {
-            console.log(`Servidor rodando na porta ${PORT}...`);
-        });
-
-        // Define as rotas após o seeding e a conexão
-        app.use(routes);
-
+        // Apenas inicie o servidor se não estiver em ambiente de teste
+        if (process.env.NODE_ENV !== 'test') {
+            app.listen(PORT, () => {
+                console.log(`Servidor rodando na porta ${PORT}...`);
+            });
+        }
     } catch (error) {
         console.error("Erro ao iniciar a aplicação:", error);
     }
@@ -45,3 +47,6 @@ async function startServer() {
 
 // Iniciar o servidor
 startServer();
+
+
+export default app;

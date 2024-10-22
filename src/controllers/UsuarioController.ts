@@ -261,7 +261,7 @@ class UsuarioController {
     
             usuario.save()
 
-        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${aguaIngerida}ml de agua!`})
+        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${aguaIngerida}ml de agua!`, aguaIngerida: usuario.agua.aguaIngerida})
     }
         catch(error){
             console.error('Erro ao buscar informações do usuário:', error);
@@ -283,7 +283,7 @@ class UsuarioController {
 
         hooks.checagemAgua(usuario.agua.atualizacao, usuario, DataForcada)
 
-        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${usuario.agua.aguaIngerida}ml de agua!`})
+        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${usuario.agua.aguaIngerida}ml de agua!`, aguaIngerida: usuario.agua.aguaIngerida})
     }
 
 }

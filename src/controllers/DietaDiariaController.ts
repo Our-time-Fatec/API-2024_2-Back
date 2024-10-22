@@ -232,7 +232,7 @@ class DietaDiariaController {
         return res.status(400).json({ message: "ID da dieta é necessário." });
       }
 
-      const dieta = await DietaFixaModel.findOne({
+      const dieta = await DietaDiariaModel.findOne({
         _id: dietaId,
         removidoEm: null,
       });
