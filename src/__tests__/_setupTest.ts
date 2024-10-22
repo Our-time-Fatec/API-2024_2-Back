@@ -1,16 +1,19 @@
 import request from "supertest";
 import app from "../index";
 import mongoose from 'mongoose';
-
-require('dotenv').config({ path: '.env.dev' });
+import dotenv from "dotenv"
+dotenv.config({ path: '.env.dev' });
 
 export const connectTestDB = async () => {
+  
+dotenv.config({ path: '.env.dev' });
   const mongoUri = process.env.DB_URI;
   if (!mongoUri) {
     throw new Error('A variável de ambiente DB_URI não está definida');
   }
 
   await mongoose.connect(mongoUri);
+  console.log(`Rodando na porta ${process.env.PORT} com o banco de dados ${mongoUri}`)
 
   // Verifica se o usuário já existe antes de criar um novo
   const existingUser = await mongoose.model('Usuario').findOne({ email: "sales@gmail.com" });
