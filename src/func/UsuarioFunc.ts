@@ -1,5 +1,5 @@
 export default class UsuarioFunc {
-  public calculadoraIMC(altura: number, peso: number): number {
+  public calculadoraIMC(altura: number, peso: number): number  {
     let alt = altura / 100;
     let imc = peso / (alt * alt);
     return imc;
@@ -23,12 +23,12 @@ export default class UsuarioFunc {
     return idade;
   }
 
-  public async calculadoraTaxaMetabolismoBasal(
+  public calculadoraTaxaMetabolismoBasal(
     peso: number,
     altura: number,
     idade: number,
     sexo: string
-  ): Promise<number> {
+  ): number {
     let taxaMetabolismoBasal = 0;
 
     if (altura < 100) {
@@ -44,10 +44,10 @@ export default class UsuarioFunc {
     return taxaMetabolismoBasal;
   }
 
-  public async calculadoraCaloriasGastas(
+  public calculadoraCaloriasGastas(
     nivelDeSedentarismo: string,
     taxaMetabolismoBasal: number
-  ): Promise<number> {
+  ): number {
     let TMB = taxaMetabolismoBasal;
     let caloriasGastas = 0;
     switch (nivelDeSedentarismo) {
@@ -70,10 +70,10 @@ export default class UsuarioFunc {
     return caloriasGastas;
   }
 
-  public async calcularConsumoDeCaloriaPorDia(
+  public calcularConsumoDeCaloriaPorDia(
     objetivo: string,
     gastoDeCaloria: number
-  ): Promise<number> {
+  ): number {
     let consumoDeCaloriaPorDia = 0;
     let x = gastoDeCaloria;
     switch (objetivo) {
@@ -93,7 +93,7 @@ export default class UsuarioFunc {
     return consumoDeCaloriaPorDia;
   }
 
-  public async calcularMetaAgua(peso: number): Promise<number> {
+  public async calcularMetaAgua(peso: number): Promise<number>  {
     const metaAgua = peso * 35;
     return metaAgua;
   }

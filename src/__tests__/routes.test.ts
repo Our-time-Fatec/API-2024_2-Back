@@ -2,6 +2,7 @@ import request from "supertest";
 import app from "../index"; // Aqui você deve importar seu arquivo principal da aplicação
 import { connectTestDB, createAndLogin, disconnectTestDB } from "./_setupTest";
 import UsuarioFunc from "../func/UsuarioFunc";
+import { DiasSemana } from "../enums/DiasSemana";
 
 let usuarioId: string;
 let authToken: string;
@@ -13,18 +14,28 @@ let alimentoId2: string;
 let dietaId: string;
 let dietaDiariaId: string;
 
-beforeAll(async () => {
-  await connectTestDB();
+const hoje = new Date();
+const diaDaSemanaHoje = hoje.getDay(); // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
+const diaSemanaAtual = Object.values(DiasSemana)[diaDaSemanaHoje];
+const diaSemanaAtualKey = Object.keys(DiasSemana)[diaDaSemanaHoje] as keyof typeof DiasSemana;
 
-  const loginResponse = await request(app).post("/auth/login").send({
-    email: "sales@gmail.com",
-    senha: "123123",
+  // Supondo que isso esteja dentro de um bloco `beforeAll`
+  beforeAll(async () => {
+    await connectTestDB();
+
+    // jest.useFakeTimers().setSystemTime(new Date('2024-10-19T00:00:00Z'));
+  
+    const loginResponse = await request(app).post("/auth/login").send({
+      email: "sales@gmail.com",
+      senha: "123123",
+    });
+  
+    generalAuthToken = loginResponse.body.token;
   });
-
-  generalAuthToken = loginResponse.body.token;
-});
-
+  
+  // Restaurar a implementação original do Date após todos os testes
 afterAll(async () => {
+
   console.log("Deletando banco de dados...");
   await disconnectTestDB();
   console.log("Deletando banco de dados deletado");
@@ -33,7 +44,9 @@ afterAll(async () => {
 describe("Routes", () => {
   // Rotas de usuário
   describe("Testando as rotas de Usuário", () => {
-    it("Deve criar um usuário com sucesso", async () => {
+    it("Deve criar um usuário com sucesso e medir o tempo de resposta", async () => {
+      const start = Date.now(); // Inicia a medição de tempo
+
       const response = await request(app).post("/usuario").send({
         nome: "André",
         sobrenome: "Sales",
@@ -47,6 +60,12 @@ describe("Routes", () => {
         objetivo: "Dieta de Ganho de Massa Muscular",
       });
 
+      const end = Date.now(); 
+      const duration = end - start; 
+
+      expect(duration).toBeLessThan(500); 
+
+      // Valida o conteúdo da resposta
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty("usuario");
       expect(response.body.usuario.email).toBe("andre@gmail.com");
@@ -230,6 +249,35 @@ describe("Routes", () => {
 
       authToken = loginResponse.body.token;
     });
+
+    it("Deve medir o tempo de criar uma conta e se logar nela", async () => {
+
+      const start = Date.now(); // Inicia a medição de tempo
+       await request(app).post("/usuario").send({
+        nome: "Teste",
+        sobrenome: "Silva",
+        email: "teste.silva@example.com",
+        senha: "123123",
+        dataDeNascimento: "2005-06-27T12:30:00Z",
+        peso: 60,
+        altura: 165,
+        nivelDeSedentarismo: "Sedentário",
+        sexo: "Masculino",
+        objetivo: "Dieta de Ganho de Massa Muscular",
+      });
+
+      const response = await request(app).post("/auth/login").send({
+        email: "teste.silva@example.com",
+        senha: "123123",
+      });
+
+      const end = Date.now(); 
+      const duration = end - start; 
+
+      expect(duration).toBeLessThan(500); 
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("token");
+    })
   });
 
   // Rotas de alimento
@@ -344,21 +392,32 @@ describe("Routes", () => {
 
   // Rotas de alimento consumido
   describe("Testando as rotas de Alimento Consumido", () => {
-    it("Deve criar um alimento com sucesso", async () => {
-      const response = await request(app)
-        .post("/alimentoConsumido")
-        .set("Authorization", `${generalAuthToken}`)
-        .send({
-          _id: alimentoId1,
-          porcao: 100,
-          quantidade: 2,
-          nomeGrupo: "Café da Tarde",
-        });
+  
 
-      expect(response.status).toBe(201);
-      expect(response.body).toHaveProperty("detalhes");
-      expect(response.body).toHaveProperty("nomeGrupo");
+    afterAll(() => {
+        // Restaurar a implementação original do Date
+        jest.restoreAllMocks();
     });
+
+    it("Deve criar um alimento com sucesso", async () => {
+        const response = await request(app)
+            .post("/alimentoConsumido")
+            .set("Authorization", `${generalAuthToken}`)
+            .send({
+                _id: alimentoId1,
+                porcao: 100,
+                quantidade: 2,
+                nomeGrupo: "Café da Tarde",
+            });
+
+        expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty("detalhes");
+        expect(response.body).toHaveProperty("nomeGrupo");
+        expect(response.body).toHaveProperty("diaSemana");
+        expect(typeof response.body.diaSemana).toBe("string");
+        expect(response.body.diaSemana).toBe(diaSemanaAtual)
+    });
+
 
     it("Deve remover UMA unidade do alimento com sucesso", async () => {
       const response = await request(app)
@@ -384,6 +443,24 @@ describe("Routes", () => {
 
       expect(response.status).toBe(200);
       expect(response.body.alimentosComCategoria.length).toBeGreaterThan(0);
+    });
+
+    it("Deve listar todos os alimentos consumidos nessa semana", async () => {
+      const response = await request(app)
+        .get("/alimentoConsumido/me/semana")
+        .set("Authorization", `${generalAuthToken}`);
+
+      expect(response.status).toBe(200);
+      
+      // Expectativa ajustada para verificar a estrutura de resposta
+      expect(response.body).toHaveProperty("Domingo")
+      expect(response.body.Domingo).toHaveProperty("total")
+      expect(response.body.Domingo).toHaveProperty("dia")
+      expect(response.body.Domingo.dia).toBeTruthy()
+      expect(response.body.Domingo.total).toHaveProperty("valorEnergetico")
+      expect(Array.isArray(response.body.Domingo.alimentos)).toBeTruthy();
+      expect(response.body).toHaveProperty(diaSemanaAtual);
+      expect(Array.isArray(response.body[diaSemanaAtual].alimentos)).toBe(true);
     });
 
     it("Deve remover dar erro ao tentar remover mais vezes um alimento que sua quantidade", async () => {
@@ -452,7 +529,7 @@ describe("Routes", () => {
               alimentos: [
                 {
                   alimentoId: alimentoId1,
-                  nome: "Arroz (polido, parboilizado, agulha, agulhinha, etc.)",
+                  nome: "Arroz (polido, parabolizado, agulha, agulhinha, etc.)",
                   preparo: "Não se aplica",
                   porcao: 100,
                   quantidade: 2,
@@ -507,7 +584,7 @@ describe("Routes", () => {
               alimentos: [
                 {
                   alimentoId: alimentoId1,
-                  nome: "Arroz (polido, parboilizado, agulha, agulhinha, etc.)",
+                  nome: "Arroz (polido, parabolizado, agulha, agulhinha, etc.)",
                   preparo: "Não se aplica",
                   porcao: 100,
                   quantidade: 2,
@@ -609,8 +686,8 @@ describe("Routes", () => {
     });
   });
 
-  // Rotas dieta diaria
-  describe("Testando rotas de Dietas Diarias", () => {
+  // Rotas dieta diária
+  describe("Testando rotas de Dietas Diárias", () => {
     createAndLogin()
       .then((id) => {
         dietaAuthId = id;
@@ -639,7 +716,7 @@ describe("Routes", () => {
               alimentos: [
                 {
                   alimentoId: alimentoId1,
-                  nome: "Arroz (polido, parboilizado, agulha, agulhinha, etc.)",
+                  nome: "Arroz (polido, parabolizado, agulha, agulhinha, etc.)",
                   preparo: "Não se aplica",
                   porcao: 100,
                   quantidade: 2,
@@ -676,6 +753,7 @@ describe("Routes", () => {
         .set("Authorization", `${dietaAuthId}`);
 
       expect(response.body[0]).toHaveProperty("diaSemana");
+      expect(response.body[0].diaSemana).toBe(diaSemanaAtual)
       expect(response.body[0]).toHaveProperty("gruposConsumo");
       expect(response.body[0].gruposConsumo[0].alimentos[0]).toHaveProperty(
         "consumido"
@@ -785,7 +863,7 @@ describe("UsuarioFunc", () => {
       const altura = 180; // cm
       const idade = 25; // anos
       const sexo = "Masculino";
-      const tmb = await usuarioFunc.calculadoraTaxaMetabolismoBasal(
+      const tmb = usuarioFunc.calculadoraTaxaMetabolismoBasal(
         peso,
         altura,
         idade,
@@ -799,7 +877,7 @@ describe("UsuarioFunc", () => {
       const altura = 170; // cm
       const idade = 30; // anos
       const sexo = "Feminino";
-      const tmb = await usuarioFunc.calculadoraTaxaMetabolismoBasal(
+      const tmb = usuarioFunc.calculadoraTaxaMetabolismoBasal(
         peso,
         altura,
         idade,
@@ -813,7 +891,7 @@ describe("UsuarioFunc", () => {
     it("Deve calcular as calorias gastas para sedentário", async () => {
       const nivelDeSedentarismo = "Sedentário";
       const taxaMetabolismoBasal = 1800; // TMB exemplo
-      const caloriasGastas = await usuarioFunc.calculadoraCaloriasGastas(
+      const caloriasGastas = usuarioFunc.calculadoraCaloriasGastas(
         nivelDeSedentarismo,
         taxaMetabolismoBasal
       );
@@ -823,7 +901,7 @@ describe("UsuarioFunc", () => {
     it("Deve calcular as calorias gastas para moderadamente ativo", async () => {
       const nivelDeSedentarismo = "Moderadamente ativo";
       const taxaMetabolismoBasal = 1800; // TMB exemplo
-      const caloriasGastas = await usuarioFunc.calculadoraCaloriasGastas(
+      const caloriasGastas = usuarioFunc.calculadoraCaloriasGastas(
         nivelDeSedentarismo,
         taxaMetabolismoBasal
       );
@@ -835,7 +913,7 @@ describe("UsuarioFunc", () => {
     it("Deve calcular o consumo de calorias para emagrecimento", async () => {
       const objetivo = "Dieta de emagrecimento";
       const gastoDeCaloria = 2000; // Calorias gastas
-      const consumo = await usuarioFunc.calcularConsumoDeCaloriaPorDia(
+      const consumo = usuarioFunc.calcularConsumoDeCaloriaPorDia(
         objetivo,
         gastoDeCaloria
       );
@@ -845,7 +923,7 @@ describe("UsuarioFunc", () => {
     it("Deve calcular o consumo de calorias para ganho de massa muscular", async () => {
       const objetivo = "Dieta de Ganho de Massa Muscular";
       const gastoDeCaloria = 2000; // Calorias gastas
-      const consumo = await usuarioFunc.calcularConsumoDeCaloriaPorDia(
+      const consumo = usuarioFunc.calcularConsumoDeCaloriaPorDia(
         objetivo,
         gastoDeCaloria
       );

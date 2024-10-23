@@ -5,6 +5,7 @@ const routes = Router();
 
 routes.post("/", AlimentoConsumido.create);
 routes.get("/me", AlimentoConsumido.listAlimentosConsumidos);
+routes.get("/me/semana", AlimentoConsumido.listAlimentosConsumidosSemana)
 // routes.put("/:id", AlimentoConsumido.update);
 routes.delete("/:id", AlimentoConsumido.delete);
 routes.put("/delete", AlimentoConsumido.findAndDelete)

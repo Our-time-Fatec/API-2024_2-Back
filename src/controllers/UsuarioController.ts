@@ -46,9 +46,9 @@ class UsuarioController {
             const senhaCriptografada = await criptografia.criptografarSenha(senha);
             const IMC = hooks.calculadoraIMC(altura, peso);
             const idade = hooks.calculadoraIdade(dataDeNascimento);
-            const taxaMetabolismoBasal = await hooks.calculadoraTaxaMetabolismoBasal(peso, altura, idade, sexo);
-            const gastoDeCaloria = await hooks.calculadoraCaloriasGastas(nivelDeSedentarismo, taxaMetabolismoBasal);
-            const consumoDeCaloriaPorDia = await hooks.calcularConsumoDeCaloriaPorDia(objetivo, gastoDeCaloria);
+            const taxaMetabolismoBasal = hooks.calculadoraTaxaMetabolismoBasal(peso, altura, idade, sexo);
+            const gastoDeCaloria = hooks.calculadoraCaloriasGastas(nivelDeSedentarismo, taxaMetabolismoBasal);
+            const consumoDeCaloriaPorDia = hooks.calcularConsumoDeCaloriaPorDia(objetivo, gastoDeCaloria);
             const metaAgua = await hooks.calcularMetaAgua(peso)
             const response = await Usuario.create({
                 nome, sobrenome,

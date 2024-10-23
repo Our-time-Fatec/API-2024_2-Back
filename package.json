@@ -7,7 +7,7 @@
     "load": "ts-node ./src/database/load",
     "start": "ts-node ./src/index.ts",
     "dev": "ts-node-dev ./src/index.ts",
-    "teste": "jest --watch"
+    "tests": "jest --watch"
   },
   "keywords": [],
   "author": "",
