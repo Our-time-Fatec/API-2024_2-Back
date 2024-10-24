@@ -392,13 +392,6 @@ describe("Routes", () => {
 
   // Rotas de alimento consumido
   describe("Testando as rotas de Alimento Consumido", () => {
-  
-
-    afterAll(() => {
-        // Restaurar a implementação original do Date
-        jest.restoreAllMocks();
-    });
-
     it("Deve criar um alimento com sucesso", async () => {
         const response = await request(app)
             .post("/alimentoConsumido")
@@ -461,6 +454,8 @@ describe("Routes", () => {
       expect(Array.isArray(response.body.Domingo.alimentos)).toBeTruthy();
       expect(response.body).toHaveProperty(diaSemanaAtual);
       expect(Array.isArray(response.body[diaSemanaAtual].alimentos)).toBe(true);
+      expect(response.body[diaSemanaAtual].alimentos[0].consumido).toBeTruthy()
+      expect(response.body[diaSemanaAtual].alimentos[0].consumido).toBe(1)
     });
 
     it("Deve remover dar erro ao tentar remover mais vezes um alimento que sua quantidade", async () => {

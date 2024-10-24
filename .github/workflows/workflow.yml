@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - teste-unitario
   pull_request:
     branches:
       - main
@@ -18,11 +17,6 @@ jobs:
         image: mongo:5.0
         ports:
           - 27017:27017
-        # options:  >-
-        #   --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'" 
-        #   --health-interval 10s
-        #   --health-timeout 5s
-        #   --health-retries 5
         env:
           MONGO_INITDB_DATABASE: ABPunitarytest
 
@@ -63,4 +57,4 @@ jobs:
         run: npm run build
 
       - name: Run tests
-        run: npm run test
+        run: npm run teste
