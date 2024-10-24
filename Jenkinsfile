@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS_20'  // Nome da configuração que você fez para o Node.js 20.x
+        nodejs 'Node'  // Nome da configuração que você fez para o Node.js
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                nodejs('NodeJS_20') {  // Usando a configuração definida no bloco tools
+                nodejs('Node') {  // Usando a configuração correta
                     echo "Instalando dependências do Node.js"
                     bat 'npm install'  // Instala as dependências
                 }
