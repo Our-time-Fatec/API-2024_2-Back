@@ -1,27 +1,25 @@
 pipeline {
-    agent {
-        label 'ubuntu-latest'
-    }
+    agent any
 
     stages {
         stage('Checkout repository') {
             steps {
                 // Checkout the repository
-                git branch: 'main', url: 'https://github.com/your-repo-url.git'
+                git branch: 'main', url: 'https://github.com/Our-time-Fatec/API-2024_2-Back'
             }
         }
 
         stage('Set up Node.js') {
             steps {
                 // Use Node.js 20.x version
-                sh 'nvm install 20'
-                sh 'nvm use 20'
+                bat 'nvm install 20'
+                bat 'nvm use 20'
             }
         }
 
         stage('Install dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
@@ -43,7 +41,7 @@ pipeline {
             steps {
                 script {
                     // Pull and run MongoDB container
-                    docker.image('mongo:5.0').run('-d -p 27017:27017 -e MONGO_INITDB_DATABASE=ABPunitarytest mongo')
+                    bat 'docker run -d -p 27017:27017 -e MONGO_INITDB_DATABASE=ABPunitarytest mongo:5.0'
                 }
             }
         }
@@ -54,7 +52,7 @@ pipeline {
                 script {
                     waitUntil {
                         try {
-                            sh 'nc -z localhost 27017'
+                            bat 'nc -z localhost 27017'
                             return true
                         } catch (Exception e) {
                             echo 'Waiting for MongoDB...'
@@ -69,14 +67,14 @@ pipeline {
         stage('Build project') {
             steps {
                 // Build the project
-                sh 'npm run build'
+                bat 'npm run build'
             }
         }
 
         stage('Run tests') {
             steps {
                 // Run the tests
-                sh 'npm run teste'
+                bat 'npm run teste'
             }
         }
     }
@@ -84,7 +82,7 @@ pipeline {
     post {
         always {
             // Cleanup MongoDB container after the build
-            sh 'docker stop $(docker ps -q --filter ancestor=mongo:5.0) || true'
+            bat 'docker stop $(docker ps -q --filter ancestor=mongo:5.0) || true'
         }
         success {
             echo 'Build and tests passed successfully!'
