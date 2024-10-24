@@ -1,34 +1,18 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'NodeJS_20'  // Nome da configuração que você fez para o Node.js 20.x
-    }
-
     stages {
-        stage('Checkout repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Our-time-Fatec/API-2024_2-Back'
-            }
-        }
-
         stage('Install dependencies') {
             steps {
-                bat 'npm install'
+                // Usa o Node.js configurado com 'nodejs' para os passos subsequentes
+                nodejs(nodeJSInstallationName: 'Node 20.x', configId: '<config-file-provider-id>') {
+                    bat 'npm config ls'  // Exibe a configuração do npm
+                    bat 'npm install'    // Instala as dependências
+                }
             }
         }
 
-        stage('Build project') {
-            steps {
-                bat 'npm run build'
-            }
-        }
-
-        stage('Run tests') {
-            steps {
-                bat 'npm run teste'
-            }
-        }
+        // Outras etapas do pipeline...
     }
 
     post {
