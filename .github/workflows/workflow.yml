@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - teste-unitario
   pull_request:
     branches:
       - main
