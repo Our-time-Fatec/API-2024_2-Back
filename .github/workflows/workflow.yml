@@ -18,11 +18,7 @@ jobs:
         image: mongo:5.0
         ports:
           - 27017:27017
-        options: >
-          --health-cmd="mongo --eval 'db.adminCommand(\"ping\")'"
-          --health-interval=10s
-          --health-timeout=10s
-          --health-retries=5
+        options: "--health-cmd='mongo --eval \"db.adminCommand(\"ping\")\"' --health-interval=10s --health-timeout=10s --health-retries=5"
 
     steps:
       - name: Check out the repository
