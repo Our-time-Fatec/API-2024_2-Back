@@ -1,0 +1,57 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - teste-unitario
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'" 
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up .env.dev file
+        run: |
+          echo "PORT=3060" >> .env.dev
+          echo "JWT_SECRET=secretKey" >> .env.dev
+          echo "JWT_SECRET_REFRESH=secretRefresh" >> .env.dev
+          echo "DB_URI=mongodb://localhost:27017/ABPunitarytest" >> .env.dev
+          echo "ADMIN_PASSWORD=12345" >> .env.dev
+          echo "NODE_ENV=test" >> .env.dev
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run tests
+        run: npm run tests
