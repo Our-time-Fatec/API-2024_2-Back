@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout repository') {
             steps {
                 // Checkout the repository
-                git branch: 'main', url: 'https://github.com/your-repo-url.git'
+                git branch: 'main', url: 'https://github.com/Our-time-Fatec/API-2024_2-Back'
             }
         }
 
