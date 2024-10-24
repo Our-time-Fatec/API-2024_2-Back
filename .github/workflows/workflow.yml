@@ -15,13 +15,13 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:latest
+        image: mongo:5.0  
         ports:
           - 27017:27017
         options: >-
           --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'" 
           --health-interval 10s
-          --health-timeout 5s
+          --health-timeout 10s  # Aumentar o timeout
           --health-retries 5
 
     strategy:
@@ -46,7 +46,7 @@ jobs:
           echo "PORT=3060" >> .env.dev
           echo "JWT_SECRET=secretKey" >> .env.dev
           echo "JWT_SECRET_REFRESH=secretRefresh" >> .env.dev
-          echo "DB_URI=mongodb://localhost:27017/ABPunitarytest" >> .env.dev
+          echo "DB_URI=mongodb://mongodb:27017/ABPunitarytest" >> .env.dev  # Nome do serviço
           echo "ADMIN_PASSWORD=12345" >> .env.dev
           echo "NODE_ENV=test" >> .env.dev
 
