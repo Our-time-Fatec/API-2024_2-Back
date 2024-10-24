@@ -1,3 +1,5 @@
+import { DiasSemana } from "../enums/DiasSemana";
+
 export interface IAlimento extends Document {
     id: string;
     nome: string;
@@ -17,16 +19,21 @@ export interface AlimentoDetalhes {
     proteinas: number;
     fibras: number;
     lipidios: number;
+    _id?: string
 }
 
 export interface IAlimentoConsumido {
+    alimentoId: string,
+    _id: string;
     nome: string;
     preparo: string;
     porcao: Number;
-    quantidade: Number;
+    quantidade: number;
     categoriaCodigo: Number;
     criadoEm: Date;
+    diaSemana: DiasSemana;
     criadoPor: string;
     removidoEm: Date | null;
     detalhes: AlimentoDetalhes;
+    nomeGrupo: string
 }

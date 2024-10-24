@@ -1,5 +1,5 @@
 import { DiasSemana } from "../enums/DiasSemana";
-import { AlimentoDetalhes, IAlimento } from "./IAlimento";
+import { AlimentoDetalhes, IAlimento, IAlimentoConsumido } from "./IAlimento";
 
 export interface IDietaDetalhes extends AlimentoDetalhes {
 }
@@ -16,6 +16,7 @@ export interface IAlimentoDieta {
 }
 
 export interface IGrupo {   
+    _id?: string,
     nome: string;
     alimentos: IAlimentoDieta[];
 }
@@ -28,4 +29,20 @@ export interface IDietaFixa extends Document {
     removidoEm?: Date | null;
     detalhes: IDietaDetalhes;
     grupos: IGrupo[];
+}
+
+export interface IDietaDiaria extends Document {
+    usuarioId: string;
+    diaSemana: DiasSemana;
+    dia: Date;
+    detalhes: IDietaDetalhes;
+    grupos: IGrupo[];
+    removidoEm?: Date | null
+    gruposConsumo: IGrupoConsumo[]
+}
+
+export interface IGrupoConsumo {
+    _id?: string,
+    nome: string,
+    alimentos: IAlimentoConsumido[];
 }

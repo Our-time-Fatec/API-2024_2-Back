@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "066a2e90-526a-4aac-a09f-d964be0861ba",
+		"_postman_id": "8bc4c341-8e6a-4678-b57b-e952cd77a67a",
 		"name": "ABP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24836916"
+		"_exporter_id": "38382565"
 	},
 	"item": [
 		{
@@ -149,44 +149,6 @@
 					"response": []
 				},
 				{
-					"name": "Get Usuario Detalhes",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3010/usuario/mydetails",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3010",
-							"path": [
-								"usuario",
-								"mydetails"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Create Usuario",
 					"request": {
 						"method": "POST",
@@ -323,7 +285,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmRkMWIzMTExYmY1MjIzZmI3MGY4ZDkiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNTc2ODQ4NCwiZXhwIjoxNzI1ODU0ODg0fQ.ltai3UH9Z3fVbY5F2KbQFkCjbzOk3XcS_FYqbY0NgZw",
 								"type": "text"
 							}
 						],
@@ -545,13 +507,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjQ5NTEwNiwiZXhwIjoxNzI2NTgxNTA2fQ.Bt-2ytmMBZnRRuPZy2y8M0UC6pa1269oJd6oWyjtYBY",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"diaSemana\": [\"Domingo\", \"Segunda-feira\", \"Terça-feira\", \"Quarta-feira\", \"Quinta-feira\", \"Sexta-feira\", \"Sábado\"],\r\n  \"grupos\": [\r\n    {\r\n      \"nome\": \"Café da Manhã\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d7abd\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        },\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d7e25\",\r\n          \"porcao\": 100,\r\n          \"quantidade\": 1\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"nome\": \"Almoço\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d79d9\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"nome\": \"Café da Tarde\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d7abd\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        },\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d7e25\",\r\n          \"porcao\": 100,\r\n          \"quantidade\": 1\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"nome\": \"Janta\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d79d9\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+							"raw": "{\r\n  \"diaSemana\": [\"Segunda-feira\"],\r\n  \"grupos\": [\r\n    {\r\n      \"nome\": \"Café da Manhã\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d79db\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"nome\": \"Almoço\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e8391bdbd1449afd1d79db\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -586,7 +548,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"diaSemana\": \"Segunda-feira\",\r\n  \"grupos\": [\r\n    {\r\n      \"nome\": \"Café da Manhã\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e6ed7a2541b90022ae6766\",\r\n          \"porcao\": 150,\r\n          \"quantidade\": 2\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+							"raw": "{\r\n  \"diaSemana\": \"Segunda-feira\",\r\n  \"grupos\": [\r\n    {\r\n      \"nome\": \"Café da Manhã\",\r\n      \"alimentos\": [\r\n        {\r\n          \"alimentoId\": \"66e6ed7a2541b90022ae6766\",\r\n          \"porcao\": 100,\r\n          \"quantidade\": 1\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -615,7 +577,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU2ZjAxNDg3OGQ4YWNlMTUxNTgwMjkiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjQxMDc3MywiZXhwIjoxNzI2NDk3MTczfQ.auxv2D-VeOJNuzxbaf0p098ZuThzSLNiv2yAa-soYtI",
 								"type": "text"
 							}
 						],
@@ -667,12 +629,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU0MmUxZDg2ZGQ4ZDY2ZTk0MDIwM2MiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjM2OTIxMCwiZXhwIjoxNzI2NDU1NjEwfQ.wUJPFe0bj5LgSyhn9Q_PDSUy5IdTKuzXgtHyU2QP7Sw",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3010/dieta/66e83aa0ea22c8b7903af212",
+							"raw": "http://localhost:3010/dieta/66e650a934596dbb80b06ff8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -680,99 +642,7 @@
 							"port": "3010",
 							"path": [
 								"dieta",
-								"66e83aa0ea22c8b7903af212"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Alimentos consumidos",
-			"item": [
-				{
-					"name": "Adicionar alimento",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"_id\": \"66e8391bdbd1449afd1d79d9\",\r\n    \"porcao\": 150,\r\n    \"quantidade\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3010/alimentoConsumido/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3010",
-							"path": [
-								"alimentoConsumido",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Listar alimentos consumidos",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3010/alimentoConsumido/me",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3010",
-							"path": [
-								"alimentoConsumido",
-								"me"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Remover alimento",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4Mzk4MmRiZDE0NDlhZmQxZDg5NDIiLCJlbWFpbCI6ImxmY29zdGEwODA0QGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NTQxNSwiZXhwIjoxNzI2NjYxODE1fQ.Vqi13ozqfcrJo57IraPdFU3CX1YbVDhDL1Zba-FFVQs",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3010/alimentoConsumido/66e98dbd9e20c8c059fad993",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3010",
-							"path": [
-								"alimentoConsumido",
-								"66e98dbd9e20c8c059fad993"
+								"66e650a934596dbb80b06ff8"
 							]
 						}
 					},

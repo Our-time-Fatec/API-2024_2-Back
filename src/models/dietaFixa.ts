@@ -2,7 +2,7 @@ import mongoose, { Schema, model, Document } from 'mongoose';
 import { IAlimentoDieta, IDietaDetalhes, IDietaFixa, IGrupo } from '../Interfaces/IDieta';
 import { DiasSemana } from '../enums/DiasSemana';
 
-const DietaDetalhesSchema = new Schema<IDietaDetalhes>({
+export const DietaDetalhesSchema = new Schema<IDietaDetalhes>({
     valorEnergetico: { type: Number, required: true },
     proteinas: { type: Number, required: true },
     carboidratos: { type: Number, required: true },
@@ -20,7 +20,7 @@ const AlimentoSchema = new Schema<IAlimentoDieta>({
     detalhes: { type: DietaDetalhesSchema, required: true },
 });
 
-const GrupoSchema = new Schema<IGrupo>({
+export const GrupoSchema = new Schema<IGrupo>({
     nome: {
         type: String,
         required: true,

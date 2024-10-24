@@ -3,6 +3,7 @@
 
 ### dotenv ###
 .env
+.env.dev
 .vs
 
 ### Node ###

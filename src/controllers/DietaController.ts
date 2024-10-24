@@ -9,6 +9,7 @@ import { IAlimento } from "../Interfaces/IAlimento";
 import DietaFixaModel from "../models/dietaFixa";
 import calcularDetalhesDieta from "../utils/calcularDetalhesDieta";
 import { DiasSemana } from "../enums/DiasSemana";
+import definirDietaDiaria from "../utils/definirDietaDiaria";
 
 class DietaController {
     static async criarDieta(req: Request, res: Response): Promise<Response> {
@@ -138,6 +139,8 @@ class DietaController {
 
       await dieta.save();
 
+      await definirDietaDiaria.atualizarDietaDiaria(userId, dieta)
+
       return res.status(200).json(dieta);
     } catch (error: any) {
       if (error && error.errors["grupos"]) {
@@ -228,6 +231,8 @@ class DietaController {
 
       dietaExistente.removidoEm = new Date();
       await dietaExistente.save();
+      
+      await definirDietaDiaria.removerDietaDiaria(userId)
 
       return res.status(200).json({ message: "Dieta removida com sucesso." });
     } catch (error: any) {
