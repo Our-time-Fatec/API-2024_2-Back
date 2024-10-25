@@ -1,6 +1,7 @@
 pipeline {
-    agent any
-
+    agent {
+        docker { image 'node:20.18.0-alpine3.20' }  // Define um agente Docker para todo o pipeline
+    }
     stages {
         stage('Checkout repository') {
             steps {
@@ -9,12 +10,6 @@ pipeline {
         }
 
         stage('Install dependencies') {
-            agent {
-                docker {
-                    image 'node:20.18.0-alpine3.20'
-                    reuseNode true
-                }
-            }
             steps {
                 echo "Instalando dependências do Node.js"
                 sh 'npm install'  // Instala as dependências
@@ -22,12 +17,6 @@ pipeline {
         }
 
         stage('Set up MongoDB') {
-            agent {
-                docker {
-                    image 'mongo:5.0'  // Usando a imagem do MongoDB
-                    reuseNode true
-                }
-            }
             steps {
                 script {
                     echo "Configurando o contêiner MongoDB..."
@@ -38,12 +27,6 @@ pipeline {
         }
 
         stage('Wait for MongoDB') {
-            agent {
-                docker {
-                    image 'mongo:5.0'  // Mantendo o mesmo ambiente do MongoDB
-                    reuseNode true
-                }
-            }
             steps {
                 script {
                     echo "Aguardando o MongoDB iniciar..."
@@ -60,24 +43,12 @@ pipeline {
         }
 
         stage('Build project') {
-            agent {
-                docker {
-                    image 'node:20.18.0-alpine3.20'
-                    reuseNode true
-                }
-            }
             steps {
                 sh 'npm run build'  // Constrói o projeto
             }
         }
 
         stage('Run tests') {
-            agent {
-                docker {
-                    image 'node:20.18.0-alpine3.20'
-                    reuseNode true
-                }
-            }
             steps {
                 sh 'npm run teste'  // Executa os testes
             }
