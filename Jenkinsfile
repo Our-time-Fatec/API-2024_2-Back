@@ -5,15 +5,20 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clona o repositório
-                git 'https://github.com/Our-time-Fatec/API-2024_2-Back.git'
+                script {
+                    // Faz o checkout na branch principal (substitua 'main' pela branch que você deseja)
+                    try {
+                        git branch: 'main', url: 'https://github.com/Our-time-Fatec/API-2024_2-Back.git'
+                    } catch (Exception e) {
+                        error "Failed to checkout Git repository: ${e.message}"
+                    }
+                }
             }
         }
 
         stage('Set up environment') {
             steps {
-                // Configura as variáveis de ambiente
                 script {
-                    // Cria um arquivo .env.dev
                     writeFile file: '.env.dev', text: """
                     PORT=3060
                     JWT_SECRET=secretKey
@@ -28,11 +33,9 @@ pipeline {
 
         stage('Run MongoDB') {
             steps {
-                // Executa o MongoDB em um contêiner
                 script {
                     docker.image('mongo:5.0').withRun('-p 27017:27017') { mongo ->
-                        // Aguarda o MongoDB iniciar
-                        sleep(10) // Aguarde alguns segundos para o MongoDB inicializar
+                        sleep(10)
                     }
                 }
             }
@@ -40,21 +43,18 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                // Instala as dependências do projeto
                 bat  'npm install'
             }
         }
 
         stage('Build project') {
             steps {
-                // Compila o projeto
                 bat  'npm run build'
             }
         }
 
         stage('Run tests') {
             steps {
-                // Executa os testes
                 bat  'npm run teste'
             }
         }
@@ -62,7 +62,6 @@ pipeline {
 
     post {
         always {
-            // Limpa os contêineres após a execução
             bat  'docker rm -f $(docker ps -a -q --filter "ancestor=mongo:5.0") || true'
         }
     }
