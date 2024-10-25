@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Clona o repositório
-                script {
-                    // Faz o checkout na branch principal (substitua 'main' pela branch que você deseja)
-                    try {
-                        git branch: 'main', url: 'https://github.com/Our-time-Fatec/API-2024_2-Back.git'
-                    } catch (Exception e) {
-                        error "Failed to checkout Git repository: ${e.message}"
-                    }
-                }
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         // Clona o repositório
+        //         script {
+        //             // Faz o checkout na branch principal (substitua 'main' pela branch que você deseja)
+        //             try {
+        //                 git branch: 'main', url: 'https://github.com/Our-time-Fatec/API-2024_2-Back.git'
+        //             } catch (Exception e) {
+        //                 error "Failed to checkout Git repository: ${e.message}"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Set up environment') {
             steps {
