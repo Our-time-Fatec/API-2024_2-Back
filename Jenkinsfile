@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'node:20.18.0-alpine3.20' }  // Define um agente Docker para todo o pipeline
-    }
+    agent { dockerfile true }
     stages {
         stage('Checkout repository') {
             steps {
