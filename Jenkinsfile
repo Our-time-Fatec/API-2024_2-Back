@@ -12,36 +12,38 @@ pipeline {
             }
         }
 
-        stage('Start MongoDB') {
+        stage('Run MongoDB') {
             steps {
                 script {
-                    // Inicia o contêiner MongoDB
-                    bat 'docker run --name mongo-test -d -p 27017:27017 -e MONGO_INITDB_DATABASE=ABPunitarytest mongo:5.0'
+                    // Inicia um contêiner do MongoDB
+                    echo "Iniciando MongoDB..."
+                    def mongoContainer = docker.run('-d -p 27017:27017 -e MONGO_INITDB_DATABASE=ABPunitarytest mongo:5.0')
+                    env.MONGO_CONTAINER_ID = mongoContainer.id
                 }
             }
         }
 
         stage('Install dependencies') {
             steps {
-                nodejs('Node') {  // Usando a configuração correta
+                nodejs('Node') {
                     echo "Instalando dependências do Node.js"
                     bat 'npm install'  // Instala as dependências
                 }
             }
         }
 
-        stage('Set up .env.dev') {
+        stage('Set up .env.dev file') {
             steps {
                 script {
-                    // Configura o arquivo .env.dev
-                    writeFile file: '.env.dev', text: '''
-                        PORT=3060
-                        JWT_SECRET=secretKey
-                        JWT_SECRET_REFRESH=secretRefresh
-                        DB_URI=mongodb://localhost:27017/ABPunitarytest
-                        ADMIN_PASSWORD=12345
-                        NODE_ENV=test
-                    '''
+                    echo "Configurando .env.dev..."
+                    writeFile file: '.env.dev', text: """
+                    PORT=3060
+                    JWT_SECRET=secretKey
+                    JWT_SECRET_REFRESH=secretRefresh
+                    DB_URI=mongodb://localhost:27017/ABPunitarytest
+                    ADMIN_PASSWORD=12345
+                    NODE_ENV=test
+                    """
                 }
             }
         }
@@ -49,10 +51,14 @@ pipeline {
         stage('Wait for MongoDB') {
             steps {
                 script {
-                    // Aguarda o MongoDB ficar disponível
-                    waitUntil {
-                        script {
-                            return sh(script: 'nc -z localhost 27017', returnStatus: true) == 0
+                    echo "Aguardando o MongoDB estar pronto..."
+                    // Espera até que o MongoDB esteja disponível
+                    timeout(time: 60, unit: 'SECONDS') {
+                        waitUntil {
+                            script {
+                                def response = sh(script: 'nc -z localhost 27017', returnStatus: true)
+                                return response == 0
+                            }
                         }
                     }
                 }
@@ -74,8 +80,12 @@ pipeline {
 
     post {
         always {
-            bat 'docker stop mongo-test || true'  // Para o contêiner do MongoDB
-            bat 'docker rm mongo-test || true'    // Remove o contêiner
+            script {
+                echo "Parando o contêiner do MongoDB..."
+                // Para e remove o contêiner do MongoDB
+                bat "docker stop ${env.MONGO_CONTAINER_ID} || true"
+                bat "docker rm ${env.MONGO_CONTAINER_ID} || true"
+            }
         }
         success {
             echo 'Build and tests passed successfully!'  // Mensagem de sucesso
