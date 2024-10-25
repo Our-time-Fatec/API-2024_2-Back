@@ -41,21 +41,21 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 // Instala as dependências do projeto
-                sh 'npm install'
+                bat  'npm install'
             }
         }
 
         stage('Build project') {
             steps {
                 // Compila o projeto
-                sh 'npm run build'
+                bat  'npm run build'
             }
         }
 
         stage('Run tests') {
             steps {
                 // Executa os testes
-                sh 'npm run teste'
+                bat  'npm run teste'
             }
         }
     }
@@ -63,7 +63,7 @@ pipeline {
     post {
         always {
             // Limpa os contêineres após a execução
-            sh 'docker rm -f $(docker ps -a -q --filter "ancestor=mongo:5.0") || true'
+            bat  'docker rm -f $(docker ps -a -q --filter "ancestor=mongo:5.0") || true'
         }
     }
 }
