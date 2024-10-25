@@ -1,14 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'Node'  // Nome da configuração que você fez para o Node.js
-    }
-
-    environment {
-        MONGO_CONTAINER_ID = 'mongo-test'  // ID do contêiner MongoDB
-    }
-
     stages {
         stage('Checkout repository') {
             steps {
@@ -17,53 +9,77 @@ pipeline {
         }
 
         stage('Install dependencies') {
-            steps {
-                nodejs('Node') {  // Usando a configuração correta
-                    echo "Instalando dependências do Node.js"
-                    bat 'npm install'  // Instala as dependências
+            agent {
+                docker {
+                    image 'node:20.18.0-alpine3.20'
+                    reuseNode true
                 }
+            }
+            steps {
+                echo "Instalando dependências do Node.js"
+                sh 'npm install'  // Instala as dependências
             }
         }
 
         stage('Set up MongoDB') {
+            agent {
+                docker {
+                    image 'mongo:5.0'  // Usando a imagem do MongoDB
+                    reuseNode true
+                }
+            }
             steps {
                 script {
                     echo "Configurando o contêiner MongoDB..."
                     // Inicia o contêiner MongoDB
-                    bat "docker run --name ${MONGO_CONTAINER_ID} -d -p 27017:27017 -e MONGO_INITDB_DATABASE=ABPunitarytest mongo:5.0"
+                    sh "docker run --name mongo-test -d -p 27017:27017 -e MONGO_INITDB_DATABASE=ABPunitarytest mongo:5.0"
                 }
             }
         }
 
         stage('Wait for MongoDB') {
+            agent {
+                docker {
+                    image 'mongo:5.0'  // Mantendo o mesmo ambiente do MongoDB
+                    reuseNode true
+                }
+            }
             steps {
                 script {
                     echo "Aguardando o MongoDB iniciar..."
                     // Aguarda até que o MongoDB esteja acessível
-                    bat """
-                    :loop
-                    docker exec ${MONGO_CONTAINER_ID} mongo --eval "db.runCommand({ ping: 1 })" && (
-                        echo "MongoDB está disponível."
-                        exit 0
-                    ) || (
+                    sh """
+                    while ! docker exec mongo-test mongo --eval "db.runCommand({ ping: 1 })"; do
                         echo "Aguardando MongoDB..."
-                        timeout /t 2 > nul
-                        goto loop
-                    )
+                        sleep 2
+                    done
+                    echo "MongoDB está disponível."
                     """
                 }
             }
         }
 
         stage('Build project') {
+            agent {
+                docker {
+                    image 'node:20.18.0-alpine3.20'
+                    reuseNode true
+                }
+            }
             steps {
-                bat 'npm run build'  // Constrói o projeto
+                sh 'npm run build'  // Constrói o projeto
             }
         }
 
         stage('Run tests') {
+            agent {
+                docker {
+                    image 'node:20.18.0-alpine3.20'
+                    reuseNode true
+                }
+            }
             steps {
-                bat 'npm run teste'  // Executa os testes
+                sh 'npm run teste'  // Executa os testes
             }
         }
     }
@@ -74,13 +90,8 @@ pipeline {
                 echo "Parando o contêiner do MongoDB..."
                 // Para e remove o contêiner do MongoDB
                 try {
-                    // Verifica se o MONGO_CONTAINER_ID não é nulo ou vazio
-                    if (env.MONGO_CONTAINER_ID) {
-                        bat "docker stop ${MONGO_CONTAINER_ID} || echo 'O contêiner já está parado.'"
-                        bat "docker rm ${MONGO_CONTAINER_ID} || echo 'O contêiner já foi removido.'"
-                    } else {
-                        echo "Nenhum contêiner MongoDB para parar ou remover."
-                    }
+                    sh "docker stop mongo-test || echo 'O contêiner já está parado.'"
+                    sh "docker rm mongo-test"
                 } catch (err) {
                     echo "Erro ao parar/remover o contêiner: ${err}"
                 }
