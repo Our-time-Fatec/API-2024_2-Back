@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+     agent {
+        docker {
+            image 'node:20'  // Imagem Docker com Node.js e npm
+            args '-u root:root'  // Para evitar problemas de permissões
+        }
+    }
 
     // environment {
     //     DB_URI = "mongodb://localhost:27017/ABPunitarytest"
