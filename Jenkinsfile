@@ -1,10 +1,5 @@
 pipeline {
-     agent {
-        docker {
-            image 'node:20'  // Imagem Docker com Node.js e npm
-            args '-u root:root'  // Para evitar problemas de permissões
-        }
-    }
+    agent any
 
     // environment {
     //     DB_URI = "mongodb://localhost:27017/ABPunitarytest"
@@ -22,21 +17,22 @@ pipeline {
             }
         }
 
-        stage('Set up Node.js') {
+        stage('Set up Node.js and install dependencies') {
             tools {
                 nodejs 'Node'  // Nome da instalação configurada no Jenkins
             }
             steps {
                 sh 'node -v'  // Verifica a versão do Node.js instalada
                 sh 'npm -v'   // Verifica a versão do npm instalada
+                sh 'npm i'
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'  // Instala as dependências do projeto
-            }
-        }
+        // stage('Install Dependencies') {
+        //     steps {
+        //           // Instala as dependências do projeto
+        //     }
+        // }
 
         stage('Set up MongoDB') {
             steps {
