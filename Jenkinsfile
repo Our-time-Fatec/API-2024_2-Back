@@ -1,14 +1,14 @@
 pipeline {
     agent any
 
-    environment {
-        DB_URI = "mongodb://localhost:27017/ABPunitarytest"
-        PORT = "3060"
-        JWT_SECRET = "secretKey"
-        JWT_SECRET_REFRESH = "secretRefresh"
-        ADMIN_PASSWORD = "12345"
-        NODE_ENV = "test"
-    }
+    // environment {
+    //     DB_URI = "mongodb://localhost:27017/ABPunitarytest"
+    //     PORT = "3060"
+    //     JWT_SECRET = "secretKey"
+    //     JWT_SECRET_REFRESH = "secretRefresh"
+    //     ADMIN_PASSWORD = "12345"
+    //     NODE_ENV = "test"
+    // }
 
     stages {
         stage('Checkout Code') {
@@ -23,12 +23,13 @@ pipeline {
             }
             steps {
                 sh 'node -v'  // Verifica a versão do Node.js instalada
+                sh 'npm -v'   // Verifica a versão do npm instalada
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'npm install'  // Instala as dependências do projeto
             }
         }
 
@@ -36,14 +37,14 @@ pipeline {
             steps {
                 script {
                     // Inicia um contêiner do MongoDB com Docker
-                    docker.image('mongo:5.0').withRun('-p 27017:27017') { mongo ->
+                    docker.image('mongo:5.0').withRun('-p 27017:27017 -e MONGO_INITDB_DATABASE=ABPunitarytest') { mongo ->
                         echo "MongoDB started on port 27017"
                     }
                 }
             }
         }
 
-        stage('Set up .env.dev') {
+        stage('Set up .env.dev file') {
             steps {
                 writeFile file: '.env.dev', text: """
                 PORT=3060
@@ -60,8 +61,8 @@ pipeline {
             steps {
                 script {
                     retry(5) {  // Tenta 5 vezes, esperando o MongoDB estar pronto
-                        sleep(time: 5, unit: 'SECONDS')
-                        sh 'nc -z localhost 27017'
+                        sleep(time: 2, unit: 'SECONDS')
+                        sh 'nc -z localhost 27017'  // Verifica se o MongoDB está acessível
                     }
                 }
             }
@@ -69,13 +70,13 @@ pipeline {
 
         stage('Build Project') {
             steps {
-                sh 'npm run build'
+                sh 'npm run build'  // Compila o projeto
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npm run teste'
+                sh 'npm run teste'  // Executa os testes do projeto
             }
         }
     }
