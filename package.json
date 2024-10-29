@@ -7,8 +7,8 @@
     "load": "ts-node ./src/database/load",
     "start": "ts-node ./src/index.ts",
     "dev": "ts-node-dev ./src/index.ts",
-    "teste": "jest",
-    "test": "jest --watchAll",
+    "teste": "jest --verbose",
+    "test": "jest --watchAll --verbose",
     "build": "tsc"
   },
   "keywords": [],
