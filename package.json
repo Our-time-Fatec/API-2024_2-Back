@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
     "mongoose": "^8.7.2",
+    "serialport": "^12.0.0",
     "servidor": "file:"
   },
   "devDependencies": {
