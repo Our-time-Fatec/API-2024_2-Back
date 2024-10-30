@@ -12,6 +12,8 @@ routes.put("/agua", authMiddleware, controller.atualzarAgua)
 routes.put("/agua/zerar", authMiddleware, controller.zerarAgua)
 routes.get("/mydetails", authMiddleware, controller.getUsuarioDetalhes);
 routes.delete("/", authMiddleware, controller.delete);
+routes.put("/editPassword", controller.editPassword);
+routes.get("/verify", controller.verificarEmail)
 
 
 export default routes
