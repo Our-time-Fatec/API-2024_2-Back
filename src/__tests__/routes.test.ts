@@ -42,8 +42,24 @@ afterAll(async () => {
 });
 
 describe("Routes", () => {
+
+  it("Deve retornar um erro 404 por não existir a rota", async () => {
+    const response = await request(app).get("/testeteste");
+
+    expect(response.status).toBe(404)
+    expect(response.body.message).toBe("Página não encontrada. Verifique a URL e tente novamente.")
+  })
+
   // Rotas de usuário
   describe("Testando as rotas de Usuário", () => {
+
+    it("Deve retornar um erro 404 por não existir a rota", async () => {
+      const response = await request(app).get("/usuario/testeteste");
+  
+      expect(response.status).toBe(404)
+      expect(response.body.message).toBe("Página não encontrada. Verifique a URL e tente novamente.")
+    })
+
     it("Deve criar um usuário com sucesso e medir o tempo de resposta", async () => {
       const start = Date.now(); // Inicia a medição de tempo
 
@@ -278,6 +294,13 @@ describe("Routes", () => {
 
   // Rotas de autenticação
   describe("Testando rotas de Autenticação", () => {
+    it("Deve retornar um erro 404 por não existir a rota", async () => {
+      const response = await request(app).get("/testeteste");
+  
+      expect(response.status).toBe(404)
+      expect(response.body.message).toBe("Página não encontrada. Verifique a URL e tente novamente.")
+    })
+
     it("Deve retornar um erro por não encontrar o usuário", async () => {
       const loginResponse = await request(app).post("/auth/login").send({
         email: "email@gmail.com",
