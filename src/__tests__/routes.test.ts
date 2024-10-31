@@ -42,8 +42,24 @@ afterAll(async () => {
 });
 
 describe("Routes", () => {
+
+  it("Deve retornar um erro 404 por não existir a rota", async () => {
+    const response = await request(app).get("/testeteste");
+
+    expect(response.status).toBe(404)
+    expect(response.body.message).toBe("Página não encontrada. Verifique a URL e tente novamente.")
+  })
+
   // Rotas de usuário
   describe("Testando as rotas de Usuário", () => {
+
+    it("Deve retornar um erro 404 por não existir a rota", async () => {
+      const response = await request(app).get("/usuario/testeteste");
+  
+      expect(response.status).toBe(404)
+      expect(response.body.message).toBe("Página não encontrada. Verifique a URL e tente novamente.")
+    })
+
     it("Deve criar um usuário com sucesso e medir o tempo de resposta", async () => {
       const start = Date.now(); // Inicia a medição de tempo
 
@@ -214,6 +230,58 @@ describe("Routes", () => {
       );
     });
 
+    it("Deve verificar se o email existe e retornar um 200", async () => {
+      const response = await request(app).get("/usuario/verify").send({
+        email: "andre@gmail.com",
+        resetLink: "http://localhost:3010/editPassword?linkEmail={andre%40gmail.com}"
+      })
+
+      expect(response.status).toBe(200)
+      expect(response.body.exists).toBe(true)
+    })
+
+    it("Deve verificar se o email existe e retornar um 404 por não existir", async () => {
+      const response = await request(app).get("/usuario/verify").send({
+        email: "andre22@gmail.com",
+        resetLink: "http://localhost:3010/editPassword?linkEmail={andre22%40gmail.com}"
+      })
+
+      expect(response.status).toBe(404)
+      expect(response.body.exists).toBe(false)
+    })
+
+    it("Deve atualizar a senha de um usuario com sucesso mesmo deslogado", async () => {
+
+      const loginResponse = await request(app).post("/usuario").send({
+        nome: "André",
+        sobrenome: "Sales",
+        email: "andre22@gmail.com",
+        senha: "123123",
+        dataDeNascimento: "2005-06-27T12:30:00Z",
+        peso: 50,
+        altura: 170,
+        nivelDeSedentarismo: "Sedentário",
+        sexo: "Masculino",
+        objetivo: "Dieta de Ganho de Massa Muscular",
+      });
+
+      const response = await request(app).put("/usuario/editPassword?linkEmail={andre22%40gmail.com}").send({
+        senha: "123456"
+      })
+
+      expect(response.status).toBe(200)
+      expect(response.body.senha !== loginResponse.body.senha).toBeTruthy()
+    })
+
+    it("Deve retornar que o usuario não existe", async () => {
+
+      const response = await request(app).put("/usuario/editPassword?linkEmail={andre24%40gmail.com}").send({
+        senha: "123456"
+      })
+
+      expect(response.status).toBe(404)
+    })
+
     it("Deve deletar o usuário com sucesso", async () => {
       const response = await request(app)
         .delete("/usuario")
@@ -226,6 +294,13 @@ describe("Routes", () => {
 
   // Rotas de autenticação
   describe("Testando rotas de Autenticação", () => {
+    it("Deve retornar um erro 404 por não existir a rota", async () => {
+      const response = await request(app).get("/testeteste");
+  
+      expect(response.status).toBe(404)
+      expect(response.body.message).toBe("Página não encontrada. Verifique a URL e tente novamente.")
+    })
+
     it("Deve retornar um erro por não encontrar o usuário", async () => {
       const loginResponse = await request(app).post("/auth/login").send({
         email: "email@gmail.com",
@@ -411,6 +486,31 @@ describe("Routes", () => {
         expect(response.body.diaSemana).toBe(diaSemanaAtual)
     });
 
+    it("Deve retornar um erro por faltar conteúdo", async () => {
+      const response = await request(app)
+          .post("/alimentoConsumido")
+          .set("Authorization", `${generalAuthToken}`)
+          .send({
+          });
+
+      expect(response.status).toBe(401);
+      expect(response.body.message).toBe("Preencha todos os campos.")
+  });
+
+  it("Deve falhar ao passar um id falso", async () => {
+    const response = await request(app)
+        .post("/alimentoConsumido")
+        .set("Authorization", `${generalAuthToken}`)
+        .send({
+            _id: "507f191e810c19729de860ea",
+            porcao: 100,
+            quantidade: 2,
+            nomeGrupo: "Café da Tarde",
+        });
+
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe("Alimento não encontrado")
+});
 
     it("Deve remover UMA unidade do alimento com sucesso", async () => {
       const response = await request(app)

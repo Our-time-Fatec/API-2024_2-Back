@@ -8,9 +8,9 @@ export const connectTestDB = async () => {
   
 dotenv.config({ path: '.env.dev' });
   const mongoUri = process.env.DB_URI;
-  if (!mongoUri) {
-    throw new Error('A variável de ambiente DB_URI não está definida');
-  }
+  // if (!mongoUri) {
+  //   throw new Error('A variável de ambiente DB_URI não está definida');
+  // }
 
   await mongoose.connect(mongoUri);
   console.log(`Rodando na porta ${process.env.PORT} com o banco de dados ${mongoUri}`)

@@ -1,14 +1,8 @@
 import { Request, Response } from "express";
 import {
-  IAlimentoDieta,
-  IDietaFixa,
   IGrupo,
-  IDietaDetalhes,
   IGrupoConsumo,
 } from "../Interfaces/IDieta";
-import { IAlimento } from "../Interfaces/IAlimento";
-import DietaFixaModel from "../models/dietaFixa";
-import calcularDetalhesDieta from "../utils/calcularDetalhesDieta";
 import { DiasSemana } from "../enums/DiasSemana";
 import DietaDiariaModel from "../models/dietaDiaria";
 import definirDietaDiaria from "../utils/definirDietaDiaria";

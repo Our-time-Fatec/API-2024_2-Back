@@ -22,6 +22,10 @@ app.use(cors());
 // Define as rotas antes de iniciar o servidor
 app.use(routes);
 
+app.use((req, res, next) => {
+    res.status(404).json({ message: "Página não encontrada. Verifique a URL e tente novamente." });
+});
+
 // Função para iniciar o servidor após conexão com o banco e seeding
 // Função para iniciar o servidor após conexão com o banco e seeding
 async function startServer() {
