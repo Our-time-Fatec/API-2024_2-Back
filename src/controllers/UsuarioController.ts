@@ -243,33 +243,7 @@ class UsuarioController {
       return res
         .status(500)
         .json({ message: "Erro ao remover usuário", error });
-            const ultimaAtualizacao = new Date(usuario.agua.atualizacao);
-            const dataLimite = new Date(ultimaAtualizacao.getTime() + 2 * 60 * 60 * 1000); 
-    
-            const dataAtual = new Date();
-    
-            if (dataAtual > dataLimite) {
-                await request(app) 
-                .get("/usuario/agua")
-                .then(response => {
-                    console.log('Sinal enviado para o Arduino:', response.body);
-                })
-                .catch(error => {
-                    console.error('Erro ao enviar sinal para o Arduino:', error);
-                });
-        }
-            await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
-
-            usuario.agua.aguaIngerida = usuario.agua.aguaIngerida + parseInt(aguaIngerida)
-            if(usuario.agua.aguaIngerida >= usuario.metaAgua){
-                usuario.agua.aguaIngerida = usuario.metaAgua
-            }
-
-            usuario.agua.atualizacao = new Date();
-    
-            usuario.save()
-
-        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${aguaIngerida}ml de agua!`, aguaIngerida: usuario.agua.aguaIngerida})
+            
     }
   }
 
@@ -323,6 +297,8 @@ class UsuarioController {
           aguaIngerida,
         },
       });
+
+      
     } catch (error) {
       console.error("Erro ao buscar informações do usuário:", error);
       res.status(500).json({ erro: "Erro ao buscar informações do usuário" });
@@ -355,10 +331,33 @@ class UsuarioController {
 
       usuario.save();
 
-      return res.status(200).json({
-        message: `Quantia atualizada! Agora você já consumiu ${aguaIngerida}ml de agua!`,
-        aguaIngerida: usuario.agua.aguaIngerida,
-      });
+      const ultimaAtualizacao = new Date(usuario.agua.atualizacao);
+            const dataLimite = new Date(ultimaAtualizacao.getTime() + 2 * 60 * 60 * 1000); 
+    
+            const dataAtual = new Date();
+    
+            if (dataAtual > dataLimite) {
+                await request(app) 
+                .get("/usuario/agua")
+                .then(response => {
+                    console.log('Sinal enviado para o Arduino:', response.body);
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar sinal para o Arduino:', error);
+                });
+        }
+            await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
+
+            usuario.agua.aguaIngerida = usuario.agua.aguaIngerida + parseInt(aguaIngerida)
+            if(usuario.agua.aguaIngerida >= usuario.metaAgua){
+                usuario.agua.aguaIngerida = usuario.metaAgua
+            }
+
+            usuario.agua.atualizacao = new Date();
+    
+            usuario.save()
+
+        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${aguaIngerida}ml de agua!`, aguaIngerida: usuario.agua.aguaIngerida})
     } catch (error) {
       console.error("Erro ao buscar informações do usuário:", error);
       return res
