@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
+import app from "..";
 import Usuario from "../models/usuarios";
 import UsuarioFunc from "../func/UsuarioFunc";
 import criptografia from "../utils/criptografia";
 import { generateRefreshToken, generateToken } from "./AuthController";
 import AlimentoConsumidoModel from "../models/alimentoConsumido";
 import { AlimentoDetalhes } from "../Interfaces/IAlimento";
-import moment from "moment";
+import moment from 'moment';
+import request from 'supertest';
 import definirDietaDiaria from "../utils/definirDietaDiaria";
 import { sendPasswordResetEmail } from "../middlewares/emailMiddleware";
 
@@ -241,6 +243,33 @@ class UsuarioController {
       return res
         .status(500)
         .json({ message: "Erro ao remover usuário", error });
+            const ultimaAtualizacao = new Date(usuario.agua.atualizacao);
+            const dataLimite = new Date(ultimaAtualizacao.getTime() + 2 * 60 * 60 * 1000); 
+    
+            const dataAtual = new Date();
+    
+            if (dataAtual > dataLimite) {
+                await request(app) 
+                .get("/usuario/agua")
+                .then(response => {
+                    console.log('Sinal enviado para o Arduino:', response.body);
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar sinal para o Arduino:', error);
+                });
+        }
+            await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
+
+            usuario.agua.aguaIngerida = usuario.agua.aguaIngerida + parseInt(aguaIngerida)
+            if(usuario.agua.aguaIngerida >= usuario.metaAgua){
+                usuario.agua.aguaIngerida = usuario.metaAgua
+            }
+
+            usuario.agua.atualizacao = new Date();
+    
+            usuario.save()
+
+        return res.status(200).json({message: `Quantia atualizada! Agora você já consumiu ${aguaIngerida}ml de agua!`, aguaIngerida: usuario.agua.aguaIngerida})
     }
   }
 
