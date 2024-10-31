@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import app from "..";
 import Usuario from "../models/usuarios";
 import UsuarioFunc from "../func/UsuarioFunc";
 import criptografia from "../utils/criptografia";
@@ -6,6 +7,7 @@ import { generateRefreshToken, generateToken } from "./AuthController";
 import AlimentoConsumidoModel from "../models/alimentoConsumido";
 import { AlimentoDetalhes } from "../Interfaces/IAlimento";
 import moment from 'moment';
+import request from 'supertest';
 import definirDietaDiaria from "../utils/definirDietaDiaria";
 
 
@@ -250,6 +252,21 @@ class UsuarioController {
                 return res.status(500).json({ erro: 'Erro ao encontrar usuário' });
             }
 
+            const ultimaAtualizacao = new Date(usuario.agua.atualizacao);
+            const dataLimite = new Date(ultimaAtualizacao.getTime() + 2 * 60 * 60 * 1000); 
+    
+            const dataAtual = new Date();
+    
+            if (dataAtual > dataLimite) {
+                await request(app) 
+                .get("/usuario/agua")
+                .then(response => {
+                    console.log('Sinal enviado para o Arduino:', response.body);
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar sinal para o Arduino:', error);
+                });
+        }
             await hooks.checagemAgua(usuario.agua.atualizacao, usuario)
 
             usuario.agua.aguaIngerida = usuario.agua.aguaIngerida + parseInt(aguaIngerida)
