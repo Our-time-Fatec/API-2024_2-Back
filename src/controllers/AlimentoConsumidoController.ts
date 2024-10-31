@@ -298,11 +298,11 @@ class AlimentoConsumidoController {
                 criadoEm: alimento.criadoEm,
                 consumido: 1, // Inicializa o consumo com 1
                 detalhes: {
-                  valorEnergetico: alimento.detalhes.valorEnergetico * alimento.quantidade, // Não multiplica pelo consumo ainda
-                  proteinas: alimento.detalhes.proteinas * alimento.quantidade,
-                  carboidratos: alimento.detalhes.carboidratos * alimento.quantidade,
-                  fibras: alimento.detalhes.fibras * alimento.quantidade,
-                  lipidios: alimento.detalhes.lipidios * alimento.quantidade,
+                  valorEnergetico: alimento.detalhes.valorEnergetico, // Não multiplica pelo consumo ainda
+                  proteinas: alimento.detalhes.proteinas,
+                  carboidratos: alimento.detalhes.carboidratos,
+                  fibras: alimento.detalhes.fibras,
+                  lipidios: alimento.detalhes.lipidios,
                   _id: alimento.detalhes._id
                 }
               };
@@ -310,11 +310,11 @@ class AlimentoConsumidoController {
               consumosPorAlimento[chave].consumido += 1; // Incrementa a quantidade consumida
 
               // Atualiza os detalhes acumulando as informações
-              consumosPorAlimento[chave].detalhes.valorEnergetico += alimento.detalhes.valorEnergetico * alimento.quantidade;
-              consumosPorAlimento[chave].detalhes.proteinas += alimento.detalhes.proteinas * alimento.quantidade;
-              consumosPorAlimento[chave].detalhes.carboidratos += alimento.detalhes.carboidratos * alimento.quantidade;
-              consumosPorAlimento[chave].detalhes.fibras += alimento.detalhes.fibras * alimento.quantidade;
-              consumosPorAlimento[chave].detalhes.lipidios += alimento.detalhes.lipidios * alimento.quantidade;
+              consumosPorAlimento[chave].detalhes.valorEnergetico += alimento.detalhes.valorEnergetico;
+              consumosPorAlimento[chave].detalhes.proteinas += alimento.detalhes.proteinas;
+              consumosPorAlimento[chave].detalhes.carboidratos += alimento.detalhes.carboidratos;
+              consumosPorAlimento[chave].detalhes.fibras += alimento.detalhes.fibras;
+              consumosPorAlimento[chave].detalhes.lipidios += alimento.detalhes.lipidios;
             }
           });
 
@@ -323,11 +323,11 @@ class AlimentoConsumidoController {
 
           // Calcula os totais para o dia
           alimentosPorDiaCompletos[dia].alimentos.forEach((alimento) => {
-            alimentosPorDiaCompletos[dia].total.valorEnergetico += alimento.detalhes.valorEnergetico * alimento.consumido;
-            alimentosPorDiaCompletos[dia].total.lipidios += alimento.detalhes.lipidios * alimento.consumido;
-            alimentosPorDiaCompletos[dia].total.proteinas += alimento.detalhes.proteinas * alimento.consumido;
-            alimentosPorDiaCompletos[dia].total.carboidratos += alimento.detalhes.carboidratos * alimento.consumido;
-            alimentosPorDiaCompletos[dia].total.fibras += alimento.detalhes.fibras * alimento.consumido;
+            alimentosPorDiaCompletos[dia].total.valorEnergetico += alimento.detalhes.valorEnergetico;
+            alimentosPorDiaCompletos[dia].total.lipidios += alimento.detalhes.lipidios;
+            alimentosPorDiaCompletos[dia].total.proteinas += alimento.detalhes.proteinas;
+            alimentosPorDiaCompletos[dia].total.carboidratos += alimento.detalhes.carboidratos;
+            alimentosPorDiaCompletos[dia].total.fibras += alimento.detalhes.fibras;
           });
         }
       });

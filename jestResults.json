@@ -1,0 +1,963 @@
+{
+    "numFailedTestSuites": 0,
+    "numFailedTests": 0,
+    "numPassedTestSuites": 2,
+    "numPassedTests": 57,
+    "numPendingTestSuites": 0,
+    "numPendingTests": 0,
+    "numRuntimeErrorTestSuites": 0,
+    "numTodoTests": 0,
+    "numTotalTestSuites": 2,
+    "numTotalTests": 57,
+    "openHandles": [],
+    "snapshot": {
+      "added": 0,
+      "didUpdate": false,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0
+    },
+    "startTime": 1730227766822,
+    "success": true,
+    "testResults": [
+      {
+        "assertionResults": [
+          {
+            "ancestorTitles": [
+              "CategoriaController"
+            ],
+            "duration": 43,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "CategoriaController deve retornar status 200 e a lista de categorias",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "deve retornar status 200 e a lista de categorias"
+          },
+          {
+            "ancestorTitles": [
+              "CategoriaController"
+            ],
+            "duration": 5,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "CategoriaController deve retornar status 500 em caso de erro",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "deve retornar status 500 em caso de erro"
+          }
+        ],
+        "endTime": 1730227786338,
+        "message": "",
+        "name": "C:\\Users\\anaal\\OneDrive\\Área de Trabalho\\ABP\\API-2024_2-Back\\src\\__tests__\\CategoriaController.test.ts",
+        "startTime": 1730227783630,
+        "status": "passed",
+        "summary": ""
+      },
+      {
+        "assertionResults": [
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 420,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve criar um usuário com sucesso e medir o tempo de resposta",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 4,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve criar um usuário com sucesso e medir o tempo de resposta"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 9,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve falhar ao criar usuário com senha curta",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve falhar ao criar usuário com senha curta"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 11,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve fazer login e retornar um token",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve fazer login e retornar um token"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 6,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve pegar os detalhes do usuário",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve pegar os detalhes do usuário"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 2,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve retornar um erro por não ter token",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve retornar um erro por não ter token"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 7,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve pegar os detalhes específicos do usuário",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve pegar os detalhes específicos do usuário"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 14,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve atualizar o usuário com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve atualizar o usuário com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 5,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve atualizar o consumo de água do usuario com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve atualizar o consumo de água do usuario com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 9,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve atualizar o consumo de água do usuario com sucesso mesmo com mais de uma requisição",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve atualizar o consumo de água do usuario com sucesso mesmo com mais de uma requisição"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 5,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve reiniciar o consumo diário do usuario",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve reiniciar o consumo diário do usuario"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 17,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve sempre manter o máximo de agua ingerida sendo a meta de água",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve sempre manter o máximo de agua ingerida sendo a meta de água"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Usuário"
+            ],
+            "duration": 7,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Usuário Deve deletar o usuário com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve deletar o usuário com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Autenticação"
+            ],
+            "duration": 3,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Autenticação Deve retornar um erro por não encontrar o usuário",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve retornar um erro por não encontrar o usuário"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Autenticação"
+            ],
+            "duration": 11,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Autenticação Deve retornar um erro por ter inserido a senha errada",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve retornar um erro por ter inserido a senha errada"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Autenticação"
+            ],
+            "duration": 25,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Autenticação Deve medir o tempo de criar uma conta e se logar nela",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve medir o tempo de criar uma conta e se logar nela"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento"
+            ],
+            "duration": 7,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Deve criar um alimento com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve criar um alimento com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento"
+            ],
+            "duration": 33,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Deve listar todos os alimentos",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 4,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listar todos os alimentos"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento"
+            ],
+            "duration": 2,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Deve retornar um erro por não ter token",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve retornar um erro por não ter token"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento"
+            ],
+            "duration": 4,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Deve buscar um alimento pelo ID",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve buscar um alimento pelo ID"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento"
+            ],
+            "duration": 6,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Deve atualizar o alimento com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve atualizar o alimento com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento"
+            ],
+            "duration": 4,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Deve deletar o alimento com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve deletar o alimento com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento"
+            ],
+            "duration": 7,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Deve listar alimentos criados pelo usuário",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listar alimentos criados pelo usuário"
+          },
+          {
+            "ancestorTitles": [
+              "Routes"
+            ],
+            "duration": 2,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Deve retornar um erro por não ter token",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve retornar um erro por não ter token"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento Consumido"
+            ],
+            "duration": 9,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Consumido Deve criar um alimento com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 6,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve criar um alimento com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento Consumido"
+            ],
+            "duration": 8,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Consumido Deve remover UMA unidade do alimento com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 4,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve remover UMA unidade do alimento com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento Consumido"
+            ],
+            "duration": 8,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Consumido Deve listar todos os alimentos consumidos",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listar todos os alimentos consumidos"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento Consumido"
+            ],
+            "duration": 6,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Consumido Deve listar todos os alimentos consumidos nessa semana",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 11,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listar todos os alimentos consumidos nessa semana"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando as rotas de Alimento Consumido"
+            ],
+            "duration": 11,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando as rotas de Alimento Consumido Deve remover dar erro ao tentar remover mais vezes um alimento que sua quantidade",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve remover dar erro ao tentar remover mais vezes um alimento que sua quantidade"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Categoria"
+            ],
+            "duration": 4,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Categoria Deve listas todas as categorias",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listas todas as categorias"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Categoria"
+            ],
+            "duration": 3,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Categoria Deve retornar um erro por não ter token",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve retornar um erro por não ter token"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Fixas"
+            ],
+            "duration": 27,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Fixas Deve criar uma dieta com sucesso",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 6,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve criar uma dieta com sucesso"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Fixas"
+            ],
+            "duration": 15,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Fixas Deve atualizar uma dieta pelo seu id",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 6,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve atualizar uma dieta pelo seu id"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Fixas"
+            ],
+            "duration": 6,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Fixas Deve listar dietas criadas pelo usuário",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listar dietas criadas pelo usuário"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Fixas"
+            ],
+            "duration": 2,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Fixas Deve retornar um erro por não ter token",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve retornar um erro por não ter token"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Fixas"
+            ],
+            "duration": 3,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Fixas Deve listar dietas criadas pelo usuário em um dia da semana específico",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listar dietas criadas pelo usuário em um dia da semana específico"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Fixas"
+            ],
+            "duration": 5,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Fixas Deve buscar uma dieta específica pelo id",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 7,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve buscar uma dieta específica pelo id"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Fixas"
+            ],
+            "duration": 9,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Fixas Deve deletar uma dieta",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve deletar uma dieta"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Fixas"
+            ],
+            "duration": 4,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Fixas Deve buscar uma dieta específica pelo id e falhar por ter sido apagada",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve buscar uma dieta específica pelo id e falhar por ter sido apagada"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Diárias"
+            ],
+            "duration": 44,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Diárias Deve criar uma dieta para hoje",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 7,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve criar uma dieta para hoje"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Diárias"
+            ],
+            "duration": 6,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Diárias Deve listar a dieta diária criada pelo usuário em um dia da semana específico",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listar a dieta diária criada pelo usuário em um dia da semana específico"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Diárias"
+            ],
+            "duration": 8,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Diárias Deve listar todas as dietas diárias criadas pelo usuário",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve listar todas as dietas diárias criadas pelo usuário"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Diárias"
+            ],
+            "duration": 2,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Diárias Deve retornar um erro por não ter token",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve retornar um erro por não ter token"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Diárias"
+            ],
+            "duration": 4,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Diárias Deve buscar uma dieta diária por ID",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 4,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve buscar uma dieta diária por ID"
+          },
+          {
+            "ancestorTitles": [
+              "Routes",
+              "Testando rotas de Dietas Diárias"
+            ],
+            "duration": 21,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "Routes Testando rotas de Dietas Diárias Deve aumentar em um a quantia de alimentos consumidos",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 4,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve aumentar em um a quantia de alimentos consumidos"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calculadoraIMC"
+            ],
+            "duration": 0,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calculadoraIMC Deve calcular o IMC corretamente",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular o IMC corretamente"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calculadoraIdade"
+            ],
+            "duration": 0,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calculadoraIdade Deve calcular a idade corretamente",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular a idade corretamente"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calculadoraTaxaMetabolismoBasal"
+            ],
+            "duration": 1,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calculadoraTaxaMetabolismoBasal Deve calcular a TMB corretamente para masculino",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular a TMB corretamente para masculino"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calculadoraTaxaMetabolismoBasal"
+            ],
+            "duration": 0,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calculadoraTaxaMetabolismoBasal Deve calcular a TMB corretamente para feminino",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular a TMB corretamente para feminino"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calculadoraCaloriasGastas"
+            ],
+            "duration": 0,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calculadoraCaloriasGastas Deve calcular as calorias gastas para sedentário",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular as calorias gastas para sedentário"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calculadoraCaloriasGastas"
+            ],
+            "duration": 0,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calculadoraCaloriasGastas Deve calcular as calorias gastas para moderadamente ativo",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular as calorias gastas para moderadamente ativo"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calcularConsumoDeCaloriaPorDia"
+            ],
+            "duration": 0,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calcularConsumoDeCaloriaPorDia Deve calcular o consumo de calorias para emagrecimento",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular o consumo de calorias para emagrecimento"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calcularConsumoDeCaloriaPorDia"
+            ],
+            "duration": 0,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calcularConsumoDeCaloriaPorDia Deve calcular o consumo de calorias para ganho de massa muscular",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular o consumo de calorias para ganho de massa muscular"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando calcularMetaAgua"
+            ],
+            "duration": 0,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando calcularMetaAgua Deve calcular a meta de água corretamente",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 1,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve calcular a meta de água corretamente"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando checagemAgua"
+            ],
+            "duration": 1,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando checagemAgua Deve reiniciar o consumo de água se for um novo dia",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 3,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve reiniciar o consumo de água se for um novo dia"
+          },
+          {
+            "ancestorTitles": [
+              "UsuarioFunc",
+              "Testando checagemAgua"
+            ],
+            "duration": 1,
+            "failureDetails": [],
+            "failureMessages": [],
+            "fullName": "UsuarioFunc Testando checagemAgua Deve não reiniciar o consumo de água se não for um novo dia",
+            "invocations": 1,
+            "location": null,
+            "numPassingAsserts": 2,
+            "retryReasons": [],
+            "status": "passed",
+            "title": "Deve não reiniciar o consumo de água se não for um novo dia"
+          }
+        ],
+        "endTime": 1730227788724,
+        "message": "",
+        "name": "C:\\Users\\anaal\\OneDrive\\Área de Trabalho\\ABP\\API-2024_2-Back\\src\\__tests__\\routes.test.ts",
+        "startTime": 1730227783629,
+        "status": "passed",
+        "summary": ""
+      }
+    ],
+    "wasInterrupted": false
+  }

@@ -3,6 +3,9 @@ import jwt, { decode } from "jsonwebtoken";
 import Usuario from "../models/usuarios";
 import criptografia from "../utils/criptografia";
 import { ObjectId, Types } from "mongoose";
+import dotenv from "dotenv"
+
+dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "secretKey";
 const REFRESH_SECRET = process.env.JWT_SECRET_REFRESH || "secretKeyRefresh";
@@ -10,6 +13,7 @@ const JWT_EXPIRES_IN = '1d';
 const REFRESH_EXPIRES_IN = '30d';
 
 export function generateToken(userId: Types.ObjectId, email: string) {
+    console.log(JWT_SECRET)
     return jwt.sign({ userId: userId.toString(), email: email }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 }
 
