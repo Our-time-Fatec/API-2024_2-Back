@@ -11,6 +11,7 @@ import request from 'supertest';
 import definirDietaDiaria from "../utils/definirDietaDiaria";
 import { sendPasswordResetEmail } from "../middlewares/emailMiddleware";
 
+
 const hooks = new UsuarioFunc();
 
 class UsuarioController {

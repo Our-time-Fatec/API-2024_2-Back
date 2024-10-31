@@ -3,6 +3,8 @@ import jwt, { decode } from "jsonwebtoken";
 import Usuario from "../models/usuarios";
 import criptografia from "../utils/criptografia";
 import { ObjectId, Types } from "mongoose";
+import dotenv from "dotenv"
+dotenv.config()
 
 const JWT_SECRET = process.env.JWT_SECRET || "secretKey";
 const REFRESH_SECRET = process.env.JWT_SECRET_REFRESH || "secretKeyRefresh";
