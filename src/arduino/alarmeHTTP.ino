@@ -32,29 +32,17 @@ void loop() {
 void makeGetRequest() {
   HTTPClient http;
   http.begin(serverName);
+
   int httpResponseCode = http.GET();
 
   if (httpResponseCode > 0) {
     String payload = http.getString();
-    Serial.println("Resposta do servidor:");
+    Serial.println(httpResponseCode);
     Serial.println(payload);
-
-    beep(f, 250);
-    beep(gS, 500);
-    beep(f, 350);
-    beep(a, 125);
-    beep(cH, 500);
-    beep(a, 375);
-    beep(cH, 125);
-    beep(eH, 650);
-    
-    digitalWrite(led, HIGH);
-    delay(100); 
-    digitalWrite(led, LOW);
-    delay(100);
   } else {
-    Serial.print("Erro na requisição: ");
+    Serial.print("Error on HTTP request: ");
     Serial.println(httpResponseCode);
   }
-  http.end();  // Finaliza a conexão
+
+  http.end();
 }
