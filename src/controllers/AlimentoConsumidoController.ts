@@ -39,7 +39,6 @@ class AlimentoConsumidoController {
   //         .json({ message: "Erro ao criar o consumo", error });
   //     }
   //   }
-
   async create(req: Request, res: Response): Promise<Response> {
     const { _id, porcao, quantidade, nomeGrupo } = req.body;
     const userId = req.body.userId;
@@ -259,7 +258,10 @@ class AlimentoConsumidoController {
         DiasSemana.Sabado,
       ];
 
+
+
       const alimentosPorDiaCompletos: Record<string, {
+        id: string,
         dia: Date,
         total: { valorEnergetico: number; lipidios: number; proteinas: number; carboidratos: number; fibras: number; },
         alimentos: any[]
@@ -269,8 +271,8 @@ class AlimentoConsumidoController {
         if (index <= diaDaSemanaHoje) {
           // Inicializa o dia no objeto se não existir
           alimentosPorDiaCompletos[dia] = {
+            id: Math.random().toString(36).substr(2, 9),
             dia: new Date(inicioDaSemana), // Atribui o início da semana como base
-         
             total: { valorEnergetico: 0, lipidios: 0, proteinas: 0, carboidratos: 0, fibras: 0 },
             alimentos: [],
           };

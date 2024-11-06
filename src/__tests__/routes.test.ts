@@ -223,7 +223,7 @@ describe("Routes", () => {
         email: "andre@gmail.com",
         senha: "123123",
       });
-
+      
       expect(response.status).toBe(200);
       expect(response.body.aguaIngerida).toBe(
         loginResponse.body.usuario.metaAgua
@@ -551,6 +551,8 @@ describe("Routes", () => {
       expect(response.body.Domingo).toHaveProperty("dia")
       expect(response.body.Domingo.dia).toBeTruthy()
       expect(response.body.Domingo.total).toHaveProperty("valorEnergetico")
+      expect(response.body.Domingo).toHaveProperty("id")
+      expect(typeof response.body.Domingo.id).toBe("string")
       expect(Array.isArray(response.body.Domingo.alimentos)).toBeTruthy();
       expect(response.body).toHaveProperty(diaSemanaAtual);
       expect(Array.isArray(response.body[diaSemanaAtual].alimentos)).toBe(true);
