@@ -1,60 +1,70 @@
+#include <WiFi.h>
 #include <HTTPClient.h>
+#include <string>
+#include <stdlib.h>
 
-const char* serverName = "https://localhost:3010/usuario/agua";
+const char* ssid = "lcosta";       // Nome da rede WiFi
+const char* password = "nogk7397";  // Senha da rede WiFi
+const char* userId = "672d457435de1023d72992a2"; // userId
 
-const int buzzerPin = 9;
-const int led = 13; 
+const char* serverName = "http://192.168.30.243:3010/arduino/agua/672d457435de1023d72992a2";  // Endpoint para busca ultimo consumo de agua
 
-const int f = 349;
-const int gS = 415;
-const int a = 440; 
-const int cH = 523; 
-const int eH = 659;
-
-void beep(int frequency, int duration) {
-  tone(buzzerPin, frequency); 
-  delay(duration); 
-  noTone(buzzerPin);     
-}
+const int buzzerPin = 18;
+const int led = 5; 
+int diferencaMinutos;
 
 void setup() {
+  Serial.begin(115200);
   pinMode(led, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
-  Serial.begin(9600);
+  
+  // Conectar ao WiFi
+  WiFi.begin(ssid, password);
+  Serial.println("Conectando à WiFi...");
+  
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Conectando...");
+  }
+  
+  Serial.println("Conectado à WiFi!");
 }
 
 void loop() {
-  makeGetRequest();
-
-  delay(7200000); 
-}
-
-void makeGetRequest() {
-  HTTPClient http;
-  http.begin(serverName);
-  int httpResponseCode = http.GET();
-
-  if (httpResponseCode > 0) {
-    String payload = http.getString();
-    Serial.println("Resposta do servidor:");
-    Serial.println(payload);
-
-    beep(f, 250);
-    beep(gS, 500);
-    beep(f, 350);
-    beep(a, 125);
-    beep(cH, 500);
-    beep(a, 375);
-    beep(cH, 125);
-    beep(eH, 650);
+  if (WiFi.status() == WL_CONNECTED) { // Verifica se está conectado
+    HTTPClient http;
     
-    digitalWrite(led, HIGH);
-    delay(100); 
-    digitalWrite(led, LOW);
-    delay(100);
-  } else {
-    Serial.print("Erro na requisição: ");
+    http.begin(serverName);
+    int httpResponseCode = http.GET();
     Serial.println(httpResponseCode);
+    if (httpResponseCode > 0) {
+      String payload = http.getString();  // Lê a resposta do servidor
+      const char* charPayload = payload.c_str();
+      Serial.println("Resposta do servidor:");
+      Serial.println(charPayload);
+      diferencaMinutos = atoi(charPayload);
+
+      Serial.print("Diferença em minutos: ");
+      Serial.println(diferencaMinutos);
+
+      if (diferencaMinutos >= 10) {  // Alerta o usuario se a diferença for de 10 minutos ou mais
+        Serial.print("Alerta o usuario");
+        digitalWrite(led, HIGH);
+        digitalWrite(buzzerPin, HIGH);
+        delay(10000); 
+        digitalWrite(buzzerPin, LOW);
+        digitalWrite(led, LOW);
+      }
+
+    } else {
+      Serial.print("Erro na requisição: ");
+      Serial.println(httpResponseCode);
+    }
+    
+    http.end();  // Fecha a conexão
+  } else {
+    Serial.println("Erro: Não conectado à WiFi");
   }
-  http.end();  // Finaliza a conexão
+  
+  delay(100000); // Delay para rodar novamente por 10 segundos
 }
