@@ -1,11 +1,11 @@
 ---
 title: IDieta
-description: 'Interface que define a estrutura de uma dieta fixa e seus componentes relacionados.'
+description: 'Interfaces relacionadas à dieta, incluindo detalhes, grupos e consumo de alimentos.'
 ---
 
 # IDieta
 
-A interface `IDieta` define a estrutura de uma dieta fixa, incluindo detalhes sobre os alimentos e grupos de alimentos que compõem a dieta. Esta interface é utilizada para garantir que os dados relacionados a dietas sejam consistentes e bem estruturados.
+Este arquivo contém definições de interfaces relacionadas à estrutura de dados de dietas, incluindo detalhes de alimentos, grupos de alimentos e informações sobre dietas fixas e diárias.
 
 ## Interfaces
 
@@ -15,14 +15,14 @@ A interface `IDieta` define a estrutura de uma dieta fixa, incluindo detalhes so
 export interface IDietaDetalhes extends AlimentoDetalhes {
 }
 ```
-
-A interface `IDietaDetalhes` estende a interface `AlimentoDetalhes`, permitindo a inclusão de detalhes adicionais sobre os alimentos na dieta.
+Interface que estende `AlimentoDetalhes`, representando detalhes adicionais de uma dieta.
 
 ### IAlimentoDieta
 
 ```typescript
 export interface IAlimentoDieta {
     id?: string;
+    alimentoId: string;
     nome: string;
     preparo: string;
     porcao: Number;
@@ -31,30 +31,18 @@ export interface IAlimentoDieta {
     detalhes: AlimentoDetalhes;
 }
 ```
-
-A interface `IAlimentoDieta` representa um alimento que pode ser incluído em uma dieta. Os campos incluem:
-
-- `id?`: Identificador opcional do alimento.
-- `nome`: Nome do alimento.
-- `preparo`: Método de preparo do alimento.
-- `porcao`: Tamanho da porção do alimento.
-- `quantidade`: Quantidade do alimento na dieta.
-- `categoriaCodigo`: Código da categoria do alimento.
-- `detalhes`: Detalhes adicionais sobre o alimento, conforme definido na interface `AlimentoDetalhes`.
+Interface que representa um alimento dentro de uma dieta, incluindo informações como ID, nome, preparo, porção, quantidade e categoria.
 
 ### IGrupo
 
 ```typescript
-export interface IGrupo {
+export interface IGrupo {   
+    _id?: string;
     nome: string;
     alimentos: IAlimentoDieta[];
 }
 ```
-
-A interface `IGrupo` representa um grupo de alimentos dentro de uma dieta. Os campos incluem:
-
-- `nome`: Nome do grupo de alimentos.
-- `alimentos`: Lista de alimentos que pertencem a este grupo, conforme definido pela interface `IAlimentoDieta`.
+Interface que representa um grupo de alimentos, contendo um nome e uma lista de alimentos que pertencem a esse grupo.
 
 ### IDietaFixa
 
@@ -69,13 +57,30 @@ export interface IDietaFixa extends Document {
     grupos: IGrupo[];
 }
 ```
+Interface que representa uma dieta fixa associada a um usuário, incluindo informações sobre o dia da semana, datas de criação e atualização, detalhes da dieta e grupos de alimentos.
 
-A interface `IDietaFixa` representa uma dieta fixa associada a um usuário. Os campos incluem:
+### IDietaDiaria
 
-- `usuarioId`: Identificador do usuário que possui a dieta.
-- `diaSemana`: Dia da semana em que a dieta é aplicada, conforme definido na enumeração `DiasSemana`.
-- `criadoEm`: Data de criação da dieta.
-- `atualizadoEm?`: Data da última atualização da dieta (opcional).
-- `removidoEm?`: Data em que a dieta foi removida (opcional).
-- `detalhes`: Detalhes da dieta, conforme definido pela interface `IDietaDetalhes`.
-- `grupos`: Lista de grupos de alimentos que compõem a dieta, conforme definido pela interface `IGrupo`.
+```typescript
+export interface IDietaDiaria extends Document {
+    usuarioId: string;
+    diaSemana: DiasSemana;
+    dia: Date;
+    detalhes: IDietaDetalhes;
+    grupos: IGrupo[];
+    removidoEm?: Date | null;
+    gruposConsumo: IGrupoConsumo[];
+}
+```
+Interface que representa uma dieta diária, incluindo informações sobre o usuário, dia da semana, data, detalhes da dieta, grupos de alimentos e grupos de consumo.
+
+### IGrupoConsumo
+
+```typescript
+export interface IGrupoConsumo {
+    _id?: string;
+    nome: string;
+    alimentos: IAlimentoConsumido[];
+}
+```
+Interface que representa um grupo de consumo, contendo um nome e uma lista de alimentos consumidos.

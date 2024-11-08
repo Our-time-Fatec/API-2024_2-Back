@@ -5,9 +5,11 @@ description: 'Rotas para gerenciamento de dietas no sistema.'
 
 # dietaRoutes
 
-Este arquivo contém as definições das rotas para o gerenciamento de dietas na aplicação. Utiliza o framework Express para definir as rotas e associá-las aos métodos do `DietaController`.
+O arquivo `dietaRoutes.ts` define as rotas relacionadas ao gerenciamento de dietas na aplicação. Utiliza o framework Express para criar um conjunto de endpoints que permitem a criação, listagem, busca, atualização e remoção de dietas.
 
-## Rotas Definidas
+## Estrutura das Rotas
+
+As seguintes rotas estão disponíveis:
 
 - `POST /`: Cria uma nova dieta.
 - `GET /me`: Lista todas as dietas do usuário autenticado.
@@ -15,19 +17,18 @@ Este arquivo contém as definições das rotas para o gerenciamento de dietas na
 - `PUT /:id`: Atualiza uma dieta existente pelo seu ID.
 - `DELETE /:id`: Remove uma dieta pelo seu ID.
 
-## Importações
+## Dependências
 
-O arquivo importa o `Router` do Express e o `DietaController`, que contém a lógica de controle para as operações relacionadas às dietas.
+Este arquivo depende do `DietaController`, que contém a lógica de negócios para cada uma das operações definidas nas rotas.
 
-```typescript
-import { Router } from "express";
-import DietaController from "../controllers/DietaController";
-```
+## Exemplo de Uso
 
-## Exportação
-
-As rotas são exportadas como um módulo padrão para serem utilizadas em outras partes da aplicação.
+Para utilizar as rotas definidas, é necessário importar o módulo em um arquivo de configuração de rotas principal e montá-las no aplicativo Express:
 
 ```typescript
-export default routes;
+import dietaRoutes from './src/routes/dietaRoutes';
+
+app.use('/api/dietas', dietaRoutes);
 ```
+
+Isso permitirá que as rotas sejam acessadas sob o prefixo `/api/dietas`.

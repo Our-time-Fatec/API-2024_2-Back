@@ -1,48 +1,187 @@
 ---
 title: usuarios
-description: 'Modelo de dados para usuários, incluindo validações e transformações.'
+description: 'Modelo de dados para usuários, incluindo validações e estrutura de dados.'
 ---
 
 # Modelo de Usuário
 
-O arquivo `usuarios.ts` define o modelo de dados para usuários utilizando o Mongoose, uma biblioteca do Node.js para modelagem de dados MongoDB. Este modelo inclui diversas propriedades com validações e transformações específicas.
+O arquivo `usuarios.ts` define o modelo de dados para usuários utilizando o Mongoose, uma biblioteca do Node.js para modelagem de dados MongoDB. Este modelo inclui diversas propriedades com validações específicas.
 
 ## Estrutura do Modelo
 
-O modelo `UsuarioSchema` é definido com as seguintes propriedades:
+### Esquema de Água
 
-- **nome**: String, obrigatório.
-- **sobrenome**: String, obrigatório.
-- **email**: String, obrigatório, único, deve ser um formato de e-mail válido.
-- **senha**: String, obrigatório, não é retornado nas consultas.
-- **dataDeNascimento**: Date, obrigatório.
-- **idade**: Number, opcional.
-- **peso**: Number, obrigatório.
-- **altura**: Number, obrigatório.
-- **nivelDeSedentarismo**: String, opcional, deve ser um dos valores: "Sedentário", "Levemente ativo", "Moderadamente ativo", "Altamente ativo", "Extremamente ativo".
-- **sexo**: String, opcional, deve ser "Masculino" ou "Feminino".
-- **objetivo**: String, opcional, deve ser um dos valores: "Dieta de emagrecimento", "Dieta de Ganho de Massa Muscular", "Dieta Low Carb".
-- **IMC**: Number, opcional.
-- **taxaMetabolismoBasal**: Number, opcional.
-- **gastoDeCaloria**: Number, opcional.
-- **consumoDeCaloriaPorDia**: Number, opcional.
-- **ultimaVezUtilizado**: Date, padrão é a data atual.
-- **criadoEm**: Date, padrão é a data atual.
-- **atualizadoEm**: Date, padrão é `null`.
-- **removidoEm**: Date, padrão é `null`.
+```typescript
+const AguaSchema = new Schema<IAgua>({
+  aguaIngerida: {
+    type: Number,
+    default: 0,
+  },
+  atualizacao: { 
+    type: Date, 
+    default: Date.now 
+  } 
+});
+```
 
-## Validações
+- **aguaIngerida**: Número que representa a quantidade de água ingerida, com valor padrão de 0.
+- **atualizacao**: Data da última atualização, com valor padrão da data atual.
 
-O campo **email** possui uma validação que utiliza uma expressão regular para garantir que o formato do e-mail seja válido. Caso contrário, uma mensagem de erro personalizada é retornada.
+### Esquema de Usuário
 
-## Transformações
+```typescript
+const UsuarioSchema = new Schema<IUsuario>({
+  nome: {
+    type: String,
+    required: [true, "Nome é obrigatório"],
+  },
+  sobrenome: {
+    type: String,
+    required: [true, "Sobrenome é obrigatório"],
+  },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: [true, "O e-mail é obrigatório"],
+    validate: {
+      validator: function (value: string) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(value);
+      },
+      message: (props: any) =>
+        `${props.value} não é um formato de e-mail válido`,
+    },
+  },
+  senha: {
+    type: String,
+    select: false,
+    trim: true,
+    required: [true, "A senha é obrigatória"],
+  },
+  dataDeNascimento: {
+    type: Date,
+    required: [true, "Preencha sua idade"],
+  },
+  idade: {
+    type: Number,
+  },
+  peso: {
+    type: Number,
+    required: [true, "Preencha seu peso"],
+  },
+  altura: {
+    type: Number,
+    required: [true, "Preencha sua altura"],
+  },
+  nivelDeSedentarismo: {
+    type: String,
+    enum: [
+      "Sedentário",
+      "Levemente ativo",
+      "Moderadamente ativo",
+      "Altamente ativo",
+      "Extremamente ativo",
+    ],
+  },
+  sexo: {
+    type: String,
+    enum: ["Masculino", "Feminino"],
+  },
+  objetivo: {
+    type: String,
+    enum: [
+      "Dieta de emagrecimento",
+      "Dieta de Ganho de Massa Muscular",
+      "Dieta Low Carb",
+    ],
+  },
+  IMC: {
+    type: Number,
+  },
+  taxaMetabolismoBasal: {
+    type: Number,
+  },
+  gastoDeCaloria: {
+    type: Number,
+  },
+  consumoDeCaloriaPorDia: {
+    type: Number,
+  },
+  ultimaVezUtilizado: {
+    type: Date,
+    default: Date.now,
+  },
+  criadoEm: {
+    type: Date,
+    default: Date.now,
+  },
+  atualizadoEm: {
+    type: Date,
+    default: null,
+  },
+  removidoEm: {
+    type: Date,
+    default: null,
+  },
+  metaAgua: {
+    type: Number,
+  },
+  agua: {
+    type: AguaSchema,
+  }
+}, {
+  toJSON: {
+    transform: function (doc, ret, options) {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+    },
+  },
+});
+```
 
-O modelo inclui uma transformação para o método `toJSON`, que altera a estrutura do objeto retornado, removendo os campos `_id` e `__v`, e adicionando um campo `id` que corresponde ao `_id`.
+#### Propriedades
 
-## Middleware
+- **nome**: Nome do usuário (obrigatório).
+- **sobrenome**: Sobrenome do usuário (obrigatório).
+- **email**: E-mail do usuário (obrigatório, único, com validação de formato).
+- **senha**: Senha do usuário (obrigatório, não retornada em consultas).
+- **dataDeNascimento**: Data de nascimento do usuário (obrigatório).
+- **idade**: Idade do usuário.
+- **peso**: Peso do usuário (obrigatório).
+- **altura**: Altura do usuário (obrigatório).
+- **nivelDeSedentarismo**: Nível de sedentarismo do usuário (opções pré-definidas).
+- **sexo**: Sexo do usuário (opções pré-definidas).
+- **objetivo**: Objetivo da dieta do usuário (opções pré-definidas).
+- **IMC**: Índice de Massa Corporal do usuário.
+- **taxaMetabolismoBasal**: Taxa de metabolismo basal do usuário.
+- **gastoDeCaloria**: Gasto calórico do usuário.
+- **consumoDeCaloriaPorDia**: Consumo calórico diário do usuário.
+- **ultimaVezUtilizado**: Data da última utilização do usuário (padrão: data atual).
+- **criadoEm**: Data de criação do registro (padrão: data atual).
+- **atualizadoEm**: Data da última atualização do registro.
+- **removidoEm**: Data de remoção do registro.
+- **metaAgua**: Meta de ingestão de água do usuário.
+- **agua**: Subdocumento que contém informações sobre a ingestão de água.
 
-Um middleware `pre('save')` é utilizado para atualizar o campo `ultimaVezUtilizado` com a data atual sempre que um documento de usuário é salvo.
+### Middleware
 
-## Exportação
+```typescript
+UsuarioSchema.pre("save", function (next) {
+  this.ultimaVezUtilizado = new Date();
+  next();
+});
+```
 
-O modelo é exportado como `UsuarioModel`, que pode ser utilizado em outras partes da aplicação para interagir com a coleção "Usuarios" no MongoDB.
+- O middleware `pre("save")` atualiza a propriedade `ultimaVezUtilizado` com a data atual sempre que um usuário é salvo.
+
+### Exportação do Modelo
+
+```typescript
+const UsuarioModel = mongoose.model<IUsuario>("Usuario", UsuarioSchema, "Usuarios");
+export default UsuarioModel;
+```
+
+- O modelo `UsuarioModel` é exportado para ser utilizado em outras partes da aplicação. Ele é associado à coleção "Usuarios" no MongoDB.

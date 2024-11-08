@@ -5,41 +5,61 @@ description: 'Middleware para autenticação de usuários utilizando JWT.'
 
 # authMiddleware
 
-O `authMiddleware` é um middleware para autenticação de usuários em uma aplicação Express, utilizando JSON Web Tokens (JWT). Ele verifica se um token de autenticação foi fornecido e se é válido, permitindo o acesso às rotas protegidas.
+O `authMiddleware` é um middleware para autenticação de usuários em uma aplicação Express, utilizando JSON Web Tokens (JWT). Este middleware verifica a presença e a validade do token de autenticação fornecido no cabeçalho da requisição.
 
 ## Importações
 
-O middleware utiliza as seguintes bibliotecas:
+O arquivo importa os seguintes módulos:
 
-- `jsonwebtoken`: Para verificar a validade do token JWT.
-- `express`: Para manipulação de requisições e respostas.
+- `jsonwebtoken`: Para verificar e decodificar o token JWT.
+- `Request`, `Response`, `NextFunction`: Tipos do Express para definir os parâmetros da função middleware.
+- `dotenv`: Para carregar variáveis de ambiente a partir de um arquivo `.env`.
 
 ## Configuração do JWT
 
-O segredo utilizado para assinar os tokens JWT é obtido a partir da variável de ambiente `JWT_SECRET`. Caso essa variável não esteja definida, um valor padrão `'secretKey'` é utilizado.
-
-## Funcionamento
-
-1. **Recepção do Token**: O middleware tenta obter o token do cabeçalho `Authorization` da requisição.
-2. **Verificação do Token**:
-   - Se o token não for fornecido, uma resposta com status `401` (Não Autorizado) é retornada, junto com uma mensagem informando que o token não foi fornecido.
-   - Se o token for fornecido, ele é verificado utilizando a função `jwt.verify()`.
-     - Se a verificação falhar, uma resposta com status `403` (Proibido) é retornada, informando que o token é inválido.
-3. **Acesso ao ID do Usuário**: Se o token for válido, o ID do usuário é extraído do token decodificado e adicionado ao corpo da requisição (`req.body.userId`), permitindo que as rotas subsequentes acessem essa informação.
-4. **Chamada do Próximo Middleware**: O middleware chama `next()` para passar o controle para o próximo middleware ou rota.
-
-## Exemplo de Uso
-
-Para utilizar o `authMiddleware`, basta importá-lo e aplicá-lo nas rotas que requerem autenticação:
+O segredo utilizado para assinar o token JWT é obtido a partir das variáveis de ambiente. Caso não esteja definido, um valor padrão `'secretKey'` é utilizado.
 
 ```typescript
-import authMiddleware from './middlewares/authMiddleware';
-
-app.use('/api/protected-route', authMiddleware, (req, res) => {
-    res.send('Acesso permitido!');
-});
+const JWT_SECRET = process.env.JWT_SECRET || 'secretKey';
 ```
+
+## Função Middleware
+
+A função `authMiddleware` é definida da seguinte forma:
+
+```typescript
+const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    // Lógica do middleware
+};
+```
+
+### Lógica do Middleware
+
+1. **Verificação do Token**: O middleware tenta obter o token do cabeçalho `Authorization` da requisição.
+   - Se o token não estiver presente, uma resposta com status `401` (Não Autorizado) é enviada.
+
+2. **Validação do Token**: O token é verificado utilizando a função `jwt.verify`.
+   - Se o token for inválido, uma resposta com status `403` (Proibido) é enviada.
+   - Se o token for válido, o `userId` decodificado é adicionado ao corpo da requisição (`req.body.userId`), e a execução do middleware prossegue chamando `next()`.
 
 ## Exportação
 
 O middleware é exportado como padrão para ser utilizado em outras partes da aplicação.
+
+```typescript
+export default authMiddleware;
+```
+
+## Exemplo de Uso
+
+Para utilizar o `authMiddleware`, você pode importá-lo e aplicá-lo em rotas que requerem autenticação:
+
+```typescript
+import authMiddleware from './middlewares/authMiddleware';
+
+app.get('/protected-route', authMiddleware, (req, res) => {
+    res.send('Esta é uma rota protegida!');
+});
+``` 
+
+Este middleware é essencial para garantir que apenas usuários autenticados possam acessar rotas específicas da aplicação.

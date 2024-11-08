@@ -1,4 +1,3 @@
-
 ---
 title: seed
 description: 'Função para popular o banco de dados com dados iniciais de usuários, categorias e alimentos.'
@@ -6,41 +5,56 @@ description: 'Função para popular o banco de dados com dados iniciais de usuá
 
 # seed
 
-A função `seedDatabase` é responsável por popular o banco de dados com dados iniciais, incluindo um usuário administrador, categorias de alimentos e alimentos em si. Esta função deve ser executada uma única vez para garantir que os dados não sejam duplicados.
+A função `seedDatabase` é responsável por popular o banco de dados com dados iniciais, incluindo um usuário administrador, categorias de alimentos e uma lista de alimentos. Esta função deve ser executada uma única vez para garantir que os dados iniciais sejam inseridos no banco de dados.
 
 ## Estrutura da Função
 
-A função realiza as seguintes operações:
+### Importações
+
+A função importa os seguintes módulos:
+
+- **Categoria**: Modelo para manipulação de categorias de alimentos.
+- **Alimento**: Modelo para manipulação de alimentos.
+- **Usuario**: Modelo para manipulação de usuários.
+- **Types**: Tipos do Mongoose.
+- **criptografia**: Utilitário para criptografar senhas.
+
+### Função `seedDatabase`
+
+```typescript
+async function seedDatabase() {
+    // Lógica da função
+}
+```
+
+#### Lógica da Função
 
 1. **Criação do Usuário Administrador**:
-   - Verifica se já existem usuários no banco de dados.
-   - Se não houver, cria um usuário administrador com informações predefinidas, incluindo nome, sobrenome, email e senha criptografada.
+   - Um objeto `userAdm` é criado com informações do administrador, incluindo nome, sobrenome, email e senha (criptografada).
+   - A função verifica se já existem usuários no banco de dados. Se não houver, o usuário administrador é criado.
 
-2. **Inserção de Categorias**:
-   - Define um conjunto de categorias de alimentos.
-   - Verifica se já existem categorias no banco de dados.
-   - Se não houver, insere as categorias definidas.
+2. **Criação de Categorias**:
+   - Um array de categorias é definido, contendo informações como código, nome e URL de um placeholder.
+   - A função verifica se já existem categorias no banco de dados. Se não houver, as categorias são inseridas.
 
-3. **Inserção de Alimentos**:
-   - Define um conjunto de alimentos com informações como nome, preparo, porção, categoria e detalhes nutricionais.
-   - Verifica se já existem alimentos no banco de dados.
-   - Se não houver, insere os alimentos definidos.
+3. **Criação de Alimentos**:
+   - Um array de alimentos é definido, onde cada alimento contém informações como nome, preparo, porção, código da categoria, ID do criador e detalhes nutricionais.
+   - A função verifica se já existem alimentos no banco de dados. Se não houver, os alimentos são inseridos.
 
 4. **Tratamento de Erros**:
-   - A função inclui um bloco `try-catch` para capturar e logar erros que possam ocorrer durante a execução.
+   - A função possui um bloco `try-catch` para capturar e logar erros que possam ocorrer durante a execução.
 
-## Uso
+### Exemplo de Uso
 
-Para utilizar a função, basta importá-la e chamá-la em um contexto apropriado, como durante a inicialização da aplicação:
+Para utilizar a função `seedDatabase`, basta importá-la e chamá-la em um contexto apropriado, como em um script de inicialização:
 
-```javascript
+```typescript
 import seedDatabase from './src/database/seed';
 
-// Chame a função para popular o banco de dados
 seedDatabase();
 ```
 
-## Considerações
+### Considerações Finais
 
-- Certifique-se de que a função seja chamada apenas uma vez para evitar a duplicação de dados.
-- As credenciais do usuário administrador devem ser configuradas através de variáveis de ambiente para maior segurança.
+- A função deve ser executada apenas uma vez para evitar duplicação de dados.
+- É importante garantir que as variáveis de ambiente necessárias, como `ADMIN_PASSWORD`, estejam configuradas corretamente antes de executar a função.

@@ -11,9 +11,10 @@ A pasta `utils` contém funções utilitárias que são utilizadas em diversas p
 
 A pasta `utils` pode conter arquivos como:
 
-- `calcularDetalhesDieta.ts`: Funções relacionadas ao cálculo de detalhes de dietas.
-- `criptografia.ts`: Funções para manipulação e segurança de dados através de criptografia.
+- `calcularDetalhesDieta.ts`: Funções para calcular detalhes relacionados a dietas.
+- `definirDietaDiaria.ts`: Funções para definir a dieta diária de um usuário.
+- `criptografia.ts`: Funções para realizar operações de criptografia.
 
 ## Uso
 
-As funções dentro da pasta `utils` devem ser importadas nos arquivos onde são necessárias, permitindo que o código permaneça limpo e organizado.
+As funções dentro da pasta `utils` podem ser importadas e utilizadas em outros módulos do projeto, permitindo que a lógica comum seja centralizada e facilmente acessível.

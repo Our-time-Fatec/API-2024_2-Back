@@ -1,24 +1,23 @@
 ---
 title: routes
-description: 'Contém as definições de rotas para a API, organizadas por recursos.'
+description: 'Diretório que contém as definições das rotas da API, organizadas por funcionalidade.'
 ---
 
-# Rotas
+# Diretório: routes
 
-A pasta `routes` contém os arquivos responsáveis pela definição das rotas da API. Cada arquivo dentro desta pasta corresponde a um recurso específico e define as operações que podem ser realizadas sobre esse recurso.
+O diretório `routes` é responsável por definir as rotas da API, organizando-as de acordo com as funcionalidades do sistema. Cada arquivo dentro deste diretório representa um conjunto de rotas relacionadas a um recurso específico.
 
-## Estrutura
+## Estrutura do Diretório
 
-A estrutura da pasta `routes` é a seguinte:
-
-- **alimentoConsumidoRoutes.ts**: Define as rotas relacionadas ao consumo de alimentos.
-- **alimentoRoutes.ts**: Define as rotas para operações relacionadas a alimentos.
-- **authRoutes.ts**: Gerencia as rotas de autenticação de usuários.
-- **categoriaRoutes.ts**: Define as rotas para operações relacionadas a categorias de alimentos.
-- **dietaRoutes.ts**: Gerencia as rotas relacionadas a dietas.
+- **alimentoConsumidoRoutes.ts**: Rotas relacionadas ao consumo de alimentos.
+- **alimentoRoutes.ts**: Rotas para gerenciamento de alimentos.
+- **authRoutes.ts**: Rotas para autenticação de usuários.
+- **dietaRoutes.ts**: Rotas para gerenciamento de dietas.
+- **categoriaRoutes.ts**: Rotas para gerenciamento de categorias de alimentos.
+- **dietaDiariaRoutes.ts**: Rotas para gerenciamento de dietas diárias.
+- **usuarioRoutes.ts**: Rotas para gerenciamento de usuários.
 - **index.ts**: Arquivo principal que agrega todas as rotas.
-- **usuarioRoutes.ts**: Define as rotas para operações relacionadas a usuários.
 
-## Uso
+## Considerações
 
-As rotas são importadas e utilizadas no servidor principal da aplicação, permitindo que os clientes interajam com os recursos da API de forma organizada e estruturada. Cada rota pode estar associada a métodos HTTP como GET, POST, PUT e DELETE, dependendo da operação que se deseja realizar.
+As rotas são fundamentais para a comunicação entre o cliente e o servidor, permitindo que as operações CRUD (Criar, Ler, Atualizar, Deletar) sejam realizadas nos recursos da aplicação. É importante garantir que as rotas estejam bem organizadas e documentadas para facilitar a manutenção e a escalabilidade do sistema.

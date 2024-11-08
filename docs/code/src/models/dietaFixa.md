@@ -5,50 +5,93 @@ description: 'Modelo de dados para Dieta Fixa utilizando Mongoose.'
 
 # dietaFixa
 
-Este arquivo define o modelo de dados para uma dieta fixa utilizando o Mongoose, uma biblioteca do Node.js que facilita a interação com o MongoDB.
+O arquivo `dietaFixa.ts` define o modelo de dados para uma dieta fixa utilizando o Mongoose, uma biblioteca do Node.js que facilita a interação com o MongoDB. Este modelo inclui a definição de esquemas para detalhes da dieta, alimentos e grupos de alimentos.
 
 ## Estruturas de Dados
 
 ### DietaDetalhesSchema
 
-Define os detalhes nutricionais de um alimento na dieta.
+Define os detalhes nutricionais de uma dieta.
 
-- **valorEnergetico**: Número, obrigatório.
-- **proteinas**: Número, obrigatório.
-- **carboidratos**: Número, obrigatório.
-- **fibras**: Número, obrigatório.
-- **lipidios**: Número, obrigatório.
+```typescript
+const DietaDetalhesSchema = new Schema<IDietaDetalhes>({
+    valorEnergetico: { type: Number, required: true },
+    proteinas: { type: Number, required: true },
+    carboidratos: { type: Number, required: true },
+    fibras: { type: Number, required: true },
+    lipidios: { type: Number, required: true },
+});
+```
 
 ### AlimentoSchema
 
-Define a estrutura de um alimento na dieta.
+Define a estrutura de um alimento dentro da dieta.
 
-- **nome**: String, obrigatório.
-- **quantidade**: Número, obrigatório.
-- **preparo**: String, obrigatório.
-- **porcao**: Número, obrigatório.
-- **categoriaCodigo**: String, obrigatório.
-- **detalhes**: DietaDetalhesSchema, obrigatório.
+```typescript
+const AlimentoSchema = new Schema<IAlimentoDieta>({
+    alimentoId: { type: String },
+    nome: { type: String, required: true },
+    quantidade: { type: Number, required: true },
+    preparo: { type: String, required: true },
+    porcao: { type: Number, required: true },
+    categoriaCodigo: { type: String, required: true },
+    detalhes: { type: DietaDetalhesSchema, required: true },
+});
+```
 
 ### GrupoSchema
 
-Define um grupo de alimentos na dieta.
+Define um grupo de alimentos, que pode incluir múltiplos alimentos.
 
-- **nome**: String, obrigatório. Deve ser um dos seguintes valores: 'Café da Manhã', 'Almoço', 'Café da Tarde', 'Janta'.
-- **alimentos**: Array de AlimentoSchema, obrigatório.
+```typescript
+const GrupoSchema = new Schema<IGrupo>({
+    nome: {
+        type: String,
+        required: true,
+        enum: ['Café da Manhã', 'Almoço', 'Café da Tarde', 'Janta'],
+    },
+    alimentos: { type: [AlimentoSchema], required: true },
+});
+```
 
 ### DietaFixaSchema
 
-Define a estrutura de uma dieta fixa.
+Define a estrutura principal da dieta fixa.
 
-- **usuarioId**: String, obrigatório.
-- **diaSemana**: String, obrigatório. Deve ser um dos valores definidos em `DiasSemana`.
-- **criadoEm**: Date, obrigatório. Padrão: data atual.
-- **atualizadoEm**: Date, opcional. Padrão: null.
-- **removidoEm**: Date, opcional. Padrão: null.
-- **detalhes**: DietaDetalhesSchema, obrigatório.
-- **grupos**: Array de GrupoSchema, obrigatório. Validação para garantir que os nomes dos grupos sejam únicos.
+```typescript
+const DietaFixaSchema = new Schema<IDietaFixa>({
+    usuarioId: { type: String, required: true },
+    diaSemana: { type: String, enum: Object.values(DiasSemana), required: true },
+    criadoEm: { type: Date, default: Date.now, required: true },
+    atualizadoEm: { type: Date, default: null, required: false },
+    removidoEm: { type: Date, default: null, required: false },
+    detalhes: { type: DietaDetalhesSchema, required: true },
+    grupos: {
+        type: [GrupoSchema],
+        required: true,
+        validate: {
+            validator: (v: IGrupo[]) => {
+                const nomesUnicos = new Set(v.map(grupo => grupo.nome));
+                return nomesUnicos.size === v.length;
+            },
+            message: 'Os grupos na dieta não podem se repetir.',
+        },
+    },
+});
+```
 
-## Exportação
+## Exportação do Modelo
 
-O modelo `DietaFixaModel` é exportado para ser utilizado em outras partes da aplicação, permitindo a criação, leitura, atualização e exclusão de documentos de dieta fixa no MongoDB.
+O modelo `DietaFixa` é exportado para ser utilizado em outras partes da aplicação.
+
+```typescript
+const DietaFixaModel = model<IDietaFixa>('DietaFixa', DietaFixaSchema, 'DietasFixas');
+
+export default DietaFixaModel;
+```
+
+## Considerações
+
+- O esquema garante que os grupos de alimentos não se repitam na dieta.
+- Os campos `criadoEm`, `atualizadoEm` e `removidoEm` são utilizados para controle de versão e histórico da dieta.
+- O uso de enums para `diaSemana` assegura que apenas dias válidos sejam utilizados.

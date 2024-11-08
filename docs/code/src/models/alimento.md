@@ -3,9 +3,9 @@ title: alimento
 description: 'Modelo de dados para Alimento utilizando Mongoose.'
 ---
 
-# Alimento
+# alimento.ts
 
-O arquivo `alimento.ts` define o modelo de dados para a entidade `Alimento` utilizando o Mongoose, uma biblioteca do Node.js que facilita a interação com o MongoDB.
+O arquivo `alimento.ts` define o modelo de dados para a entidade `Alimento` utilizando a biblioteca Mongoose, que é uma ferramenta para modelar dados em MongoDB.
 
 ## Estruturas de Dados
 
@@ -35,4 +35,4 @@ O `AlimentoSchema` é o esquema principal que representa um alimento. Ele conté
 
 ## Exportação
 
-O modelo `AlimentoModel` é exportado como o modelo Mongoose para a coleção "Alimentos". Ele pode ser utilizado para realizar operações de CRUD (Create, Read, Update, Delete) na coleção correspondente no banco de dados MongoDB.
+O modelo `AlimentoModel` é exportado como o modelo Mongoose para a coleção "Alimentos", permitindo a interação com a base de dados MongoDB.

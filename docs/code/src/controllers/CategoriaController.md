@@ -5,7 +5,7 @@ description: 'Controlador responsável pela manipulação das categorias no sist
 
 # CategoriaController
 
-O `CategoriaController` é responsável por gerenciar as operações relacionadas às categorias no sistema. Ele utiliza o modelo `Categoria` para interagir com o banco de dados e fornece métodos para listar as categorias disponíveis.
+O `CategoriaController` é uma classe que gerencia as operações relacionadas às categorias no sistema. Ele utiliza o modelo `Categoria` para interagir com o banco de dados e fornece métodos para listar as categorias.
 
 ## Métodos
 
@@ -15,14 +15,20 @@ O `CategoriaController` é responsável por gerenciar as operações relacionada
 async list(req: Request, res: Response): Promise<Response>
 ```
 
-O método `list` é responsável por recuperar todas as categorias que não foram removidas. Ele responde com um status HTTP 200 e um JSON contendo a lista de categorias, ou um status HTTP 500 em caso de erro.
+O método `list` é responsável por recuperar todas as categorias que não foram marcadas como removidas. Ele responde com um status HTTP 200 e a lista de categorias em formato JSON. Em caso de erro, retorna um status HTTP 500 com uma mensagem de erro.
 
 #### Parâmetros
 
-- `req`: O objeto de requisição do Express.
-- `res`: O objeto de resposta do Express.
+- `req`: Objeto de requisição do Express.
+- `res`: Objeto de resposta do Express.
 
-#### Respostas
+#### Exemplo de Uso
 
-- **200 OK**: Retorna um JSON com a lista de categorias.
-- **500 Internal Server Error**: Retorna um JSON com uma mensagem de erro caso ocorra uma falha ao listar as categorias.
+```typescript
+// Exemplo de chamada ao método list
+const categorias = await categoriaController.list(req, res);
+```
+
+## Exportação
+
+O controlador é exportado como uma instância única, permitindo que seja utilizado em outras partes da aplicação.

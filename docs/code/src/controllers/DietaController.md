@@ -6,7 +6,7 @@ description: 'Controlador responsável pela gestão das dietas, incluindo criaç
 
 # DietaController
 
-O `DietaController` é responsável por gerenciar as operações relacionadas às dietas no sistema. Ele permite a criação, atualização, listagem, remoção e busca de dietas específicas. A seguir, são descritas as principais funcionalidades deste controlador.
+O `DietaController` é responsável por gerenciar as operações relacionadas às dietas no sistema. Ele fornece métodos para criar, atualizar, listar, remover e buscar dietas específicas. Abaixo estão os métodos disponíveis e suas funcionalidades.
 
 ## Métodos
 
@@ -16,22 +16,15 @@ O `DietaController` é responsável por gerenciar as operações relacionadas à
 static async criarDieta(req: Request, res: Response): Promise<Response>
 ```
 
-Cria uma nova dieta para um usuário específico em um ou mais dias da semana.
+Cria uma nova dieta para um usuário. Verifica se os parâmetros obrigatórios estão presentes e se já existe uma dieta para os dias da semana fornecidos.
 
-#### Parâmetros
+**Parâmetros:**
+- `req.body`: Deve conter `userId`, `diaSemana` e `grupos`.
 
-- `req.body`:
-  - `userId`: ID do usuário.
-  - `diaSemana`: Dia(s) da semana para a dieta.
-  - `grupos`: Grupos de alimentos associados à dieta.
-
-#### Respostas
-
-- **201**: Dietas criadas com sucesso.
-- **400**: Parâmetros inválidos ou já existe uma dieta para o dia da semana.
-- **500**: Erro interno do servidor.
-
----
+**Retorno:**
+- `201`: Dietas criadas com sucesso.
+- `400`: Parâmetros inválidos ou já existe dieta para os dias fornecidos.
+- `500`: Erro interno.
 
 ### atualizarDieta
 
@@ -39,25 +32,17 @@ Cria uma nova dieta para um usuário específico em um ou mais dias da semana.
 static async atualizarDieta(req: Request, res: Response): Promise<Response>
 ```
 
-Atualiza uma dieta existente.
+Atualiza uma dieta existente. Verifica se o usuário tem permissão para atualizar a dieta e se não existe outra dieta para o mesmo dia da semana.
 
-#### Parâmetros
-
+**Parâmetros:**
 - `req.params.id`: ID da dieta a ser atualizada.
-- `req.body`:
-  - `userId`: ID do usuário.
-  - `diaSemana`: Novo dia da semana para a dieta.
-  - `grupos`: Novos grupos de alimentos associados à dieta.
+- `req.body`: Deve conter `userId`, `diaSemana` e `grupos`.
 
-#### Respostas
-
-- **200**: Dieta atualizada com sucesso.
-- **400**: Parâmetros inválidos ou já existe uma dieta para o dia da semana.
-- **403**: Permissão negada para atualizar a dieta.
-- **404**: Dieta não encontrada.
-- **500**: Erro interno do servidor.
-
----
+**Retorno:**
+- `200`: Dieta atualizada com sucesso.
+- `400`: Parâmetros inválidos ou já existe dieta para o dia fornecido.
+- `404`: Dieta não encontrada.
+- `500`: Erro interno.
 
 ### listarDietas
 
@@ -65,22 +50,16 @@ Atualiza uma dieta existente.
 static async listarDietas(req: Request, res: Response): Promise<Response>
 ```
 
-Lista todas as dietas de um usuário.
+Lista todas as dietas de um usuário. Permite filtrar por dia da semana.
 
-#### Parâmetros
+**Parâmetros:**
+- `req.body`: Deve conter `userId`.
+- `req.query`: Pode conter `diaSemana`.
 
-- `req.body`:
-  - `userId`: ID do usuário.
-- `req.query`:
-  - `diaSemana`: (opcional) Dia da semana para filtrar as dietas.
-
-#### Respostas
-
-- **200**: Lista de dietas retornada com sucesso.
-- **400**: Parâmetro `userId` ausente ou inválido.
-- **500**: Erro interno do servidor.
-
----
+**Retorno:**
+- `200`: Lista de dietas.
+- `400`: Parâmetros inválidos.
+- `500`: Erro interno.
 
 ### removerDieta
 
@@ -88,23 +67,17 @@ Lista todas as dietas de um usuário.
 static async removerDieta(req: Request, res: Response): Promise<Response>
 ```
 
-Remove uma dieta existente.
+Remove uma dieta existente. Verifica se o usuário tem permissão para remover a dieta.
 
-#### Parâmetros
-
+**Parâmetros:**
 - `req.params.id`: ID da dieta a ser removida.
-- `req.body`:
-  - `userId`: ID do usuário.
+- `req.body`: Deve conter `userId`.
 
-#### Respostas
-
-- **200**: Dieta removida com sucesso.
-- **400**: Parâmetros inválidos ou ausentes.
-- **403**: Permissão negada para remover a dieta.
-- **404**: Dieta não encontrada.
-- **500**: Erro interno do servidor.
-
----
+**Retorno:**
+- `200`: Dieta removida com sucesso.
+- `400`: Parâmetros inválidos.
+- `404`: Dieta não encontrada.
+- `500`: Erro interno.
 
 ### buscarDietaPorId
 
@@ -112,18 +85,14 @@ Remove uma dieta existente.
 static async buscarDietaPorId(req: Request, res: Response): Promise<Response>
 ```
 
-Busca uma dieta específica pelo ID.
+Busca uma dieta específica pelo ID. Verifica se o usuário tem permissão para visualizar a dieta.
 
-#### Parâmetros
-
+**Parâmetros:**
 - `req.params.id`: ID da dieta a ser buscada.
-- `req.body`:
-  - `userId`: ID do usuário.
+- `req.body`: Deve conter `userId`.
 
-#### Respostas
-
-- **200**: Dieta encontrada e retornada com sucesso.
-- **400**: ID da dieta é necessário.
-- **403**: Permissão negada para visualizar a dieta.
-- **404**: Dieta não encontrada ou já removida.
-- **500**: Erro interno do servidor.
+**Retorno:**
+- `200`: Dieta encontrada.
+- `400`: ID da dieta é necessário.
+- `404`: Dieta não encontrada ou já removida.
+- `500`: Erro interno.

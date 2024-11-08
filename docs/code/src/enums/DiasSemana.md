@@ -5,7 +5,7 @@ description: 'Enumeração que representa os dias da semana.'
 
 # DiasSemana
 
-A enumeração `DiasSemana` define os dias da semana com seus respectivos nomes. Esta enumeração pode ser utilizada em diversas partes do sistema onde a identificação dos dias da semana é necessária.
+A enumeração `DiasSemana` define os dias da semana com seus respectivos nomes. Esta estrutura é útil para garantir que os dias da semana sejam representados de forma consistente em todo o sistema.
 
 ## Enumeração
 
@@ -33,4 +33,4 @@ export enum DiasSemana {
 
 ## Uso
 
-A enumeração `DiasSemana` pode ser utilizada para garantir que apenas valores válidos sejam atribuídos a variáveis que representam dias da semana, melhorando a legibilidade e a manutenção do código.
+A enumeração `DiasSemana` pode ser utilizada em diversas partes do sistema onde a identificação dos dias da semana é necessária, como em agendamentos, relatórios e outras funcionalidades que dependem da manipulação de datas.

@@ -5,7 +5,7 @@ description: 'Função para calcular detalhes nutricionais de uma dieta com base
 
 # calcularDetalhesDieta
 
-A função `calcularDetalhesDieta` é responsável por calcular os detalhes nutricionais de uma dieta, agrupando os alimentos em grupos e somando suas propriedades nutricionais.
+A função `calcularDetalhesDieta` é responsável por calcular os detalhes nutricionais de uma dieta, agrupando os alimentos e suas respectivas porções. Ela retorna uma lista de grupos completos e um resumo dos detalhes nutricionais da dieta.
 
 ## Parâmetros
 
@@ -22,11 +22,11 @@ A função recebe um parâmetro:
 
 A função retorna uma Promise que resolve para um objeto contendo:
 
-- `gruposCompletos`: Um array de grupos com os alimentos completos, onde cada grupo possui:
+- `gruposCompletos`: Um array de grupos completos, onde cada grupo contém:
   - `nome`: O nome do grupo.
-  - `alimentos`: Um array de objetos que representam os alimentos com suas propriedades nutricionais.
+  - `alimentos`: Um array de objetos que representam os alimentos com detalhes nutricionais.
   
-- `dietaDetalhes`: Um objeto que contém os totais nutricionais da dieta, com as seguintes propriedades:
+- `dietaDetalhes`: Um objeto com os totais nutricionais da dieta, contendo:
   - `valorEnergetico`: Total de calorias.
   - `proteinas`: Total de proteínas.
   - `carboidratos`: Total de carboidratos.
@@ -35,14 +35,14 @@ A função retorna uma Promise que resolve para um objeto contendo:
 
 ## Exceções
 
-A função lança um erro caso um alimento com o `alimentoId` fornecido não seja encontrado no banco de dados.
+A função lança um erro caso um alimento com o ID especificado não seja encontrado no banco de dados.
 
 ## Exemplo de Uso
 
 ```typescript
 const grupos = [
     {
-        nome: "Café da Manhã",
+        nome: "Grupo 1",
         alimentos: [
             { alimentoId: "1", porcao: 100, quantidade: 2 },
             { alimentoId: "2", porcao: 50, quantidade: 1 }

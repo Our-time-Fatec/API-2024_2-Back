@@ -1,5 +1,5 @@
 ---
-title: API-2024_2-Back
+title: README
 description: 'Documentação da API para o projeto API-2024_2-Back, incluindo informações sobre estrutura, funcionalidades e uso.'
 ---
 

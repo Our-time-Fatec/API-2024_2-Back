@@ -1,11 +1,11 @@
 ---
-title: criptografia
-description: 'Serviço para criptografia de senhas utilizando bcrypt.'
+title: CriptografiaService
+description: 'Serviço para criptografar e verificar senhas utilizando bcrypt.'
 ---
 
 # CriptografiaService
 
-O `CriptografiaService` é uma classe responsável por fornecer métodos para criptografar e verificar senhas utilizando a biblioteca `bcrypt`. Este serviço é essencial para garantir a segurança das senhas armazenadas em um sistema.
+O `CriptografiaService` é uma classe responsável por fornecer métodos para criptografar senhas e verificar senhas criptografadas utilizando a biblioteca `bcrypt`. Este serviço é essencial para garantir a segurança das senhas armazenadas em um sistema.
 
 ## Estrutura da Classe
 
@@ -20,29 +20,29 @@ O `CriptografiaService` é uma classe responsável por fornecer métodos para cr
 Método responsável por criptografar uma senha.
 
 - **Parâmetros**:
-  - `senha`: A senha a ser criptografada.
+  - `senha`: A senha em formato de string que será criptografada.
   
-- **Retorno**: Uma `Promise` que resolve para a senha criptografada.
+- **Retorno**: Uma `Promise` que resolve para a senha criptografada em formato de string.
 
 #### `async verificarSenha(senha: string, hash: string): Promise<boolean>`
 
-Método responsável por verificar se uma senha corresponde ao hash fornecido.
+Método responsável por verificar se uma senha fornecida corresponde a um hash armazenado.
 
 - **Parâmetros**:
-  - `senha`: A senha a ser verificada.
-  - `hash`: O hash da senha que será comparado.
+  - `senha`: A senha em formato de string que será verificada.
+  - `hash`: O hash da senha armazenado em formato de string.
   
 - **Retorno**: Uma `Promise` que resolve para um booleano indicando se a senha corresponde ao hash.
 
 ## Exemplo de Uso
 
 ```typescript
-import criptografiaService from './src/utils/criptografia';
+import CriptografiaService from './src/utils/criptografia';
 
-const senha = 'minhaSenhaSegura';
-const hash = await criptografiaService.criptografarSenha(senha);
+const senha = 'minhaSenhaSecreta';
+const hash = await CriptografiaService.criptografarSenha(senha);
 
-const isMatch = await criptografiaService.verificarSenha(senha, hash);
+const isMatch = await CriptografiaService.verificarSenha(senha, hash);
 console.log(isMatch); // true
 ```
 

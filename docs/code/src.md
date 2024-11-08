@@ -1,20 +1,21 @@
 ---
 title: src
-description: 'Diretório principal contendo a implementação do projeto, incluindo controladores, modelos, rotas e utilitários.'
+description: 'Diretório principal contendo a lógica da aplicação, incluindo controladores, modelos, rotas e utilitários.'
 ---
 
 # src
 
-O diretório `src` é a raiz da implementação do projeto. Ele contém todos os componentes necessários para a funcionalidade da aplicação, organizados em subdiretórios conforme descrito abaixo:
+O diretório `src` é o núcleo da aplicação, onde reside toda a lógica de negócio. Ele contém subdiretórios organizados que agrupam diferentes aspectos da aplicação, como controladores, modelos, rotas e utilitários. Abaixo está uma breve descrição de cada subdiretório:
 
-- **controllers**: Contém os controladores que gerenciam a lógica de negócios e as interações com os modelos.
-- **database**: Inclui a configuração da conexão com o banco de dados e scripts de seed para inicialização de dados.
-- **func**: Contém funções auxiliares que suportam a lógica da aplicação.
+- **controllers**: Contém os controladores que gerenciam a lógica de entrada e saída da aplicação, manipulando as requisições e respostas.
+- **database**: Inclui arquivos relacionados à conexão com o banco de dados e scripts de semeadura de dados.
+- **enums**: Define enums utilizados em toda a aplicação, como dias da semana.
+- **func**: Contém funções auxiliares que são utilizadas em diferentes partes da aplicação.
 - **Interfaces**: Define as interfaces TypeScript que descrevem a estrutura dos dados utilizados na aplicação.
 - **models**: Contém os modelos que representam as entidades do domínio da aplicação.
-- **middlewares**: Inclui middlewares que interceptam requisições e podem realizar validações ou autenticações.
 - **routes**: Define as rotas da aplicação, mapeando URLs para os controladores correspondentes.
-- **types**: Contém definições de tipos personalizados para uso em toda a aplicação.
-- **utils**: Inclui funções utilitárias que fornecem funcionalidades auxiliares.
+- **middlewares**: Contém middlewares que são utilizados para processar requisições antes que elas cheguem aos controladores.
+- **types**: Define tipos TypeScript personalizados que são utilizados em toda a aplicação.
+- **utils**: Contém funções utilitárias que fornecem funcionalidades auxiliares.
 
-Este diretório é fundamental para a organização e manutenção do código, permitindo uma estrutura modular e escalável.
+Este diretório é fundamental para a organização e manutenção do código, permitindo uma estrutura clara e modular para o desenvolvimento da aplicação.

@@ -1,17 +1,17 @@
 ---
 title: database
-description: 'Pasta responsável pela configuração e manipulação do banco de dados da aplicação.'
+description: 'Pasta que contém as definições e interações com o banco de dados da aplicação.'
 ---
 
 # database
 
-A pasta `database` contém os arquivos e configurações necessárias para a interação com o banco de dados da aplicação. Ela é fundamental para a persistência de dados e inclui scripts de conexão e seeding.
+A pasta `database` é responsável por gerenciar as interações com o banco de dados da aplicação. Ela contém arquivos que definem a conexão com o banco de dados e scripts para a inserção de dados iniciais (seed).
 
 ## Estrutura
 
-- **connection.ts**: Este arquivo contém a lógica de conexão com o banco de dados, incluindo as configurações necessárias para estabelecer a comunicação.
-- **seed.ts**: Este arquivo é utilizado para popular o banco de dados com dados iniciais, facilitando o desenvolvimento e testes da aplicação.
+- **connection.ts**: Este arquivo contém a lógica para estabelecer a conexão com o banco de dados.
+- **seed.ts**: Este arquivo é utilizado para popular o banco de dados com dados iniciais, facilitando o desenvolvimento e testes.
 
-## Funcionalidade
+## Uso
 
-A estrutura da pasta `database` permite que a aplicação gerencie suas operações de banco de dados de forma organizada e eficiente, garantindo que a conexão e a inicialização dos dados sejam tratadas de maneira centralizada.
+Os arquivos dentro da pasta `database` devem ser importados e utilizados nos controladores e serviços que necessitam de acesso ao banco de dados. A conexão deve ser estabelecida antes de qualquer operação de leitura ou escrita.
