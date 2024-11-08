@@ -1,11 +1,11 @@
 ---
 title: dietaFixa
-description: 'Modelo de dados para Dieta Fixa utilizando Mongoose.'
+description: 'Modelo de dados para a dieta fixa, incluindo detalhes nutricionais e grupos de alimentos.'
 ---
 
 # dietaFixa
 
-Este arquivo define o modelo de dados para uma dieta fixa utilizando o Mongoose, uma biblioteca do Node.js que facilita a interação com o MongoDB.
+O arquivo `dietaFixa.ts` define o modelo de dados para a dieta fixa utilizando o Mongoose, uma biblioteca do Node.js para modelagem de dados MongoDB. Este modelo inclui esquemas para detalhes nutricionais, alimentos e grupos de alimentos.
 
 ## Estruturas de Dados
 
@@ -23,32 +23,38 @@ Define os detalhes nutricionais de um alimento na dieta.
 
 Define a estrutura de um alimento na dieta.
 
+- **alimentoId**: String, opcional.
 - **nome**: String, obrigatório.
 - **quantidade**: Número, obrigatório.
 - **preparo**: String, obrigatório.
 - **porcao**: Número, obrigatório.
 - **categoriaCodigo**: String, obrigatório.
-- **detalhes**: DietaDetalhesSchema, obrigatório.
+- **detalhes**: `DietaDetalhesSchema`, obrigatório.
 
 ### GrupoSchema
 
 Define um grupo de alimentos na dieta.
 
 - **nome**: String, obrigatório. Deve ser um dos seguintes valores: 'Café da Manhã', 'Almoço', 'Café da Tarde', 'Janta'.
-- **alimentos**: Array de AlimentoSchema, obrigatório.
+- **alimentos**: Array de `AlimentoSchema`, obrigatório.
 
 ### DietaFixaSchema
 
-Define a estrutura de uma dieta fixa.
+Define a estrutura da dieta fixa.
 
 - **usuarioId**: String, obrigatório.
 - **diaSemana**: String, obrigatório. Deve ser um dos valores definidos em `DiasSemana`.
-- **criadoEm**: Date, obrigatório. Padrão: data atual.
-- **atualizadoEm**: Date, opcional. Padrão: null.
-- **removidoEm**: Date, opcional. Padrão: null.
-- **detalhes**: DietaDetalhesSchema, obrigatório.
-- **grupos**: Array de GrupoSchema, obrigatório. Validação para garantir que os nomes dos grupos sejam únicos.
+- **criadoEm**: Date, padrão é a data atual, obrigatório.
+- **atualizadoEm**: Date, padrão é null, opcional.
+- **removidoEm**: Date, padrão é null, opcional.
+- **detalhes**: `DietaDetalhesSchema`, obrigatório.
+- **grupos**: Array de `GrupoSchema`, obrigatório. Validação para garantir que os nomes dos grupos sejam únicos.
 
 ## Exportação
 
-O modelo `DietaFixaModel` é exportado para ser utilizado em outras partes da aplicação, permitindo a criação, leitura, atualização e exclusão de documentos de dieta fixa no MongoDB.
+O modelo `DietaFixaModel` é exportado como um modelo Mongoose, permitindo a interação com a coleção 'DietasFixas' no MongoDB.
+
+```typescript
+const DietaFixaModel = model<IDietaFixa>('DietaFixa', DietaFixaSchema, 'DietasFixas');
+export default DietaFixaModel;
+```

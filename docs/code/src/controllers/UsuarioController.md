@@ -1,133 +1,121 @@
+
 ---
 title: UsuarioController
-description: 'Controlador responsável pela gestão de usuários, incluindo criação, listagem, atualização e remoção.'
+description: 'Controlador responsável pela gestão de usuários, incluindo criação, atualização, listagem e remoção.'
 ---
 
 # UsuarioController
 
-O `UsuarioController` é responsável por gerenciar as operações relacionadas aos usuários no sistema. Ele fornece métodos para criar, listar, obter, atualizar e remover usuários, além de calcular detalhes relacionados à saúde e nutrição.
+O `UsuarioController` é responsável por gerenciar as operações relacionadas aos usuários no sistema. Ele fornece métodos para criar, listar, obter detalhes, atualizar e remover usuários, além de gerenciar a atualização de informações específicas, como a quantidade de água ingerida.
 
 ## Métodos
 
 ### create
 
-```typescript
-public async create(req: Request, res: Response): Promise<Response>
-```
+Cria um novo usuário no sistema.
 
-Cria um novo usuário. Valida os dados de entrada e criptografa a senha antes de armazenar no banco de dados.
-
-#### Parâmetros
-
+**Parâmetros:**
 - `req`: Objeto de requisição que contém os dados do usuário.
 - `res`: Objeto de resposta para enviar a resposta ao cliente.
 
-#### Respostas
-
-- **201**: Usuário criado com sucesso.
-- **400**: Erros de validação (e-mail ou senha inválidos).
-- **401**: E-mail e senha não fornecidos.
-- **500**: Erro interno do servidor.
-
----
+**Retorno:**
+- Resposta com status 201 se o usuário for criado com sucesso, ou um erro apropriado.
 
 ### list
 
-```typescript
-public async list(_: Request, res: Response): Promise<void>
-```
-
 Lista todos os usuários ativos no sistema.
 
-#### Parâmetros
+**Parâmetros:**
+- `req`: Objeto de requisição.
+- `res`: Objeto de resposta.
 
-- `res`: Objeto de resposta para enviar a lista de usuários.
-
-#### Respostas
-
-- **200**: Lista de usuários.
-- **500**: Erro ao listar usuários.
-
----
+**Retorno:**
+- Resposta com status 200 e a lista de usuários.
 
 ### getUsuario
 
-```typescript
-public async getUsuario(req: Request, res: Response): Promise<void>
-```
-
 Obtém as informações de um usuário específico.
 
-#### Parâmetros
-
+**Parâmetros:**
 - `req`: Objeto de requisição que contém o ID do usuário.
-- `res`: Objeto de resposta para enviar as informações do usuário.
+- `res`: Objeto de resposta.
 
-#### Respostas
-
-- **200**: Informações do usuário.
-- **404**: Usuário não encontrado.
-- **500**: Erro ao buscar informações do usuário.
-
----
+**Retorno:**
+- Resposta com status 200 e os detalhes do usuário, ou um erro se o usuário não for encontrado.
 
 ### update
 
-```typescript
-public async update(req: Request, res: Response): Promise<Response>
-```
-
 Atualiza as informações de um usuário existente.
 
-#### Parâmetros
-
+**Parâmetros:**
 - `req`: Objeto de requisição que contém os dados atualizados do usuário.
-- `res`: Objeto de resposta para enviar a resposta ao cliente.
+- `res`: Objeto de resposta.
 
-#### Respostas
-
-- **200**: Usuário atualizado com sucesso.
-- **404**: Usuário não encontrado.
-- **500**: Erro ao atualizar usuário.
-
----
+**Retorno:**
+- Resposta com status 200 se a atualização for bem-sucedida, ou um erro apropriado.
 
 ### delete
 
-```typescript
-public async delete(req: Request, res: Response): Promise<Response>
-```
-
 Remove um usuário do sistema, marcando-o como removido.
 
-#### Parâmetros
+**Parâmetros:**
+- `req`: Objeto de requisição que contém o ID do usuário.
+- `res`: Objeto de resposta.
 
-- `req`: Objeto de requisição que contém o ID do usuário a ser removido.
-- `res`: Objeto de resposta para enviar a resposta ao cliente.
-
-#### Respostas
-
-- **200**: Usuário removido com sucesso.
-- **404**: Usuário não encontrado.
-- **500**: Erro ao remover usuário.
-
----
+**Retorno:**
+- Resposta com status 200 se o usuário for removido com sucesso, ou um erro se o usuário não for encontrado.
 
 ### getUsuarioDetalhes
 
-```typescript
-public async getUsuarioDetalhes(req: Request, res: Response): Promise<void>
-```
+Obtém detalhes adicionais sobre um usuário, incluindo informações sobre a ingestão de água e alimentos consumidos.
 
-Obtém detalhes sobre os alimentos consumidos por um usuário em um dia específico.
-
-#### Parâmetros
-
+**Parâmetros:**
 - `req`: Objeto de requisição que contém o ID do usuário.
-- `res`: Objeto de resposta para enviar os detalhes dos alimentos.
+- `res`: Objeto de resposta.
 
-#### Respostas
+**Retorno:**
+- Resposta com status 200 e os detalhes do usuário, ou um erro se o usuário não for encontrado.
 
-- **200**: Detalhes dos alimentos consumidos pelo usuário.
-- **404**: Usuário não encontrado.
-- **500**: Erro ao buscar informações do usuário.
+### atualzarAgua
+
+Atualiza a quantidade de água ingerida por um usuário.
+
+**Parâmetros:**
+- `req`: Objeto de requisição que contém a quantidade de água e o ID do usuário.
+- `res`: Objeto de resposta.
+
+**Retorno:**
+- Resposta com status 200 se a atualização for bem-sucedida, ou um erro apropriado.
+
+### zerarAgua
+
+Zera a quantidade de água ingerida por um usuário.
+
+**Parâmetros:**
+- `req`: Objeto de requisição que contém o ID do usuário.
+- `res`: Objeto de resposta.
+
+**Retorno:**
+- Resposta com status 200 e a quantidade de água zerada, ou um erro se o usuário não for encontrado.
+
+### editPassword
+
+Atualiza a senha de um usuário.
+
+**Parâmetros:**
+- `req`: Objeto de requisição que contém a nova senha e o link de email.
+- `res`: Objeto de resposta.
+
+**Retorno:**
+- Resposta com status 200 se a senha for atualizada com sucesso, ou um erro apropriado.
+
+### verificarEmail
+
+Verifica se um email está associado a um usuário e envia um link de redefinição de senha, se necessário.
+
+**Parâmetros:**
+- `req`: Objeto de requisição que contém o email e o link de redefinição.
+- `res`: Objeto de resposta.
+
+**Retorno:**
+- Resposta com status 200 se o email existir, ou um erro se não for encontrado.

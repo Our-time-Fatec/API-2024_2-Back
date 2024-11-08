@@ -1,6 +1,6 @@
 ---
 title: criptografia
-description: 'Serviço para criptografia de senhas utilizando bcrypt.'
+description: 'Serviço de criptografia para gerenciamento de senhas utilizando bcrypt.'
 ---
 
 # CriptografiaService
@@ -11,42 +11,43 @@ O `CriptografiaService` é uma classe responsável por fornecer métodos para cr
 
 ### Propriedades
 
-- `saltRounds: number`: Número de rounds utilizados para gerar o hash da senha. O valor padrão é 7.
+- **saltRounds**: Número de rounds de sal utilizados para a criptografia. O valor padrão é 7.
 
 ### Métodos
 
-#### `async criptografarSenha(senha: string): Promise<string>`
+#### `criptografarSenha(senha: string): Promise<string>`
 
-Método responsável por criptografar uma senha.
+Método assíncrono que recebe uma senha em formato de string e retorna uma promessa que resolve para a senha criptografada.
 
-- **Parâmetros**:
-  - `senha`: A senha a ser criptografada.
-  
-- **Retorno**: Uma `Promise` que resolve para a senha criptografada.
+**Parâmetros:**
+- `senha`: A senha a ser criptografada.
 
-#### `async verificarSenha(senha: string, hash: string): Promise<boolean>`
+**Retorno:**
+- Uma promessa que resolve para a senha criptografada.
 
-Método responsável por verificar se uma senha corresponde ao hash fornecido.
+#### `verificarSenha(senha: string, hash: string): Promise<boolean>`
 
-- **Parâmetros**:
-  - `senha`: A senha a ser verificada.
-  - `hash`: O hash da senha que será comparado.
-  
-- **Retorno**: Uma `Promise` que resolve para um booleano indicando se a senha corresponde ao hash.
+Método assíncrono que verifica se uma senha fornecida corresponde a um hash previamente gerado.
+
+**Parâmetros:**
+- `senha`: A senha a ser verificada.
+- `hash`: O hash da senha que será comparado.
+
+**Retorno:**
+- Uma promessa que resolve para um booleano indicando se a senha corresponde ao hash.
 
 ## Exemplo de Uso
 
 ```typescript
-import criptografiaService from './src/utils/criptografia';
+import CriptografiaService from './src/utils/criptografia';
 
-const senha = 'minhaSenhaSegura';
-const hash = await criptografiaService.criptografarSenha(senha);
+// Criptografar uma senha
+const senhaCriptografada = await CriptografiaService.criptografarSenha('minhaSenhaSecreta');
 
-const isMatch = await criptografiaService.verificarSenha(senha, hash);
-console.log(isMatch); // true
+// Verificar a senha
+const isSenhaValida = await CriptografiaService.verificarSenha('minhaSenhaSecreta', senhaCriptografada);
 ```
 
-## Considerações
+## Considerações Finais
 
-- É recomendável ajustar o número de `saltRounds` de acordo com as necessidades de segurança e desempenho do seu sistema.
-- O uso de `bcrypt` é uma prática comum para garantir a segurança das senhas em aplicações.
+O `CriptografiaService` é uma ferramenta fundamental para a segurança de aplicações que lidam com senhas. É recomendável ajustar o número de `saltRounds` conforme a necessidade de segurança e performance da aplicação.

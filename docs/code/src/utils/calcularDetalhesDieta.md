@@ -5,7 +5,7 @@ description: 'Função para calcular detalhes nutricionais de uma dieta com base
 
 # calcularDetalhesDieta
 
-A função `calcularDetalhesDieta` é responsável por calcular os detalhes nutricionais de uma dieta, agrupando os alimentos em grupos e somando suas propriedades nutricionais.
+A função `calcularDetalhesDieta` é responsável por calcular os detalhes nutricionais de uma dieta, agrupando os alimentos e somando suas propriedades nutricionais.
 
 ## Parâmetros
 
@@ -22,11 +22,8 @@ A função recebe um parâmetro:
 
 A função retorna uma Promise que resolve para um objeto contendo:
 
-- `gruposCompletos`: Um array de grupos com os alimentos completos, onde cada grupo possui:
-  - `nome`: O nome do grupo.
-  - `alimentos`: Um array de objetos que representam os alimentos com suas propriedades nutricionais.
-  
-- `dietaDetalhes`: Um objeto que contém os totais nutricionais da dieta, com as seguintes propriedades:
+- `gruposCompletos`: Um array de grupos com os alimentos completos, incluindo detalhes nutricionais.
+- `dietaDetalhes`: Um objeto com os totais nutricionais da dieta, incluindo:
   - `valorEnergetico`: Total de calorias.
   - `proteinas`: Total de proteínas.
   - `carboidratos`: Total de carboidratos.
@@ -35,7 +32,7 @@ A função retorna uma Promise que resolve para um objeto contendo:
 
 ## Exceções
 
-A função lança um erro caso um alimento com o `alimentoId` fornecido não seja encontrado no banco de dados.
+A função lança um erro se algum alimento não for encontrado no banco de dados, com a mensagem: `Alimento com ID {alimentoId} não encontrado.`
 
 ## Exemplo de Uso
 

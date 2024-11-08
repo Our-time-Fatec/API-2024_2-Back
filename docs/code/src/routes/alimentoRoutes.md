@@ -1,15 +1,13 @@
 ---
 title: alimentoRoutes
-description: 'Rotas para gerenciamento de alimentos na aplicação.'
+description: 'Definição das rotas para gerenciamento de alimentos na aplicação.'
 ---
 
 # alimentoRoutes
 
 O arquivo `alimentoRoutes.ts` define as rotas relacionadas ao gerenciamento de alimentos na aplicação. Utiliza o framework Express para criar um conjunto de endpoints que permitem a interação com o controlador de alimentos.
 
-## Estrutura das Rotas
-
-As seguintes rotas estão disponíveis:
+## Rotas Definidas
 
 - `POST /`: Cria um novo alimento.
 - `GET /`: Lista todos os alimentos.
@@ -18,18 +16,19 @@ As seguintes rotas estão disponíveis:
 - `PUT /:id`: Atualiza um alimento existente pelo seu ID.
 - `DELETE /:id`: Remove um alimento pelo seu ID.
 
-## Dependências
+## Importações
 
-Este arquivo importa o `Router` do Express e o `AlimentoController`, que contém a lógica de negócios para cada uma das operações definidas nas rotas.
-
-## Exemplo de Uso
-
-Para utilizar as rotas definidas, é necessário importar o módulo em um arquivo de configuração de rotas principal, como `index.ts`, e registrá-las no aplicativo Express.
+O arquivo importa o `Router` do Express e o `AlimentoController`, que contém a lógica de negócios para cada uma das operações definidas nas rotas.
 
 ```typescript
-import alimentoRoutes from './routes/alimentoRoutes';
-
-app.use('/api/alimentos', alimentoRoutes);
+import { Router } from "express";
+import AlimentoController from "../controllers/AlimentoController";
 ```
 
-Isso permitirá que as rotas sejam acessadas sob o prefixo `/api/alimentos`.
+## Exportação
+
+As rotas são exportadas como um módulo padrão, permitindo que sejam utilizadas em outras partes da aplicação.
+
+```typescript
+export default routes;
+```

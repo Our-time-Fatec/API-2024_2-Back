@@ -1,49 +1,88 @@
 ---
 title: IUsuario
-description: 'Interface que define a estrutura de um usuário no sistema.'
+description: 'Interface que define a estrutura de um usuário no sistema, incluindo informações pessoais e de saúde.'
 ---
 
 # IUsuario
 
-A interface `IUsuario` define a estrutura de dados para um usuário no sistema. Ela inclui informações pessoais, dados de saúde e preferências de dieta.
+A interface `IUsuario` descreve a estrutura de um usuário no sistema, incluindo suas informações pessoais, dados de saúde e objetivos relacionados à dieta. 
 
-## Propriedades
-
-- **id** (opcional): `string` - Identificador único do usuário.
-- **nome**: `string` - Nome do usuário.
-- **sobrenome**: `string` - Sobrenome do usuário.
-- **email**: `string` - Endereço de e-mail do usuário.
-- **senha** (opcional): `string` - Senha do usuário.
-- **dataDeNascimento**: `Date` - Data de nascimento do usuário.
-- **idade**: `number` - Idade do usuário.
-- **peso**: `number` - Peso do usuário em quilogramas.
-- **altura**: `number` - Altura do usuário em centímetros.
-- **nivelDeSedentarismo**: `"Sedentário" | "Levemente ativo" | "Moderadamente ativo" | "Altamente ativo" | "Extremamente ativo"` - Nível de atividade física do usuário.
-- **sexo**: `"Masculino" | "Feminino"` - Sexo do usuário.
-- **objetivo**: `"Dieta de emagrecimento" | "Dieta de Ganho de Massa Muscular" | "Dieta Low Carb"` - Objetivo dietético do usuário.
-- **IMC** (opcional): `number` - Índice de Massa Corporal do usuário.
-- **taxaMetabolismoBasal** (opcional): `number` - Taxa de metabolismo basal do usuário.
-- **gastoDeCaloria** (opcional): `number` - Gasto calórico diário do usuário.
-- **consumoDeCaloriaPorDia** (opcional): `number` - Consumo calórico diário do usuário.
-- **ultimaVezUtilizado** (opcional): `Date` - Data da última vez que o usuário utilizou o sistema.
-- **criadoEm** (opcional): `Date` - Data de criação do registro do usuário.
-- **atualizadoEm** (opcional): `Date | null` - Data da última atualização do registro do usuário.
-- **removidoEm** (opcional): `Date | null` - Data em que o registro do usuário foi removido.
-
-## Exemplo de Uso
+## Estrutura
 
 ```typescript
-const usuario: IUsuario = {
-    nome: "João",
-    sobrenome: "Silva",
-    email: "joao.silva@example.com",
-    dataDeNascimento: new Date("1990-01-01"),
-    idade: 33,
-    peso: 70,
-    altura: 175,
-    nivelDeSedentarismo: "Moderadamente ativo",
-    sexo: "Masculino",
-    objetivo: "Dieta de emagrecimento",
-    criadoEm: new Date(),
-};
+export interface IUsuario {
+  id?: string;
+  nome: string;
+  sobrenome: string;
+  email: string;
+  senha?: string;
+  dataDeNascimento: Date;
+  idade: number;
+  peso: number;
+  altura: number;
+  nivelDeSedentarismo: "Sedentário" | "Levemente ativo" | "Moderadamente ativo" | "Altamente ativo" | "Extremamente ativo";
+  sexo: "Masculino" | "Feminino";
+  objetivo: "Dieta de emagrecimento" | "Dieta de Ganho de Massa Muscular" | "Dieta Low Carb";
+  IMC?: number;
+  taxaMetabolismoBasal?: number;
+  gastoDeCaloria?: number;
+  consumoDeCaloriaPorDia?: number;
+  ultimaVezUtilizado?: Date;
+  criadoEm?: Date;
+  atualizadoEm?: Date | null;
+  removidoEm?: Date | null;
+  metaAgua: number;
+  agua: IAgua;
+}
 ```
+
+### Propriedades
+
+- **id**: (opcional) Identificador único do usuário.
+- **nome**: Nome do usuário.
+- **sobrenome**: Sobrenome do usuário.
+- **email**: Endereço de e-mail do usuário.
+- **senha**: (opcional) Senha do usuário.
+- **dataDeNascimento**: Data de nascimento do usuário.
+- **idade**: Idade do usuário em anos.
+- **peso**: Peso do usuário em quilogramas.
+- **altura**: Altura do usuário em centímetros.
+- **nivelDeSedentarismo**: Nível de atividade física do usuário, podendo ser:
+  - "Sedentário"
+  - "Levemente ativo"
+  - "Moderadamente ativo"
+  - "Altamente ativo"
+  - "Extremamente ativo"
+- **sexo**: Sexo do usuário, podendo ser:
+  - "Masculino"
+  - "Feminino"
+- **objetivo**: Objetivo dietético do usuário, podendo ser:
+  - "Dieta de emagrecimento"
+  - "Dieta de Ganho de Massa Muscular"
+  - "Dieta Low Carb"
+- **IMC**: (opcional) Índice de Massa Corporal do usuário.
+- **taxaMetabolismoBasal**: (opcional) Taxa de metabolismo basal do usuário.
+- **gastoDeCaloria**: (opcional) Gasto calórico diário do usuário.
+- **consumoDeCaloriaPorDia**: (opcional) Consumo calórico diário do usuário.
+- **ultimaVezUtilizado**: (opcional) Data da última utilização do sistema pelo usuário.
+- **criadoEm**: (opcional) Data de criação do registro do usuário.
+- **atualizadoEm**: (opcional) Data da última atualização do registro do usuário.
+- **removidoEm**: (opcional) Data em que o registro do usuário foi removido.
+- **metaAgua**: Meta de ingestão de água do usuário em mililitros.
+- **agua**: Objeto que contém informações sobre a ingestão de água do usuário.
+
+### IAgua
+
+A interface `IAgua` define a estrutura relacionada à ingestão de água do usuário.
+
+```typescript
+export interface IAgua {
+  aguaIngerida: number;
+  atualizacao: Date;
+}
+```
+
+#### Propriedades
+
+- **aguaIngerida**: Quantidade de água ingerida pelo usuário em mililitros.
+- **atualizacao**: Data da última atualização das informações de ingestão de água.

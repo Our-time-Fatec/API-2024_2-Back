@@ -1,22 +1,26 @@
 ---
 title: usuarioRoutes
-description: 'Definição das rotas para gerenciamento de usuários na aplicação.'
+description: 'Rotas para gerenciamento de usuários, incluindo criação, listagem, atualização e exclusão.'
 ---
 
 # usuarioRoutes
 
-Este arquivo contém a definição das rotas relacionadas ao gerenciamento de usuários na aplicação. Utiliza o framework Express para criar as rotas e integra-se com o controlador de usuários e um middleware de autenticação.
+Este arquivo define as rotas relacionadas ao gerenciamento de usuários na aplicação. Utiliza o framework Express para a criação de rotas e inclui middleware de autenticação para proteger algumas das rotas.
 
 ## Estrutura das Rotas
 
-As rotas definidas neste arquivo são as seguintes:
+As seguintes rotas estão disponíveis:
 
 - `POST /`: Cria um novo usuário.
 - `GET /`: Lista todos os usuários (requer autenticação).
-- `GET /me`: Retorna os detalhes do usuário autenticado (requer autenticação).
-- `PUT /`: Atualiza as informações do usuário autenticado (requer autenticação).
-- `GET /mydetails`: Retorna detalhes adicionais do usuário autenticado (requer autenticação).
-- `DELETE /`: Remove o usuário autenticado (requer autenticação).
+- `GET /me`: Obtém os detalhes do usuário autenticado (requer autenticação).
+- `PUT /`: Atualiza os dados do usuário autenticado (requer autenticação).
+- `PUT /agua`: Atualiza a quantidade de água do usuário (requer autenticação).
+- `PUT /agua/zerar`: Zera a quantidade de água do usuário (requer autenticação).
+- `GET /mydetails`: Obtém detalhes adicionais do usuário autenticado (requer autenticação).
+- `DELETE /`: Exclui o usuário autenticado (requer autenticação).
+- `PUT /editPassword`: Edita a senha do usuário (sem autenticação).
+- `GET /verify`: Verifica o email do usuário (sem autenticação).
 
 ## Importações
 
@@ -26,17 +30,6 @@ O arquivo importa os seguintes módulos:
 - `controller` do `UsuarioController` para manipulação das requisições.
 - `authMiddleware` para proteger as rotas que requerem autenticação.
 
-## Exemplo de Uso
+## Exportação
 
-Para utilizar estas rotas, você deve integrá-las ao seu aplicativo Express principal, como mostrado abaixo:
-
-```javascript
-import usuarioRoutes from './src/routes/usuarioRoutes';
-
-const app = express();
-app.use('/api/usuarios', usuarioRoutes);
-```
-
-## Considerações
-
-As rotas que requerem autenticação utilizam o `authMiddleware`, que deve ser implementado para verificar a validade do token de autenticação antes de permitir o acesso às rotas protegidas.
+As rotas são exportadas como um módulo padrão para serem utilizadas em outras partes da aplicação.

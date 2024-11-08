@@ -14,26 +14,30 @@ O arquivo `connection.ts` é responsável por estabelecer e gerenciar a conexão
 
 ## Variáveis
 
-- `uri`: String que contém a URI de conexão com o MongoDB. O valor é obtido a partir da variável de ambiente `DB_URI`, ou utiliza um valor padrão que conecta ao MongoDB local.
+- `uri`: String que contém a URI de conexão com o MongoDB. O valor padrão é `mongodb://localhost:27017/abp-teste`, mas pode ser sobrescrito por uma variável de ambiente `DB_URI`.
 
 ## Funções
 
 ### `connect()`
 
-Estabelece a conexão com o MongoDB utilizando a URI definida. 
+Estabelece a conexão com o MongoDB.
 
-#### Comportamento:
+#### Comportamento
 
-- Utiliza o método `connect` do Mongoose.
-- Exibe uma mensagem de sucesso no console ao conectar.
-- Em caso de erro, exibe uma mensagem de erro no console.
-- Escuta o sinal `SIGINT` (geralmente enviado ao pressionar Ctrl+C) para fechar a conexão de forma limpa.
+- Utiliza o método `connect` do Mongoose para conectar-se ao banco de dados.
+- Em caso de sucesso, imprime uma mensagem de confirmação no console.
+- Em caso de erro, imprime uma mensagem de erro no console.
+
+#### Encerramento da Conexão
+
+- Escuta o sinal `SIGINT` (geralmente enviado ao pressionar Ctrl+C) para fechar a conexão com o MongoDB de forma limpa.
+- Ao receber o sinal, tenta fechar a conexão e imprime uma mensagem de encerramento no console. Se ocorrer um erro durante o fechamento, imprime uma mensagem de erro.
 
 ### `disconnect()`
 
 Encerra a conexão com o MongoDB.
 
-#### Comportamento:
+#### Comportamento
 
-- Exibe uma mensagem no console informando que a conexão está sendo encerrada.
-- Utiliza o método `disconnect` do Mongoose para fechar a conexão.
+- Imprime uma mensagem de encerramento no console.
+- Utiliza o método `disconnect` do Mongoose para desconectar do banco de dados.

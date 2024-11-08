@@ -1,24 +1,25 @@
 ---
 title: routes
-description: 'Contém as definições de rotas para a API, organizadas por recursos.'
+description: 'Diretório que contém as definições das rotas da API, organizadas por recursos.'
 ---
 
-# Rotas
+# routes
 
-A pasta `routes` contém os arquivos responsáveis pela definição das rotas da API. Cada arquivo dentro desta pasta corresponde a um recurso específico e define as operações que podem ser realizadas sobre esse recurso.
+O diretório `routes` é responsável por definir as rotas da API, organizando-as de acordo com os diferentes recursos do sistema. Cada arquivo dentro deste diretório contém as rotas específicas para um determinado recurso, facilitando a manutenção e a escalabilidade da aplicação.
 
-## Estrutura
+## Estrutura do Diretório
 
-A estrutura da pasta `routes` é a seguinte:
+O diretório `routes` contém os seguintes arquivos:
 
-- **alimentoConsumidoRoutes.ts**: Define as rotas relacionadas ao consumo de alimentos.
-- **alimentoRoutes.ts**: Define as rotas para operações relacionadas a alimentos.
-- **authRoutes.ts**: Gerencia as rotas de autenticação de usuários.
-- **categoriaRoutes.ts**: Define as rotas para operações relacionadas a categorias de alimentos.
-- **dietaRoutes.ts**: Gerencia as rotas relacionadas a dietas.
+- **alimentoRoutes.ts**: Define as rotas relacionadas ao recurso "alimento".
+- **alimentoConsumidoRoutes.ts**: Define as rotas para gerenciar alimentos consumidos.
+- **authRoutes.ts**: Contém as rotas para autenticação de usuários.
+- **categoriaRoutes.ts**: Define as rotas para gerenciar categorias de alimentos.
+- **dietaDiariaRoutes.ts**: Contém as rotas para gerenciar dietas diárias.
+- **dietaRoutes.ts**: Define as rotas para gerenciar dietas fixas.
 - **index.ts**: Arquivo principal que agrega todas as rotas.
-- **usuarioRoutes.ts**: Define as rotas para operações relacionadas a usuários.
+- **usuarioRoutes.ts**: Define as rotas relacionadas ao gerenciamento de usuários.
 
-## Uso
+## Considerações
 
-As rotas são importadas e utilizadas no servidor principal da aplicação, permitindo que os clientes interajam com os recursos da API de forma organizada e estruturada. Cada rota pode estar associada a métodos HTTP como GET, POST, PUT e DELETE, dependendo da operação que se deseja realizar.
+A organização das rotas em arquivos separados permite uma melhor modularização do código, facilitando a leitura e a manutenção. Cada arquivo deve exportar suas rotas para que possam ser utilizadas no arquivo `index.ts`, onde todas as rotas são combinadas e exportadas para uso na aplicação.
